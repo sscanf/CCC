@@ -1,0 +1,731 @@
+
+
+    Aperture Information                                          RRTX21.PCB
+
+                                        
+
+                         Aperture and Tool Descriptions
+    ========================================================================
+
+    Code   Shape    X    Y     Hole  Type   Comment
+    ------------------------------------------------------------------------
+    D10    Mt Hole  200  200   000   Draw   
+    D11    Ellipse  050  050   000   Draw   
+    D12    Sq Rect  050  050   000   Draw   
+    D13    Ellipse  060  060   000   Draw   
+    D14    Sq Rect  060  060   000   Draw   
+    D15    Sq Rect  070  070   000   Draw   
+    D16    Ellipse  070  070   000   Draw   
+    D17    Mt Hole  188  188   000   Draw   
+    D18    Mt Hole  098  098   000   Draw   
+    D19    Mt Hole  156  156   000   Draw   
+    
+
+
+    Code   Hole Diameter
+    --------------------
+    T01    020
+    T02    035
+    T03    038
+    T04    046
+    T05    040
+    T06    140
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  1
+
+    Aperture Information                                          RRTX21.PCB
+
+                                        
+
+                          Aperture and Tool Assignments
+    ========================================================================
+
+    Item                     Normal  S Mask   Plane   Thermal  Drl Sym  Tool
+    ------------------------------------------------------------------------
+    DRAW APERTURE            D11      -        -       -        -        -
+    LINE_006                  *       -        -       -        -        -
+    LINE_008                  *       -        -       -        -        -
+    LINE_010                  *       -        -       -        -        -
+    LINE_012                  *       -        -       -        -        -
+    LINE_014                  *       -        -       -        -        -
+    LINE_020                  *       -        -       -        -        -
+    LINE_026                  *       -        -       -        -        -
+    LINE_030                  *       -        -       -        -        -
+    LINE_040                  *       -        -       -        -        -
+    P_EL_0050_0050_035_AL     *       *        *       *        -        -
+    P_EL_0060_0060_035_AL     *       *        *       *        -        -
+    P_EL_0080_0080_035_AL     *       *        *       *        -        -
+    P_EL_0080_0080_040_AL     *       *        *       *        -        -
+    P_EL_0100_0100_035_AL     *       *        *       *        -        -
+    P_MH_0140_0140_140_AL     *       -        *       -        -        -
+    P_SQ_0050_0050_035_AL     *       *        *       *        -        -
+    P_SQ_0060_0060_035_AL     *       *        *       *        -        -
+    P_SQ_0080_0080_040_AL     *       *        *       *        -        -
+    V_CR_040_020              *       *        *       *        -        -
+    HOLE_020                  -       -        -       -        *       T01
+    HOLE_035                  -       -        -       -        *       T02
+    HOLE_040                  -       -        -       -        *       T05
+    HOLE_140                  -       -        -       -        *       T06
+    
+
+    - : Not applicable.                   * : Aperture/tool is not assigned.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  2
+
+    PCB Statistics                                                RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+    Arcs:     27     Components:      58     Pads:   349     Polygons:     5
+    Lines:   922     Text strings:   119     Vias:    60     Holes:      409
+
+    ------------------------------------------------------------------------
+
+    Text Summary -        T_0032_006_3:     1
+                          T_0060_010_0:    85
+                          T_0060_010_1:    11
+                          T_0060_010_2:     5
+                          T_0060_010_3:    12
+                          T_0060_010_6:     1
+                          T_0060_012_0:     2
+                          T_0060_012_1:     1
+                          T_0060_012_3:     1
+    
+    Line Summary -        L_006:    86
+                          L_008:    11
+                          L_010:   178
+                          L_014:     4
+                          L_020:   540
+                          L_026:    52
+                          L_030:     2
+                          L_040:    76
+    
+    Pad Summary  -        P_EL_0050_0050_035_AL:    43
+                          P_EL_0060_0060_035_AL:   106
+                          P_EL_0080_0080_035_AL:   128
+                          P_EL_0080_0080_040_AL:     5
+                          P_EL_0100_0100_035_AL:    25
+                          P_MH_0140_0140_140_AL:     4
+                          P_SQ_0050_0050_035_AL:     1
+                          P_SQ_0060_0060_035_AL:    36
+                          P_SQ_0080_0080_040_AL:     1
+    
+    Via Summary  -        V_CR_040_020:    60
+    
+    Hole Summary -        H_020:    60
+                          H_035:   339
+                          H_040:     6
+                          H_140:     4
+    
+    Plane Connections -   Power Thermals:      0
+                          Power Directs:       0
+                          Ground Thermals:     0
+                          Ground Directs:      0
+    
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  1
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+    DRC Clearances (in mils)
+    ------------------------
+
+                   Top   Bot  Mid1  Mid2  Mid3  Mid4  Mid5  Mid6  Mid7  Mid8
+
+      Pad-to-Pad    20    20    20    20    20    20    20    20    20    20
+     Pad-to-Line    13    13    13    13    13    13    13    13    13    13
+    Line-to-Line    13    13    13    13    13    13    13    13    13    13
+    
+    Hole-to-Hole    13
+    
+
+    DRC Report Options
+    ------------------
+
+    Clearance Violations:             enabled
+    Text Violations:                  enabled
+    Net List Violations:              enabled
+    Single Node Routes:               enabled
+    Unconnected Pins:                 enabled
+    Unplaced Nodes:                   enabled
+    
+
+    DRC Errors
+    ----------
+
+    CLEARANCE VIOLATION
+       Line at (2527,2399) to (3000,2400) [Bottom layer]
+       Pad U7-4 at (2650,2450) 
+       Calculated clearance:  10
+    OPEN NET:  VEE
+       Subnet #1
+          R3-B at (2400,2700) 
+          U7-4 at (2650,2450) 
+       Subnet #2
+          CN1-5 at (4150,3000) 
+    SHORTED NETS:
+       Net name:  VEE
+          CN1-5 at (4150,3000) 
+       Net name:  NET_064
+          P1-CW at (2791,3001) 
+          R3-A at (2400,3000) 
+    CONNECTION TO UNCOMMITTED NODE
+       CN2-4 at (1453,3399) 
+    OPEN NET:  VDD
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  1
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+       Subnet #1
+          C9-A at (2303,2551) 
+          U2-1 at (2053,2851) 
+          R13-A at (1699,4551) 
+          R15-A at (2149,4551) 
+          R14-A at (2699,4551) 
+          U7-1 at (2650,2750) 
+       Subnet #2
+          C11-B at (2050,3050) 
+    SINGLE NODE ROUTE
+       C11-B at (2050,3050) 
+    CLEARANCE VIOLATION
+       Line at (2256,3164) to (3281,3164) [Bottom layer]
+       Via at (2476,3115) 
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Line at (3200,1580) to (3200,1650) [Top layer]
+       Line at (2198,1538) to (4318,1538) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Line at (3440,1580) to (3440,1920) [Top layer]
+       Line at (2198,1538) to (4318,1538) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Line at (2780,1580) to (2780,1780) [Top layer]
+       Line at (2198,1538) to (4318,1538) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Line at (3200,1580) to (3440,1580) [Top layer]
+       Line at (2198,1538) to (4318,1538) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Line at (2780,1580) to (3200,1580) [Top layer]
+       Line at (2198,1538) to (4318,1538) [Top layer]
+       Calculated clearance:  9
+    CONNECTION TO UNCOMMITTED NODE
+       R16-A at (5275,2125) 
+    CONNECTION TO UNCOMMITTED NODE
+       Q2-E at (5875,2225) 
+    CONNECTION TO UNCOMMITTED NODE
+       R18-B at (5875,2075) 
+    OPEN NET:  VCC
+       Subnet #1
+          U1-44 at (4250,2051) 
+          R8-B at (2153,2101) 
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  2
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+          C10-PLUS at (1853,2451) 
+          U2-3 at (1853,2851) 
+          R1-B at (5373,2294) 
+          CN1-3 at (4250,3000) 
+          U3-16 at (2000,2000) 
+          U3-3 at (2200,1700) 
+          U4-7 at (1648,2185) 
+       Subnet #2
+          R2-B at (1853,2251) 
+    CLEARANCE VIOLATION
+       Line at (2297,1842) to (3309,1841) [Bottom layer]
+       Pad R11-B at (3175,1893) 
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Line at (1500,2340) to (1920,2340) [Bottom layer]
+       Pad U4-9 at (1648,2385) 
+       Calculated clearance:  5
+    CLEARANCE VIOLATION
+       Pad T10- at (3270,3239) 
+       Via at (3281,3164) 
+       Calculated clearance:  15
+    CONNECTION TO UNCOMMITTED NODE
+       R11-B at (3175,1893) 
+    CONNECTION TO UNCOMMITTED NODE
+       C2-B at (4945,1832) 
+    CONNECTION TO UNCOMMITTED NODE
+       CN2-1 at (1453,3099) 
+    CONNECTION TO UNCOMMITTED NODE
+       Q1-E at (5500,1800) 
+    CONNECTION TO UNCOMMITTED NODE
+       CN6-2 at (6000,3550) 
+    SHORTED NETS:
+       Net name:  VCC
+          R2-B at (1853,2251) 
+       Net name:  GND
+          SPK1-C1 at (4502,1586) 
+          U1-22 at (3550,2151) 
+          C1-B at (4950,2000) 
+          C3-MINUS at (4600,2300) 
+          C9-B at (2303,2351) 
+          C10-MINUS at (1953,2451) 
+          U2-2 at (1953,2851) 
+          CN5-C2 at (2349,4851) 
+          R9-B at (3200,1650) 
+          CN1-1 at (4350,3000) 
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  3
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+          CN1-2 at (4350,2900) 
+          R7-1 at (3350,2100) 
+          U7-2 at (2650,2650) 
+          U7-6 at (2650,2250) 
+          C11-A at (1850,3050) 
+          U3-8 at (2700,1700) 
+          U3-1 at (2000,1700) 
+          U4-9 at (1648,2385) 
+          U4-6 at (1648,2085) 
+    CLEARANCE VIOLATION
+       Line at (1514,3000) to (1517,1696) [Top layer]
+       Via at (1557,1803) 
+       Calculated clearance:  10
+    CONNECTION TO UNCOMMITTED NODE
+       CN2-2 at (1453,3199) 
+    CONNECTION TO UNCOMMITTED NODE
+       CN2-6 at (1453,3599) 
+    CLEARANCE VIOLATION
+       Via at (1476,2477) 
+       Line at (1514,3000) to (1517,1696) [Top layer]
+       Calculated clearance:  9
+    CONNECTION TO UNCOMMITTED NODE
+       CN2-3 at (1453,3299) 
+    CONNECTION TO UNCOMMITTED NODE
+       CN2-5 at (1453,3499) 
+    CLEARANCE VIOLATION
+       Line at (2297,1842) to (3309,1841) [Bottom layer]
+       Pad R11-A at (2875,1893) 
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Line at (2527,2399) to (3000,2400) [Bottom layer]
+       Pad D3-K at (2853,2451) 
+       Calculated clearance:  11
+    CONNECTION TO UNCOMMITTED NODE
+       R11-A at (2875,1893) 
+    CLEARANCE VIOLATION
+       Pad T10- at (2970,3239) 
+       Line at (2910,3138) to (2910,3538) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad T15-C2 at (4858,2443) 
+       Line at (4920,2100) to (4920,2640) [Top layer]
+       Calculated clearance:  12
+    CLEARANCE VIOLATION
+       Via at (4860,2100) 
+       Line at (4880,2060) to (4920,2100) [Top layer]
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  4
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  12
+    CLEARANCE VIOLATION
+       Pad T14- at (5346,3639) 
+       Line at (4980,3580) to (5400,3580) [Bottom layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad T13- at (5154,3639) 
+       Line at (4980,3580) to (5400,3580) [Bottom layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad T13- at (5054,3639) 
+       Line at (4980,3580) to (5400,3580) [Bottom layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Via at (4860,2100) 
+       Line at (4860,2060) to (4880,2040) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (4860,2100) 
+       Line at (4460,2060) to (4860,2060) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3300,2460) to (3300,2660) [Top layer]
+       Pad R7-5 at (3350,2500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3506,2320) to (3540,2280) [Top layer]
+       Line at (3475,2225) to (3475,2500) [Top layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Line at (3506,2404) to (3540,2440) [Top layer]
+       Line at (3475,2225) to (3475,2500) [Top layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Line at (3506,2320) to (3506,2404) [Top layer]
+       Line at (3475,2225) to (3475,2500) [Top layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Pad CN1-17 at (3550,3000) 
+       Line at (3500,2700) to (3501,3450) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad CN1-19 at (3450,3000) 
+       Line at (3500,2700) to (3501,3450) [Top layer]
+       Calculated clearance:  10
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  5
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Pad CN1-20 at (3450,2900) 
+       Line at (3500,2700) to (3501,3450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-18 at (3550,2900) 
+       Line at (3500,2700) to (3501,3450) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Line at (3309,1798) to (4100,1800) [Bottom layer]
+       Pad U1-29 at (3650,1751) 
+       Calculated clearance:  12
+    CLEARANCE VIOLATION
+       Pad R7-6 at (3350,2600) 
+       Line at (3300,2460) to (3300,2660) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U1-18 at (3550,2351) 
+       Line at (3596,2336) to (3597,2399) [Bottom layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Pad U1-19 at (3650,2351) 
+       Line at (3596,2336) to (3640,2300) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U7-5 at (2650,2350) 
+       Line at (2527,2399) to (3000,2400) [Bottom layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad U1-43 at (4150,1951) 
+       Line at (4100,1960) to (4140,2000) [Top layer]
+       Calculated clearance:  6
+    CLEARANCE VIOLATION
+       Pad U1-1 at (4150,2051) 
+       Line at (4180,2000) to (4200,2020) [Top layer]
+       Calculated clearance:  11
+    CONNECTION TO UNCOMMITTED NODE
+       C2-A at (4745,1832) 
+    CLEARANCE VIOLATION
+       Pad U4-5 at (1648,1985) 
+       Line at (1500,1940) to (1700,1940) [Bottom layer]
+       Calculated clearance:  5
+    CLEARANCE VIOLATION
+       Line at (1401,1636) to (1830,1636) [Bottom layer]
+       Pad U4-1 at (1648,1585) 
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  6
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Line at (2790,1578) to (3422,1578) [Bottom layer]
+       Line at (1782,1546) to (3838,1546) [Bottom layer]
+       Calculated clearance:  12
+    CLEARANCE VIOLATION
+       Line at (3422,1578) to (3446,1602) [Bottom layer]
+       Line at (1782,1546) to (3838,1546) [Bottom layer]
+       Calculated clearance:  12
+    CLEARANCE VIOLATION
+       Line at (2758,1602) to (2790,1578) [Bottom layer]
+       Line at (1782,1546) to (3838,1546) [Bottom layer]
+       Calculated clearance:  12
+    CLEARANCE VIOLATION
+       Via at (3800,1700) 
+       Line at (3838,1546) to (3840,1740) [Bottom layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad U4-2 at (1648,1685) 
+       Line at (1401,1636) to (1830,1636) [Bottom layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad CN1-20 at (3450,2900) 
+       Line at (3400,2760) to (3400,2960) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3600,2420) to (3600,2940) [Top layer]
+       Pad CN1-18 at (3550,2900) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U1-18 at (3550,2351) 
+       Line at (3506,2320) to (3506,2404) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad CN1-16 at (3650,2900) 
+       Line at (3600,2420) to (3600,2940) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3700,2420) to (3700,2940) [Top layer]
+       Pad CN1-16 at (3650,2900) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-14 at (3750,2900) 
+       Line at (3700,2420) to (3700,2940) [Top layer]
+       Calculated clearance:  10
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  7
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Line at (3800,2420) to (3800,2940) [Top layer]
+       Pad CN1-14 at (3750,2900) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-12 at (3850,2900) 
+       Line at (3800,2420) to (3800,2940) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3900,2500) to (3900,2960) [Top layer]
+       Pad CN1-12 at (3850,2900) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-10 at (3950,2900) 
+       Line at (3900,2500) to (3900,2960) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U1-8 at (4150,2351) 
+       Line at (4160,2300) to (4200,2340) [Top layer]
+       Calculated clearance:  8
+    CLEARANCE VIOLATION
+       Line at (4200,2300) to (4300,2300) [Top layer]
+       Line at (4160,2300) to (4200,2340) [Top layer]
+       Calculated clearance:  8
+    CLEARANCE VIOLATION
+       Line at (4160,2260) to (4200,2300) [Top layer]
+       Line at (4160,2300) to (4200,2340) [Top layer]
+       Calculated clearance:  8
+    CLEARANCE VIOLATION
+       Line at (4160,2260) to (4200,2300) [Top layer]
+       Line at (4120,2300) to (4160,2300) [Top layer]
+       Calculated clearance:  8
+    CLEARANCE VIOLATION
+       Pad CN1-8 at (4050,2900) 
+       Line at (4000,2880) to (4040,2840) [Top layer]
+       Calculated clearance:  9
+    CLEARANCE VIOLATION
+       Pad CN1-10 at (3950,2900) 
+       Line at (4000,2880) to (4000,2940) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-8 at (4050,2900) 
+       Line at (4000,2880) to (4000,2940) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  8
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+       Line at (5000,2125) to (5000,2525) [Top layer]
+       Pad T15- at (5058,2443) 
+       Calculated clearance:  8
+    
+
+    Unconnected Pins
+    ----------------
+
+       U1-4 at (4250,2251) 
+       U1-11 at (3950,2451) 
+       U1-18 at (3550,2351) 
+       U1-35 at (3950,1751) 
+       U1-37 at (4050,1751) 
+       U1-39 at (4150,1751) 
+       U1-40 at (4250,1851) 
+       U1-41 at (4150,1851) 
+       U1-3 at (4150,2151) 
+       U1-23 at (3650,2151) 
+       U1-34 at (3850,1851) 
+       U1-36 at (3950,1851) 
+       U1-38 at (4050,1851) 
+       CN1-20 at (3450,2900) 
+       R7-6 at (3350,2600) 
+       U7-5 at (2650,2350) 
+       U3-9 at (2700,2000) 
+       U3-10 at (2600,2000) 
+       U3-11 at (2500,2000) 
+       U3-12 at (2400,2000) 
+       U3-13 at (2300,2000) 
+       U3-7 at (2600,1700) 
+       U3-6 at (2500,1700) 
+       U3-5 at (2400,1700) 
+       U4-14 at (1348,2185) 
+       U4-13 at (1348,2285) 
+       U4-8 at (1648,2285) 
+       U4-5 at (1648,1985) 
+       U4-4 at (1648,1885) 
+       U4-3 at (1648,1785) 
+       U4-2 at (1648,1685) 
+       Q1-B at (5600,1900) 
+       Q1-C at (5500,2000) 
+       Q2-C at (6075,2225) 
+       Q2-B at (5975,2125) 
+       CN6-1 at (6000,3650) 
+    
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page  9
+
+    Design Rule Check Report                                      RRTX21.PCB
+
+                                        
+
+    ========================================================================
+
+    
+    Unplaced Nodes
+    -------------
+
+       No unplaced nodes detected.
+    
+    DRC Summary
+    -----------
+
+           83 errors detected
+           36 unconnected pins detected
+            0 unplaced nodes detected
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  20:32                                                 Page 10

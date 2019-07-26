@@ -1,0 +1,692 @@
+Cami¢n
+Fecha
+     M s Ficheros 
+Cami¢n
+Fecha
+     M s Ficheros 
+Cami¢n
+Fecha
+     M s Ficheros 
+ M s Ficheros
+Modal.Sobregra
+Modal.Anexo
+ M s Ficheros
+    M s Ficheros  
+Cami¢n
+Fecha
+Cami¢n
+Fecha
+Cami¢n
+Fecha
+Use las flechas para seleccionar un fichero,
+Depr.ENTER para seleccio
+Error--NO renombr¢ fichero
+SI renombr¢ el fichero.   
+Error--NO borr¢ el fichero
+Fich
+borrado.
+ERROR--NO guard¢ directorio! 
+Direct.del fichero guardado
+Use flechas para seleccionar una opci¢n,
+ Depri.ENTER para selecc
+Depri.BARRA ESP.para ir entre Modal.de
+Anexo y Sobregrabar, Depri.ESC p/continu
+Modal.Sobregra
+Modal. Anexar 
+Depri. una tecla [A-Z] para estable.dispo.de disc
+ Depri.ESC para continua
+Depri. una tecla [A-Z] oara estable.dispo. 
+disco, Depri.ESC para continua
+Entre la nueva ruta del dispo
+ Depri.ESC para continua
+Use las flechas para selecc. una opci¢n,
+ Depri.ENTER para selecc
+Selecc.Opci¢n
+Principal    
+MM/DD
+DD/MM
+/YY        1
+Entre un n£mero (0-59) para seleccionar una demora
+Depri.ENTER p/cambiar demor
+Selecc.Opci¢n
+Entre un # (0-59) p/selecc.demora del ciclo de carg
+Depri.ENTER p/cambiar demor
+Selecc.Opci¢n
+Depri.un n£mero (1 ... 
+para selec.una v¡a
+Depri.ENTER p/usar nva.v¡a COM 
+Selecc.Opci¢n
+ ESPERE. TRATANDO DE ESTABLECER COMUNICACION CON EL   
+CONTROLADOR TPMS ....5 
+Selecc.Opci¢n
+Selecc.Opci¢n
+No pudo cargar fich.de Idioma
+Depr.BARRA ESP p/el formato, flechas p/selecc. item
+, y ENTER para continua
+Selecc.Opci¢n
+MM/DD
+DD/MM
+Falta memoria
+CONFIRME.¨Quiere borrar ciclos
+de carga de la memoria TPMS?  
+1) Reloj TPMS : 
+<inaccesible> 
+2) Ciclo prin.: 
+3) Reloj PC   : 
+Depr.1,2 ¢ 3 p/cambiar fecha
+y hora, depr. ESC para salir
+Depr. [1-4] para selecc., entre 
+m x.10 caract, depr. ESC p/salir
+Use 
+p/mover,
+a selecci.
+R‚gimen de carga £til:   
+Entre el nuevo r‚gimen de carga
+     £til del TPMS.            
+Ident.actual cam.  
+Entre nva.ident.cam.1-
+depr.ESC p/salir     
+CONFIRME ... ¨Quiere    
+CALIBRAR? 
+Ultima cal.
+(Consulte AYUDA antes de cont.) 
+Entre lectura del Hor¢metro:
+CONFIRME. ¨Quiere SALIR?      
+Reloj TPMS: 
+Reloj PC  : 
+Escoja una opci¢n:      
+1) Establ.hora TPMS c/PC
+2) Establ.hora PC c/TPMS
+3) Use hora PC, contin£e
+No puede comunicar con TPMS     
+hasta renovar la comunicaci¢n.  
+¨Quiere tratar de comunicarse   
+nuevamente?                     
+Depr.1 ¢ 2 p/establ. fecha 
+u hoja, depr.ESC p/salir
+Nombre fich.vie
+Nombre fich.nvo.
+(no entre una extensi¢n ...)  
+(.PRN asignada autom ticamente
+CONFIRME. ¨Quiere BORRAR?      
+fich
+Use 
+p/mover,
+a seleccio
+Use 
+p/mover,
+a seleccio
+Use las flechas para seleccionar una impresora,
+Depri. ENTER para seleccionar
+V¡a   :
+Use 
+p/mover,
+a seleccio
+Use las flechas p/selecc.v¡a del impresor
+Depri.ENTER para seleccionar 
+V¡a  
+L¡neas por p g. : 
+Depri.cualq.tecla para imprimir,
+o depri.ESC p/cancelar impresi¢n
+¨Quiere guardar directo
+actual de datos y disco p/ 
+la siguiente sesi¢n TPM?       
+ERROR--NO encontr¢ directori
+en el disp.de disco selec
+Depri.cualq.tecla p/continua
+¨Quiere ver datos de ciclos 
+de carga reci‚n descargado?
+Use 
+p/mover,
+a selecci.
+Compruebe conex. impresora
+Impresor apagado, fuera de servi
+desconectado o le falta papel
+Depri.cualq.tecla p/continua
+No. de p g. :
+****RESUMEN DE INFORME***** 
+INFORME COMPLETO      
+Caterpillar, Inc
+Imprimiendo el fichero
+, depri.ESC para Dejar de Imprimir.         
+Error de hardware    
+  Error del dispos.
+de disco 
+Disco protegido. Verifique el   
+disco y trate nuevamente.
+Disco seleccionado lo desconoc
+el sistema. Verifique conexi¢n
+de impul.disco y trate nuevament
+o selecc. diferente dispo.disco.
+Impul.disco no est  listo. Com-
+pruebe que disco est‚ metido 
+y la puerta cerrada
+Error al impresor o disposi
+de disco. Si imprime, verif. el 
+impresor, sino, seleccione 
+un dispo.diferente o trate otro
+disco. Falta papel al   
+impresor. Ponga papel y trate   
+nuevamente.          
+Falla general de hardware
+Abortando programa y
+regresando a DOS.
+Depri.cualq.tecla p/continua
+Descargue, registre, archive y disponga el programa
+Desc.datos de ciclo
+Transf.ciclos de carga
+Info. del controlador 
+TPMS a un fichero de  
+exportaci¢n           
+Registro de tiempo 
+Guarde en un disco los
+datos de tiempo real  
+de operaci¢n          
+<BARRA ESP p/cambiar> 
+Reg. ciclos carga: 
+Guarde en un disco los
+datos de ciclos carga 
+como se obtienen      
+<BARRA ESP p/cambiar> 
+Oper. de ficheros  
+Imprima,vea (pantalla)
+Renombre, borre ficher
+creados en TPM o      
+establezca directorio 
+Establezca programa
+Seleccione el idioma, 
+comunicaci¢n y v¡as de
+impresor, y los par - 
+metros de operaci¢n   
+Cambie info.que define usuario en TPM
+Estab.fechas y hora
+Edite tiempo de reloj 
+TPMS, fecha y hora de 
+comienzo de ciclos, o 
+reloj del sistema PC  
+Datos definen usuar
+Edite 4  reas definida
+del usuario de TPMS   
+No. de modelo      
+Edite modelo de cami¢n
+N£mero                
+R‚gimen carga £til 
+Edite r‚gimen carga   
+£til de un cami¢n     
+C¢d.Ident.de cami¢n
+Edite el No. Ident. de
+un cami¢n             
+Conf.par metros operaci¢n del TPMS 
+Unidades:      
+Cambie opciones TPMS  
+Muestre unidades en   
+m‚trico e ingl‚s.     
+<BARRA ESP p/cambiar> 
+Muestre carga £til
+Cambie opciones TPMS  
+Muestre opc.carga £til
+Pant.oper.enc.o apagad
+<BARRA ESP p/cambiar> 
+L mparas externas:
+Encienda o apage el   
+control de las l mpara
+externas              
+<BARRA ESP p/cambiar> 
+Ind. £ltima pasada
+Cambie la operaci¢n   
+de l mparas p/incluir 
+Ind. £ltima pasada    
+<BARRA ESP p/cambiar> 
+Emisi¢n autom t
+Cambie la caracter¡sti
+de emisi¢n autom tica 
+del TPMS              
+<BARRA ESP p/cambiar> 
+Vel.Baudio
+Cambie opciones TPMS  
+Vel.baudio de adquisic
+remota de datos       
+<BARRA ESP p/cambiar> 
+Muestre opcione
+Cambie opciones TPMS  
+Muestre opc.carga £til
+Opci¢n conec.o descone
+<BARRA ESP p/cambiar> 
+Examine minuciosamente fallas y diagn¢sticos intermitentes 
+Presen. activa 
+Selecc.la presentaci¢n
+Estado de la present. 
+activa de datos       
+<BARRA ESP p/cambiar> 
+C¢d. fallas
+Examine la falla      
+Muestre el diagn¢stico
+en detalle            
+Cod. intermitentes
+Examine minuciosamente
+la presentaci¢n de los
+diagn¢sticos intermi- 
+tentes                
+C¢d. estado 
+Examine minuciosamente
+el estado de la pre-  
+senta. de diagn¢sticos
+Calibre detectores del TPMS 
+Salida por el sist.de sop. TPMS  
+S¡   
+No  
+     INDIQUE SU ACEPTACION DEPRIMIENDO CUALQUIER TECLA PARA CONTINUAR      
+Despeje los ciclos carga de TPMS
+Establezca fechas y horas       
+ Editando datos definen usuario 
+No. de modelo del cami¢n        
+R‚gimen de carga £til del TPMS  
+C¢digo de Identificaci¢n cami¢n 
+Calibraci¢n de amort. del TPMS  
+Descarga de los ciclos del TPMS 
+Salida del programa TPMS        
+Diferencia entre relojes PC/TPMS
+Error de comunicaci¢n del TPMS  
+VUELVA A NOMBRAR EL FICHERO     
+BORRE EL FICHERO                
+Opci¢n de Idioma del TPM        
+Opciones de impresor del TPM    
+Imprima un fichero de datos TPM 
+Guarde la ruta del direct.ficher
+Error no v lido del directorio  
+Vea los ciclos descargados      
+Selecc. estilo del informe      
+Error del impresor              
+Establ. hora del reloj TPMS
+Estab.fecha/hora princ.cicl
+Estab.fecha y hora del PC  
+*Inscripci¢n C¢digo de Fallas del Ciclo*
+* EL - Falla de las l mparas externas  *
+* NM - Error sin importancia de memoria*
+* PS - Error del detector de presi¢n   *
+* AP - Falla anormal de presi¢n        *
+* RC - Error en la hora del reloj      *
+* BC - Error de malos ciclos de carga  *
+* XX - Para uso de Caterpillar         *
+Copyright 1991 - Caterpillar, Inc
+Medici¢n carga £til cami¢
+Por las muchas variables en recopilar y
+analizar datos de esta clase y el ries-
+go de errores inadvertidos u omisiones 
+en preparar informes de esta naturaleza
+ni Caterpillar Inc. ni los distribuido-
+res pueden ni tratan de garantizar im- 
+pl¡cita o expresamente, la veracidad   
+de este informe.                       
+                                       
+ParoVac
+ViajVac
+Cargand
+ParoCar
+ViajCar
+Descarg
+U.S.  
+M‚tric
+DES
+CON
+Use flechas para selecc.opci¢n, depri.ENTER p/revisar 
+Use flechas para cambiar opci¢n, depri.ENTER p/
+demorar la hora regist
+demorar ciclos carga  
+la v¡a del TPMS       
+impresor de salida    
+idioma utilizado      
+fecha y No. de formato
+Imprimir un fichero.       
+Ver un fichero de datos.   
+Volver a nombrar un fichero
+Borrar un fichero.         
+Establ. opciones de fichero
+Regresar al men£ principal.
+parado vac¡o 
+viajando vac¡o 
+cargand
+parado cargado
+viajando cargado
+descarg
+<inaccesible> 
+Program
+Operando 
+Sin    
+Control
+Problema al iniciar Ayuda.
+No puede encontrar ruta de datos--Ruta establ.al directorio actual
+No puede establ.ruta de datos--Ruta establ. al directorio actual.     
+No carga fichero de Idioma.  
+Este programa necesita un monitor CGA compatible.   
+Verif. conexiones de cable 
+y depr. cualq.tecla p/contin
+ESPERE. TRATANDO DE ESTABLECER COMUNICACION CON EL   
+CONTROLADOR TPMS ....5 
+L¡neas por p g.  :
+Depri.BARRA ESP p/cambiar, ENTER para confirmar o ESC p/cancelar cambios.
+Mes    :    
+D¡a    :    
+Mes no v lido!           
+Mes    :    
+D¡a    :    
+A¤o    :      
+D¡a no v lido!         
+D¡a    :    
+A¤o    :      
+Mes    :    
+A¤o no v lido!          
+A¤o    :      
+Hora   :    
+Hora no v lida!         
+Hora   :    
+Minutos:    
+Minutos no v lidos!       
+Minutos:    
+Entre la fecha del mes (1-12),
+D¡a (1-31, y el A¤o.  
+Entre la hora (0-23), y los  
+minutos (0-59),    
+Entre datos del No.de campo
+Depri.RETURN cuando ter
+Nuevo r‚g.car.£til:      
+Nva.Ident.cam.
+   Tuvo Exito la Calibraci¢n!   
+V¡a  :  
+Selecc. 66 ¢ 72 l¡neas p/p gina
+ Use BARRA ESP para cambiar. 
+TPM-
+F1-Ayuda  ESC-Previa  Teclas V lidas:  Home,End  PgUp, PgDn  
+espere por favor ... Leyendo datos del disco.                                   
+1a.l¡nea de datos. Use la tecla FLECHA ABAJO, PgDn o ESC p/regresar a men£ anter
+fin de datos. Use la tecla FLECHA ARRIBA, PgUp o ESC p/regresar a men£ anterior.
+TOTALS
+MINIMO 
+MAXIMO 
+PROMEDI
+"Producci¢n (
+M‚tric
+U.S.
+ Ton / Hora):  
+"Producci¢n (
+M‚tric
+U.S.
+ Ton /  
+Kil¢metro
+Mill
+No. total de cargas
+Gama 
+de
+No. de"
+(en tonela)
+(en tons)
+Total
+Carga
+"Fecha y hora cuando cre¢ fich
+"Modelo Cami¢n
+"Iden.Cami¢
+Carga £til espera
+Datos definen usuario
+Fecha
+Tiem
+Unida
+ModOper
+Veloc
+FI
+FD
+PI
+PD
+Fallas           Estado     Intermitentes"
+(km/h)"
+(kPa)
+(kPa)
+(kPa)
+(kPa)
+(mph)
+lb/"2
+lb/"2
+lb/"2
+lb/"2
+"Fecha y hora que cre¢ fichero
+Modelo cami¢n:
+Iden.cami¢n
+Lectura del hor¢metro:  
+Carga £til espe
+Datos definen usuari
+Princ. ciclo: 
+Tiempo desc.dato
+Unidades siste
+M‚trico
+U.S."
+Carga  
+Ciclo  
+Ciclo  
+Carga  
+Vac¡o  
+Vac¡o  
+Vac¡o  
+Carga  
+Cargado
+Cargado
+Cargado
+Fallas *
+Princip
+Ciclo  
+Fecha  
+Hora   
+Altura 
+Viaje  
+Viaje  
+Parado 
+Tiempo 
+Parado 
+Viaje  
+Viaje  
+ENPARBxx
+Cambie 
+<N/A>
+Tiempo 
+No.    
+Tiempo 
+<N/A>  
+<N/A>  
+Tiempo 
+Dist.  
+Tiempo 
+Tiempo 
+Tiempo 
+Dist.  
+LMSPCCxx
+Interru
+(tonel)
+(min.) 
+(km)   
+(min.) 
+(min.) 
+(min.) 
+(min.) 
+(km)   
+(ton)  
+(min.) 
+(milla)
+(min.) 
+(min.) 
+(min.) 
+(min.) 
+(milla)
+Princip
+Descargar ciclos de carga     
+Depri.ESC p/ABORTAR descarg
+Quedan fiche
+ESC deprimida. Espere hasta  
+que no queden ficheros.       
+Descarga completada!
+Datos guard.fichero
+Depri.cualq.tecla p/continua
+ ESC deprimida. Descarga abor-
+tada con ‚xito.               
+Error al escribir fihero!      
+Operaci¢n sin terminar. 
+  Error de comunicaci¢n TPMS
+Desc. datos incompleta.
+Error -
+no se borr¢.
+Fiche
+borrado.    
+Fiche
+sin borrar. 
+Depri.cualq.tecla p/continua
+No hay ciclos de carga guar
+dados en la memoria del TPMS.
+No habr  descarga de datos!   
+Depri.cualq.tecla p/continua
+Escrito por-Brian Anderson, Greg Schumacher 
+Version 1.1
+Medici¢n carga £til cami¢
+Copyright 1991 CATERPILLAR INC. - All Rights Reserved
+DEPRI.CUALQ.TECLA P/CONTI
+Medici¢n carga £til cami¢
+ESPERE POR FAVOR. TRATANDO DE ESTABLECER COMUNICACION CON CONTROL TPMS
+  The  TRUCK PAYLOAD MEASUREMENT PROGRAM  and information therein  (PROGRAM)  
+  are proprietary to Caterpillar Inc.,  Peoria, Illinois, U.S.A., and/or its  
+  subsidiaries  (CATERPILLAR).   PROGRAM  is  licensed  only to  CATERPILLAR  
+  dealers  (DEALERS)  under  terms  of   "Agreement  for  Personal  Computer  
+  Programs"  including:   DEALER  may  transfer whole  PROGRAMS to  selected  
+  Customers;  provided all  notices are  included.   DEALER and  Customer by  
+  accepting  PROGRAM, agree to hold program in confidence and that  PROGRAM,  
+  or any part, shall not be  transferred to, disclosed to, or used by others  
+  without prior written authorization.                                        
+  CATERPILLAR may terminate the license and secure return of  PROGRAM or any  
+  part, and any copies thereof, at any time.                                  
+  CATERPILLAR   MAKES  NO  EXPRESS  WARRANTIES  AND  DISCLAIMS  ALL  IMPLIED  
+  WARRANTIES,  INCLUDING   MERCHANTABILITY  AND  FITNESS  FOR  A  PARTICULAR  
+  PURPOSE,  REGARDING  PROGRAM.  CATERPILLAR SHALL HAVE NO LIABILITY, IN LAW  
+  OR EQUITY,  FOR DAMAGES,  CONSEQUENTIAL OR OTHERWISE,  ARISING FROM USE OF  
+  PROGRAM AND RELATED MATERIALS OR ANY PART THEREOF.
+Copyright 1991 CATERPILLAR INC. - All Rights Reserved
+  FICHERO   
+   EDITAR   
+ CONFIGURAR 
+   ENFOCAR  
+  CALIBRAR  
+   SALIR   
+Organ. del Prog. de Medici¢n util Cam. 
+ 1) Reg.de tiempo demora
+ 4) Impresor
+ 2)Reg.demora ciclo carga
+ 5) Idioma   
+ 3)Via de comunicaciones
+ 6) Formato de fecha y no. 
+Segundos
+Segundos
+ COM :
+F1-Ayuda ESC-Men£ Principal   
+  Imprimir  
+    Ver     
+  Renombrar 
+   Borrar   
+  Organizar 
+Men£ Principa
+  Descarga de Datos 
+Reg. de Tiempo Real 
+Reg. Ciclos de Carga
+ Ficheros Misc.
+Mod.Fichero E/S:  
+Dis.Impul:
+Dir.Ficheros de Datos
+Oper. Fichero Medici¢n Carga Util de Cam.
+F1-Ayuda ESC-Men£ Principal   
+Enfoque Diag. Medici¢n Carga Util de Cam.
+TPM-4d
+C¢digos de Estado:
+ reservado                                     
+ reservado                                     
+ estado del interruptor de levantamiento caja  
+ estado de la se¤al del detector transmisi¢n   
+ estado del interruptor de neutral             
+ reservado                                     
+ reservado                                     
+ reservado                                     
+ Estado         
+Deprima cualquier tecla para regesar a visual. est ndar
+Enfoque diag. medicion Carga Util de Cam.
+TPM-4c
+C¢digos Intermitentes: 
+ Presi¢n anormal intermitente/cil. de susp - del/izq  
+ Presi¢n anormal intermitente/cil. de susp - del/der  
+ Presi¢n anormal intermitente/cil. de susp - tras/izq 
+ Presi¢n anormal intermitente/cil. de susp - tras/der 
+ Detector - presi¢n intermitente/cil. de susp-del/izq 
+ Detector - presi¢n intermitente/cil. de susp-del/der 
+ Detector - presi¢n intermitente/cil. de susp-tras/izq
+ Detector - presi¢n intermitente/cil. de susp-tras/der
+ Reloj intermitente                                   
+ Sist.organizando/almacenamiento intermitente de carga
+ Reservado                                            
+ Reservado                                            
+ Circuito abierto,luz verde/corto cir. a tierra inter.
+ Corto circuito inter. de la luz verde de la bater¡a  
+ Circuito abierto,luz roja/corto cir. a tierra inter. 
+ Corto circuito inter. de la luz roja de la bater¡a   
+ Intermitente   
+Deprima cualquier tecla para regesar a vis. est ndar   
+ Falla          
+Enfoque Diag. Medicion Carga Util de Cam.
+TPM-4b
+C¢digos Fallas: 
+ Falla presi¢n anormal,cil de susp-del/izq
+ Falla presi¢n anormal,cil de susp-del/der
+ Falla presi¢n anormal,cil de susp-tras/iz
+ Falla presi¢n anormal,cil de susp-tras/de
+ Falla det. de presi¢n,cil susp del/izq   
+ Falla det. de presi¢n,cil susp del/der   
+ Falla det. de presi¢n,cil susp tras/izq  
+ Falla det. de presi¢n,cil susp tras/der  
+ Fall del reloj (de tiempo horaio)        
+ Sist. organ./falla de almacenamiento car.
+ Reservado                                
+ Reservado                                
+ Cir. abierto luz verde/corto conexi¢n tierra
+ Cir. de la bater¡a abierto, luz verde    
+ Cir. abierto,luz roja/corto conex. tierra 
+ Cir. de la bater¡a abierto, luz roja     
+Deprima cualquier tecla para regresar a visual. est nda
+  FICHERO   
+Modelo Camion:
+Iden Cam.
+Regimen carga  
+Tiemp
+Prin.ciclo
+ datos:
+Fallas : 
+l mp externa  
+mem. vol til  
+presi¢n detec 
+presi¢n anor. 
+error reloj   
+cicolo mal/car
+reservado     
+reservado     
+Peso de carga £til: 
+Tiempo viaje vac¡o: 
+Distan. de viaje :  
+Tiempo de parada :  
+Tiempo de carga  :  
+Tiempo parado car:  
+Tiempo de viaje  :  
+Distancia de via :  
+Cont.:
+tons. 
+millas
+millas
+ Modal. Operacion:   
+Presi¢n amort.(lb/"2)
+Frent
+Izq.  
+Der.  
+Post.
+Vel. en MPH:  
+Fallas        
+     Estado       
+Intermitentes 
+F1-Ayud

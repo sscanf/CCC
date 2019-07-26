@@ -1,0 +1,704 @@
+MM/DD
+DD/MM
+/YY        1
+Enter a number (0..59) to select real time delay, 
+Press ENTER to change delay
+Select Option
+Enter a number (0..59) to select load cycle delay, 
+Press ENTER to change delay
+Select Option
+Press a number key (1..
+to select a port, 
+Press ENTER to use new COM port
+Select Option
+ PLEASE WAIT.  ATTEMPTING TO ESTABLISH COMMUNICATIONS 
+WITH TPMS CONTROL....5 
+Select Option
+Select Option
+Unable to load Language file.
+Press SPACE to toggle format, arrows to choose item
+, and ENTER to continue
+Select Option
+MM/DD
+DD/MM
+Out of Memory
+Hopper/Conveyer
+Shovel/Loader  
+Page Number: 
+S U M M A R Y    R E P O R T
+F U L L    R E P O R T
+Caterpillar, Inc
+Now printing the file 
+, Press ESCAPE to Stop Printing.            
+TPM-
+F1 - Help   ESC - Previous   Valid Keys:  Home,End  PgUp,PgDn
+please wait... Reading data from disk.                                          
+top of data... Use DN_ARROW or PG_DN key, or ESCape to return to previous menu. 
+end of data... Use UP_ARROW or PG_UP key, or ESCape to return to previous menu. 
+TOTALS
+MINIMUM
+MAXIMUM
+AVERAGE
+"Production (
+Metric
+U.S.
+ Tons / Hour): 
+"Production (
+Metric
+U.S.
+ Tons / 
+Kilometer
+Mile
+Total No. of Loads:
+Range
+of
+No. of"
+(in tonnes)
+(in tons)
+Total
+Loads
+"File Creation Date and Time: 
+"Truck Model: 
+"Truck ID: 
+"Target Payload: 
+"User Defined Data:  
+"Date
+Time
+Units
+OpMode"
+Speed
+LF
+RF
+LR
+RR
+Faults            Status    Intermittents"
+(km/h)"
+(kPa)
+(kPa)
+(kPa)
+(kPa)
+(mph)
+(PSI)
+(PSI)
+(PSI)
+(PSI)
+"File Creation Date and Time: 
+"Truck Model: 
+"Truck ID: 
+"Service Meter Reading: 
+Target Payload:
+"User Defined Data: 
+"Cycle Start: 
+"Download Time: 
+System Units: 
+Metric"
+U.S."
+Load   
+Cycle  
+Cycle  
+Load   
+Empty  
+Empty  
+Empty  
+Load   
+Loaded 
+Loaded 
+Loaded 
+Faults *
+Start  
+Cycle  
+Date   
+Time   
+Weight 
+Travel 
+Travel 
+Stopped
+Time   
+Stopped
+Travel 
+Travel 
+ENPARBxx
+Toggle 
+<N/A>
+Time   
+No.    
+Time   
+<N/A>  
+<N/A>  
+Time   
+Dist.  
+Time   
+Time   
+Time   
+Dist.  
+LMSPCCxx
+Switch 
+(tonne)
+(min)  
+(km)   
+(min)  
+(min)  
+(min)  
+(min)  
+(km)   
+(ton)  
+(min)  
+(mile) 
+(min)  
+(min)  
+(min)  
+(min)  
+(mile) 
+"Start"
+Downloading Load Cycle Data...
+Press ESC to ABORT Download
+records left
+ESC key pressed.  Please wait
+til there are no records left.
+Download Successful!
+Data stored in file
+Press any key to continue...
+ ESCape key pressed.  Download
+function aborted successfully.
+Error encountered writing file!
+Operation not completed.
+    TPMS Communication Error
+Download not completed.
+Error -
+not deleted.
+ File
+was deleted.
+ File
+not deleted.
+Press any key to continue...
+There are currently no load
+cycles stored in TPMS memory.
+Download will not be executed!
+Press any key to continue...
+Lines Per Page:   
+Press SPACE bar to toggle, ENTER to confirm, or ESCape to cancel changes.
+Month  :    
+Day    :    
+Invalid Month Assignment!
+Month  :    
+Day    :    
+Year   :      
+Invalid Day Assignment!
+Day    :    
+Year   :      
+Month  :    
+Invalid Year Assignment!
+Year   :      
+Hour   :    
+Invalid Hour Assignment!
+Hour   :    
+Minute :    
+Invalid Minute Assignment!
+Minute :    
+Enter the date's Month (1-12),
+Day (1-31), then Year.
+Enter the time's Hour (0-23),
+then Minute (0-59).
+Enter data for field number
+Press RETURN when done.
+New Payload Rating:      
+New Truck ID: 
+    Calibration Successful!     
+Port  : 
+Select 66 or 72 lines per page.
+ Use the SPACE bar to toggle.
+CONFIRM...Do you want to clear
+loads cycles from TPMS memory?
+1) TPMS Clock : 
+<unavailable> 
+2) Cycle Start: 
+3) PC Clock   : 
+Press 1, 2 or 3 to edit date
+and time, press ESC to exit.
+Press key [1-4] to select, enter
+10 chars max, press ESC to exit.
+Use 
+to move,
+to select.
+Current Payload Rating:  
+Enter new value for TPMS target
+        payload rating.        
+Current Truck ID:  
+Enter new Truck ID, 1-
+or press ESC to exit.
+CONFIRM...Do you want to
+CALIBRATE?
+Last Cal:  
+(Consult HELP before proceeding)
+Enter Service Meter Reading:
+CONFIRM...Do you want to EXIT?
+TPMS Clock: 
+PC Clock  : 
+Please choose an option:
+1) Set TPMS Time with PC
+2) Set PC Time with TPMS
+3) Use PC Time, continue
+Unable to communicate with TPMS 
+until communications are re-    
+started.  Do you want to restart
+communications and try again?   
+Press 1 or 2 to set date or
+time, press ESC to exit.
+Old File Name: 
+New File Name:  
+(do not enter an extension...)
+(.PRN assigned automatically.)
+CONFIRM...Do you want to DELETE
+file
+Use 
+to move,
+to select.
+Use 
+to move,
+to select.
+Use arrow keys to select a printer for output, 
+Press the ENTER key to choose
+Port  :
+Use 
+to move,
+to select.
+Use arrow keys to select a printer port, 
+Press the ENTER key to choose
+Port 
+Lines Per Page  : 
+Press any key to start printing,
+or press ESC to cancel printing.
+Do you want to save the
+current Drive and Data File
+Directory for next TPM session?
+ERROR -- Directory NOT found
+  on selected disk drive.
+Press any key to continue...
+Do you want to view the Load
+Cycle Data just downloaded?
+Use 
+to move,
+to select.
+Check printer connections.
+Printer is either off, off-line,
+disconnected or out of paper.
+Press any key to continue...
+File TPMMODEL.TXT not found.  
+Error in File TPMMODEL.TXT
+Truck:
+Date:
+    More Files    
+Truck:
+Date:
+    More Files    
+Truck:
+Date:
+    More Files    
+ More Files  
+Overwrite Mode
+Append Mode
+ More Files  
+    More Files    
+Truck:
+Date:
+Truck:
+Date:
+Truck:
+Date:
+Use cursor control keys to highlight a file,
+ Press ENTER to select. 
+Error -- File NOT renamed!
+File successfully renamed.
+Error -- File NOT deleted!
+File
+deleted.
+ERROR -- Directory NOT saved!
+ Data File Directory saved.
+Use arrow keys to select a setup option,
+ Press ENTER to select. 
+Hit SPACE to toggle between Append and
+ Overwrite modes, Press ESC to continue.
+Overwrite Mode
+Append Mode   
+Press a key [A..Z] to set the default disk device
+, Press ESC to continue.
+Press a key [A..Z] to set the default disk 
+device, Press ESC to continue.
+Enter the new path for device
+, Press ESC to continue.
+Use arrow keys to select a setup option,
+ Press ENTER to select. 
+Select Option
+Main Menu    
+Hardware Device Error
+  Disk Device Error
+on drive 
+Disk is Write-Protected.  Please
+check disk and try again.
+Disk drive selected unknown to
+the system.  Please check disk
+drive connections and try again,
+or select different disk device.
+Disk Drive not ready.  Check to
+see that disk is inserted and
+drive door is shut.
+Error writing to printer or
+disk device.  If printing, check
+printer status - otherwise,
+select a different drive or try
+a different floppy disk.
+Printer is out of paper.  Please
+reload and try again.
+General Hardware failure.
+Aborting program and
+returning to DOS.
+Press any key to continue...
+Do Downloads, Logs, File Operations & Program Setup
+Download Cycle Data
+Transfer Load Cycle   
+Information from the  
+TPMS Control to an    
+Export file           
+Real Time Log:     
+Keep a disk record of 
+real time operating   
+information           
+<Hit SPACE to Toggle> 
+Load Cycle Log:    
+Keep a disk record of 
+Load Cycle Information
+as it occurs          
+<Hit SPACE to Toggle> 
+File Operations    
+Print, View (screen), 
+Rename, Delete data   
+files created by TPM  
+or Setup Directory    
+Program Setup      
+Select Language,      
+Communications and    
+Printer Ports, and    
+Operating Parameters  
+Change TPM User-Definable Information
+Set Dates & Times  
+Edit TPMS Real Time   
+Clock, Cycle Start    
+date and time, or     
+PC System Clock       
+User Defined Data  
+Edit TPMS's four User 
+Defined Data Areas    
+Model Number       
+Edit a truck's Model  
+Number                
+Payload Rating     
+Edit a truck's Payload
+Rating                
+Truck ID Code      
+Edit a truck's        
+Identification Number 
+Configure TPMS Operating Parameters
+Units:         
+Change TPMS's default 
+Display Units between 
+U.S. and Metric       
+<Hit SPACE to Toggle> 
+Display Payld:    
+Change TPMS's default 
+Display Payload Option
+POD display on or off 
+<Hit SPACE to Toggle> 
+External Lamps:   
+Turn the control of   
+the External Lamps on 
+or off                
+<Hit SPACE to Toggle> 
+Final Pass Ind:   
+Change the operation  
+of lamps to include   
+Final Pass Indication 
+<Hit SPACE to Toggle> 
+Auto Broadcast:
+Change TPMS's         
+Automatic Broadcast   
+feature               
+<Hit SPACE to Toggle> 
+Baud Rate:
+Change TPMS's Default 
+Baud Rate for remote  
+data acquisition      
+<Hit SPACE to Toggle> 
+Display Faults:
+Change TPMS's default 
+POD Display Faults    
+Option on or off      
+<Hit SPACE to Toggle> 
+Weigh Method:
+Change weigh method   
+Hopper/Conveyer or    
+Shovel/Loader.        
+<Hit SPACE to Toggle> 
+Examine Status, Faults & Intermittent Diagnostics in Detail
+Active Display:
+Select the display    
+status of the Active  
+Data Display          
+<Hit SPACE to Toggle> 
+Fault Codes
+Examine the Fault     
+Diagnostic Display    
+in detail             
+Intermittent Codes
+Examine the           
+Intermittent          
+Diagnostic Display    
+in detail             
+Status Codes
+Examine the Status    
+Diagnostic Display    
+in detail             
+Calibrate TPMS Strut Sensors
+Exit from the TPMS Support System
+Yes  
+No  
+       INDICATE ACCEPTANCE OF TERMS BY PRESSING ANY KEY TO CONTINUE        
+Clear TPMS Load Cycle Data      
+Set Dates and Times             
+   Editting User Defined Data   
+Truck Model Number              
+TPMS Payload Rating             
+Truck Identification Code       
+TPMS Strut Calibration          
+TPMS Download Cycle Data        
+Exit TPMS Program               
+PC/TPMS Clock Difference        
+TPMS Communication Error        
+RENAME FILE                     
+DELETE FILE                     
+TPM Default Language            
+TPM Default Printer             
+Print A TPM Data File           
+Save Data File Directory Path   
+Invalid Directory Error         
+View Downloaded Cycle Data      
+Select Data Report Style        
+Printer Error                   
+Set TPMS Real Time Clock   
+Set Cycle Start Date & Time
+Set PC System Date & Time  
+*       Cycle Fault Code Legend        *
+* EL - External Lamps Fault            *
+* NM - Nonvolatile Memory Error        *
+* PS - Pressure Sensor Error           *
+* AP - Abnormal Pressure Fault         *
+* RC - Real Time Clock Error           *
+* BC - Bad Load Cycle Data Error       *
+* XX - Reserved for Use by Caterpillar *
+Copyright 1989 - Caterpillar, Inc
+Truck Payload Measurement
+Due to the many variables involved in  
+collecting and analyzing data of this  
+type and the consequent possibility of 
+inadvertent errors or omissions in     
+preparing reports of this character,   
+neither Caterpillar Inc. nor the dealer
+can or does represent or warrant,      
+expressly or implicitly, the accuracy  
+of this report.                        
+StopEmp
+TravEmp
+Loading
+StopdLd
+TravlLd
+Dumping
+U.S.  
+Metric
+S/L
+H/C
+OFF
+ON 
+Use arrow keys to select option, Press ENTER to revise
+Use arrow keys to change option, Press ENTER to
+real time log delay   
+load cycle log delay  
+TPMS serial port      
+printer for output    
+language displayed    
+date and number format
+Print a data file.         
+View a data file.          
+Rename a data file.        
+Delete a data file.        
+Setup file options.        
+Return to the Main Menu.   
+stopped empty
+traveling empty
+loading
+stopped loaded
+traveling loaded
+dumping
+<unavailable> 
+Program
+Operating
+Without
+Control
+Problem initializing Help.
+Unable to find datapath.def -- Data Path set to current directory.
+Unable to set default data path -- Data Path set to current directory.
+Unable to load Language file.
+This software needs a CGA compatible display to run.
+Check cable connections and
+Press any key to continue...
+PLEASE WAIT.  ATTEMPTING TO ESTABLISH COMMUNICATIONS 
+WITH TPMS CONTROL....5 
+Written By - Brian Anderson, Greg Schumacher
+Version 8.0
+Truck Payload Measurement
+Copyright 1989 CATERPILLAR INC. - All Rights Reserved
+PRESS ANY KEY TO CONTINUE
+Truck Payload Measurement
+PLEASE WAIT.  ATTEMPTING TO ESTABLISH COMMUNICATIONS WITH TPMS CONTROL
+  The  TRUCK PAYLOAD MEASUREMENT PROGRAM  and information therein  (PROGRAM)  
+  are proprietary to Caterpillar Inc.,  Peoria, Illinois, U.S.A., and/or its  
+  subsidiaries  (CATERPILLAR).   PROGRAM  is  licensed  only to  CATERPILLAR  
+  dealers  (DEALERS)  under  terms  of   "Agreement  for  Personal  Computer  
+  Programs"  including:   DEALER  may  transfer whole  PROGRAMS to  selected  
+  Customers;  provided all  notices are  included.   DEALER and  Customer by  
+  accepting  PROGRAM, agree to hold program in confidence and that  PROGRAM,  
+  or any part, shall not be  transferred to, disclosed to, or used by others  
+  without prior written authorization.                                        
+  CATERPILLAR may terminate the license and secure return of  PROGRAM or any  
+  part, and any copies thereof, at any time.                                  
+  CATERPILLAR   MAKES  NO  EXPRESS  WARRANTIES  AND  DISCLAIMS  ALL  IMPLIED  
+  WARRANTIES,  INCLUDING   MERCHANTABILITY  AND  FITNESS  FOR  A  PARTICULAR  
+  PURPOSE,  REGARDING  PROGRAM.  CATERPILLAR SHALL HAVE NO LIABILITY, IN LAW  
+  OR EQUITY,  FOR DAMAGES,  CONSEQUENTIAL OR OTHERWISE,  ARISING FROM USE OF  
+  PROGRAM AND RELATED MATERIALS OR ANY PART THEREOF.
+Copyright 1989 CATERPILLAR INC. - All Rights Reserved
+    FILE    
+    EDIT    
+ CONFIGURE  
+    ZOOM    
+ CALIBRATE  
+    EXIT   
+Truck Payload Measurement Program Setup
+ 1) Real Time Log Delay 
+ 4) Printer 
+ 2) Load Cycle Log Delay 
+ 5) Language 
+ 3) Communications Port 
+ 6) Date and Number Format 
+Seconds:
+Seconds:
+ COM :
+F1 - Help   ESC - Main Menu   
+   Print    
+    View    
+   Rename   
+   Delete   
+   Setup    
+  Main Menu  
+   Download Data    
+   Real Time Log    
+   Load Cycle Log   
+  Misc. Files  
+ File I/O Mode:   
+ Drive:   
+ Data File Directory:
+Truck Payload Measurement File Operations
+F1 - Help   ESC - Main Menu   
+Truck Payload Measurement Diagnostic Zoom
+TPM-4d
+  Status Codes:   
+ reserved                                      
+ reserved                                      
+ bed raise switch status                       
+ transmission sensor signal status             
+ neutral switch status                         
+ reserved                                      
+ reserved                                      
+ reserved                                      
+ Status         
+ Press any key to return to the standard display.      
+Truck Payload Measurement Diagnostic Zoom
+TPM-4c
+  Intermittent Codes:  
+ Left Front abnormal pressure intermittent            
+ Right Front abnormal pressure intermittent           
+ Left Rear abnormal pressure intermittent             
+ Right Rear abnormal pressure intermittent            
+ Left Front pressure sensor intermittent              
+ Right Front pressure sensor intermittent             
+ Left Rear pressure sensor intermittent               
+ Right Rear pressure sensor intermittent              
+ real time clock intermittent                         
+ system setting / load storage intermittent           
+ reserved                                             
+ reserved                                             
+ green lamp open / ground short intermittent          
+ green lamp circuit battery short intermittent        
+ red lamp open / ground short intermittent            
+ red lamp circuit battery short intermittent          
+ Intermittents  
+Press SPACE to clear faults or any key to return to the standard display
+ Faults         
+Truck Payload Measurement Diagnostic Zoom
+TPM-4b
+  Fault Codes:  
+ Left Front abnormal pressure fault       
+ Right Front abnormal pressure fault      
+ Left Rear abnormal pressure fault        
+ Right Rear abnormal pressure fault       
+ Left Front pressure sensor fault         
+ Right Front pressure sensor fault        
+ Left Rear pressure sensor fault          
+ Right Rear pressure sensor fault         
+ real time clock fault                    
+ system setting / load storage fault      
+ reserved                                 
+ reserved                                 
+ green lamp circuit open / ground short fault
+ green lamp circuit battery short fault   
+ red lamp circuit open / ground short fault
+ red lamp circuit battery short fault     
+ Press any key to return to the standard display.      
+    FILE    
+Truck Model  :
+ID:
+Payload Rating:
+Time:
+Weigh Method: 
+Cycle Data
+ Start 
+ Faults: 
+ externl lamp 
+ nvolatil mem 
+ pressr sensr 
+ abnorm press 
+ rt clock err 
+ bad ld cycle 
+ reserved     
+ reserved     
+ Payload Weight    :
+ Empty  Travel Time:
+        Travel Dist:
+        Stop   Time:
+ Loading Time      :
+ Loaded Stop   Time:
+        Travel Time:
+        Travel Dist:
+Count:
+tons  
+miles 
+miles 
+   Operating Mode:   
+Strut Pressure (psi):
+Front
+Left  
+Right 
+Rear 
+Speed in MPH :
+Faults        
+      Status      
+Intermittents 
+F1-Help

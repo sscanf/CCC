@@ -1,0 +1,57 @@
+
+
+    Bill of Materials                                           RRTX21CP.PCB
+
+                                        
+
+    Quantity  Type              Value             Ref Designators
+    ========================================================================
+
+         7                      0.1               C13,C14,C15,C16,C17,C18,
+                                                  C26
+         3                      1                 C1,C7,C12
+         2                      1K                R8,R15
+         1                      1N4007            D5
+         4                      1N4148            D1,D2,D3,D4
+         4                      1uF               C20,C22,C23,C24
+         4                      2K2               R1,R2,R3,R4
+         4                      4K7               R9,R16,R17,R18
+         1                      4.7               C27
+         6                      10K               R6,R7,R10,R11,R12,R20
+         1                      16 Mhz            XT1
+         2                      33                C2,C3
+         2                      100               R13,R14
+         2                      680               C4,C6
+         1                      680p              C25
+         1                      2000uF            C21
+         1                      7805              U7
+         1                      ROJO              LED1
+         2    16V8                                U2,U3
+         1    27C512                              M1
+         1    7404                                U6
+         1    DB15F ACODADO                       CN1
+         1    DS1220Y                             M2
+         1    DS1245Y                             M3
+         1    MAX-238                             U8
+         1    MEMORY CARD                         CN4
+         1    MOLEX 2 P-M                         JP1
+         1    MOLEX 6 PIN-M                       CN2
+         1    MOLEX 30 P-M                        CN3
+         1    PD70320L-8        PD70320L-8        U1
+         1    ULN2803                             U5
+    
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    11-Mar-80  21:41                                                 Page  1

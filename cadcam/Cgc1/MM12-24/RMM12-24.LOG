@@ -1,0 +1,91 @@
+     TANGO-ROUTE PLUS STATISTICS LOG
+        LOG FILENAME:  RMM12-24.LOG
+        DATE/TIME:  Mon Mar 03 04:17:19 1980
+
+     Filename Specifications:
+        Input  .PCB file:  MM12-24.PCB
+        Output .PCB file:  RMM12-24.PCB
+        Output .LOG file:  RMM12-24.LOG
+        Setup  .SET file:  G:\RACC\MM12-24.SET
+
+     PCB Layer Assignments:
+        Top:      Horizontal routes
+        Bottom:   Vertical routes
+        Mid 1:    (disabled)
+        Mid 2:    (disabled)
+        Mid 3:    (disabled)
+        Mid 4:    (disabled)
+        Mid 5:    (disabled)
+        Mid 6:    (disabled)
+        Mid 7:    (disabled)
+        Mid 8:    (disabled)
+
+     Routing Parameters:
+        Routing Grid:       20 mils
+        Routing Line Width: 10 mils
+        Routing Clearance:  10 mils
+        Via Diameter:       40 mils
+        Via Hole Diameter:  20 mils
+
+        Pad-to-Pad DRC:     10 mils
+        Pad-to-Line DRC:    10 mils
+        Line-to-Line DRC:   10 mils
+
+     Reading PCB file
+
+     Processing pads
+
+     Processing lines
+
+     Processing polygons
+
+     Processing text
+
+     Processing keepouts
+
+     Processing polygons
+
+     Optimizing pre-routed lines
+
+     Optimizing nets
+
+     Routing Performance:
+                               Routes   Percentage       Time in    Total
+        Pass Title          Completed    Completed          Pass     Time
+
+        Pre-routed signals:         0           0%          0:02     0:02
+        Wide line routing:          0           0%      disabled
+        Horizontal routes:         25          22%          0:01     0:03
+        Vertical routes:           58          51%          0:02     0:05
+        L routes (1 via):          92          82%          0:04     0:09
+        Z routes (2 vias):        101          90%          0:05     0:14
+        C routes (2 vias):        101          90%          0:02     0:16
+        Any node (2 vias):        105          93%          0:05     0:21
+        Maze routes:              110          98%          0:28     0:49
+        Any node (maze routes):   111          99%          0:20     1:09
+        Route clean-up:            27 segs removed          0:09     1:18
+        Via minimization:          35 vias removed          0:02     1:20
+
+     Net list analysis:
+
+        Net not entirely routed:  D3
+
+            0   U1-12
+
+            1   CN2-7               
+
+
+     Final Board Statistics:
+
+        Total pins (in input PCB file):     179
+        Equivalent 16 pin IC's (EIC's):    11.1
+        Area on PCB (square inches):        8.1
+        Density (sq inches per EIC):       0.72
+        Vias added:                          73
+        Completed routes:                   111  ( 99%)
+        Non-completed routes:                 1  (  1%)
+
+        Total execution time:              1:22
+
+     Tango-Route PLUS  V2.02 
+     Copyright (C) 1988-91  ACCEL Technologies, Inc.  All rights reserved.

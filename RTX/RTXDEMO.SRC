@@ -1,0 +1,2328 @@
+        NAME RTX
+;******************************************************************************
+;*                                                                            *
+;* NOMBRE       : RTX21DSP.SRC                                                *
+;* DESCRIPCION  : Software controlador display consola coche.                 *
+;* LENGUAJE     : Assembler motorola 68H705/C4/C8                             *
+;* EDITOR       : NE.COM                                                      *
+;* OBSERVACIONES:                                                             *
+;*                                                                            *
+;*                                                                            *
+;******************************************************************************
+;
+; DEFINICION DE LOS PORTS
+porta   equ 00h
+portb   equ 01h
+portc   equ 02h
+portd   equ 03h
+pca     equ 04h
+pcb     equ 05h
+pcc     equ 06h
+pcd     equ 07h
+mr      equ 0ah                 ;miscellaneous register
+
+
+
+;============================= SEGMENTO DE RAM ============================
+BORRA   equ 0000h       ;000eh para GRID
+
+scdat   equ 0011h       ;sERIAL cOMUNICATIONS dATA rEGISTER
+sccr1   equ 000eh       ;sERIAL cOMUNICATION rEGISTER 1
+sccr2   equ 000fh       ;sERIAL cOMUNICATION rEGISTER 2
+scsr    equ 0010h       ;sERIAL COMUNICATION sTATUS rEGISTER
+baud    equ 000dh       ;bAUD rATE rEGISTER
+tcr     equ 0012h       ;tIMER cONTROL rEGISTER
+tsr     equ 0013h       ;tIMER sTATUS rEGISTER
+icr     equ 0014h
+icr1    equ 0015h
+ocr     equ 0016h
+ocr1    equ 0017h
+ccr     equ 0018h
+ccr1    equ 0019h
+entry   equ 0100h       ;direccion comienzo rom
+optreg  equ 0fdfh       ;option register
+tcrh    equ 0018h       ;timer count register (high)
+tcrl    equ 0019h       ;timer count register (low)
+largo   equ 00055
+                        org 50h
+cnt     res 1
+CntH    res 1
+CntL    res 1
+sava    res 1
+savx    res 1
+CmdDsp  res 1
+cont    res 1
+var     res 1
+atrib   res 1
+lmem    res 1
+BUFMEC  RES 3
+hmem    res 1
+divers  res 1   ;direcciona bloques en printf
+keyb    res 1   ;exploracio teclat
+time    res 1   ;bucle de espera de la rutina "tems", al llamar x debe cargarse con num. de milisegundos
+stat    res 1   ;funcio en proces: bit 0=entrada num.mecanic
+                ;                   bit 1=lliure
+                ;                   bit 2=servei
+                ;                   bit 3=despla€ament
+                ;                   bit 4=ocupat
+                ;                   bit 5=aturat
+                ;                   bit 6=anul-la
+                ;                   bit 7=proces intern o pendent de ack
+tim     res 1
+tim1    res 1
+flag    res 1
+tim4    res 1
+contx   res 1   ;puntero (x) con numeros entrados en MECANIC
+lineaL  res 1
+lineaH  res 1
+savchar res 1
+dirnum  res 1
+;==============================================================================
+
+                           org entry    ;comienza el programa
+
+;------------------------- PROGRAMACION DE LOS PORTS --------------------------
+
+        sei
+
+        lda #$FF
+        STA pca
+
+        lda #$ff
+        STA pcb
+
+        lda #$f0
+        STA pcc
+
+;------------------------------------------------------------------------------
+reset:
+        ldx #$50
+clrmem:                     ;borra la ram
+        clra
+        STA 0,x
+        incx
+        cpx #$bf
+        bne clrmem
+
+;        jsr scion           ; Programa puertos serie.
+;-----------------------------------------------------------------------------
+
+        lda #$ff
+        STA CmdDsp
+        STA porta
+        lda #$2
+        sta lineaH
+        jsr pretim
+
+;
+;                       * * * CARGA CARACTERES ESPECIALES * * *
+;
+;
+        lda #$f0
+        sta portc
+;
+        jsr IniDisplay
+
+        lda #$03
+        jsr WrtData
+        clra
+        jsr WrtData
+        lda #$22
+        jsr WrtCmd
+
+graf:
+        lda #$00
+        ldx #$1c
+        jsr GoMem
+        lda #$b0
+        jsr WrtCmd
+        clrx
+        nop
+        nop
+ldbigchar:
+        LDA bigchar,x
+        cmp #$ff
+        beq fincarg
+        ora #$80
+        jsr WrtData
+        incx
+        bra ldbigchar
+fincarg:
+        clrx
+finc2:
+        lda bigch,x
+        cmp #$ff
+        beq finc33
+        ora #$80
+        jsr WrtData
+        incx
+        bra finc2
+finc33:
+        clrx
+finc3:
+        lda bigch1,x
+        cmp #$ff
+        beq finc44
+        ora #$80
+        jsr WrtData
+        incx
+        bra finc3
+finc44:
+        clrx
+
+finc4:
+        lda bigch2,x
+        cmp #$ff
+        beq finfin
+        ora #$80
+        jsr WrtData
+        incx
+        bra finc4
+
+
+finfin:
+        lda #$b2        ;fin autowrite
+        jsr WrtCmd
+;
+;
+;PRESENTACION
+;
+        jsr borrunapant ;escribe EB
+        sei
+        lda #$42
+        ldx #$01
+        jsr GoMem
+        lda #8
+        sta divers
+        clrx
+        jsr printf
+;
+        lda #$A2
+        ldx #$01
+        JSR GoMem
+        clrx
+        lda #$b0
+        jsr WrtCmd
+marc:
+        lda marca,x
+        cmp #$ff
+        BEQ TANC
+        SUB #$20
+        jsr WrtData
+        incx
+        bra marc
+tanc:
+        lda #$b2
+        jsr WrtCmd
+        ldx #$ff
+        jsr tems
+        ldx #$ff
+        jsr tems
+        ldx #$ff
+        jsr tems
+tanca:
+        cli
+        jsr pantmec
+        clr stat
+        bset 0,stat     ;funcion "pantalla mecanico"
+meca:
+        brset 3,flag,mc ;la pulsacion de LLI pone este bit a 1
+        brset 0,stat,meca
+mc:
+        bclr 3,flag
+        lda #$d3        ;saca atrib a LLI
+        ldx #$11
+        jsr GoMem
+        clra
+        ldx #$3
+        jsr setatt
+        ldx #$3         ;pasa a la cpu (v25), el num. del mecanico
+        bra palli       ;************* DEMO
+resot:
+        jmp reset
+;envia  los tres numeros al v25
+meca1:
+        lda bufmec,x
+        jsr pcsend
+        decx
+        bne meca1
+        bset 0,stat             ;espera el ack para seguir
+meca2:
+        jsr ci
+        cmp #0                  ;0 indica OK
+        bne meca2
+;
+;esta rutina debera eliminarse cuando no sea demo
+palli:
+        bclr 0,stat
+        jsr pantlliu            ;funcion "LIBRE"
+        bset 1,stat
+lliu1:
+        brset 1,stat,lliu1      ;
+        brset 0,stat,resot
+        brset 5,stat,aturt
+        bset 2,stat
+        jsr pantserv
+pntserv:
+        brset 2,stat,pntserv
+        bset 3,stat
+        lda #1
+        sta tim
+        bset 5,tcr
+despotra:
+
+        jsr pantdesp
+
+        cli
+despz:
+        brset 3,stat,despz
+        brset 4,stat,ocupt
+        brset 6,stat,anulacio
+ocupt:
+        jsr pantaocup
+ocupp:
+        brset 4,stat,ocupp
+        bra palli
+anulacio:
+       jsr pantanul
+anula3:
+        brset 6,stat,anula3
+        brset 3,stat,despotra
+        brset 1,stat,palli
+;
+aturt:
+       jsr pantatur
+pntur:
+        brset 5,stat,pntur
+        bra palli
+;
+;
+main:
+         bra main
+ci:
+        brset 5,scsr,ci
+        lda scdat
+        cmp #1          ;es anul-la?
+        beq anuld
+        cmp #5
+        beq dades       ;es servei ?
+        cmp #7          ;es mecanic ?
+        beq code
+;
+
+;                       ;******** entra un fitxer *********
+        
+        cmp #$0d        ;cambi de linia ?
+        
+dades:
+;        jsr pantaserv   ;pantalla
+        bset 2,stat     ;paraula de stat per info
+;
+        lda #$0
+        sta lmem
+        ldx #$02
+        sta hmem
+        jsr GoMem
+;
+        ldx #$c8
+        stx var
+        jsr blok        ;esborra ram de text i ram d'atributs
+        lda #$0
+        ldx #$02            ;punter d'inici
+        jsr GoMem
+        lda #$b0        ;auto write
+        jsr WrtCmd
+;
+        clr cont
+dadesbe:
+        jsr ci
+        cmp #$1f        ;es eof ?
+        beq tot
+        cmp #$0d        ;es return ?
+        beq camlin
+        inc cont
+        jsr WrtData
+        jsr pretim
+        cli
+        bra dadesbe
+tot:
+        lda #$b2
+        jsr WrtCmd
+        lda #$00        ;display la porcion de ram recibida
+        jsr WrtData
+        ldx #$02
+        jsr WrtData
+        lda #$40
+        jsr WrtCmd
+        bset 7,stat     ;indica que esta en pantalla fichero
+        bra main
+
+
+camlin:
+        lda #$20        ;num. d'espais per fi de linia
+        sub cont
+        tax
+linia:
+        clra
+        jsr WrtData     ;espais per canvi de linia
+        decx
+        bne linia
+        clr cont
+        bra dadesbe
+                
+        
+anuld:
+        
+code:
+        bra main                         
+inke:
+;        lda scdat
+;        ldx 2
+;        mul
+;        jmp top,x
+
+top:
+;        jmp CurPos         ;Cursor position
+;        jmp HomeTextSet    ;Home home text set
+;        jmp TextAreaSet    ;Text area set
+;        jmp HomeGrapSet    ;Graphics home text set
+;        jmp GrapAreaSet    ;Graphics aresa set
+;        jmp blink          ;Activa o desactiva el parpadeo
+;        jmp cursor         ;Pone o quita el cursor
+;        jmp TextMode       ;Modo texto
+;        jmp GrMode         ;Graphics mode
+;        jmp CursTipo       ;Cursor tipo 1,2,3
+;        jmp AddPointSet    ;Addres pointer set
+;        jmp StringOut      ;Saca cadena de caracteres (00- para final)
+;        jmp ClrScr         ;clear screen
+;        jmp SetPixel       ;Dibuja un pixel en pantalla
+;        jmp OutChar        ;Saca un caracter
+
+
+
+;============================ SUBRUTINAS =====================================
+
+;--------------------------------construye pantalla "mecanic"-------
+pantmec:
+        jsr borrunapant
+        sei
+        lda #$23
+        ldx #$00
+        jsr GoMem       ;mecanic
+        clrx
+        lda #1
+        sta divers
+        jsr printf
+        lda #$a7
+        clrx
+        jsr GoMem
+        ldx #nummec-mecanic
+        jsr printf
+        lda #$ee
+        ldx #$10
+        jsr GoMem
+        ldx #$3
+        lda #$08
+        jsr setatt
+defkey:
+        jsr retic
+        jsr setnum
+        inc lmem
+        lda #4
+        sta cont
+        jsr setn
+        lda #$c3
+        sta lmem
+        lda #3
+        sta cont
+        jsr setn
+;
+        jsr altaveu     ;escriu altaveu i sos
+        jsr lli
+        jsr flecha
+        cli
+        rts
+pantdesp:
+        jsr borrunapant
+        sei
+        lda #$24
+        ldx #$0
+        jsr GoMem
+        ldx #despla-mecanic
+        lda #1
+        sta divers
+        jsr printf        
+        lda #$c4
+        clrx
+        jsr GoMem
+        clrx
+        lda #2
+        sta divers
+        jsr printf
+        jsr retic
+        jsr anu
+;
+ocu:
+        lda #$c2
+        ldx #$01
+        jsr GoMem
+        lda #$2f
+        jsr write
+        lda #$23
+        jsr write
+        lda #$35
+        jsr write
+        jsr altaveu
+;
+        cli
+        rts
+ANU:
+        sei
+        lda #$82
+        ldx #$01
+        jsr GoMem
+        lda #$21
+        jsr write
+        lda #$2e
+        jsr write
+        lda #$35
+        jsr write
+        cli
+        rts
+
+pantserv:
+        jsr borrunapant
+        sei
+        lda #$65
+        clrx
+        jsr GoMem
+        lda #2
+        sta divers
+        ldx #servei-cament
+        jsr printf
+        jsr retic
+        jsr anu
+;                
+        lda #$c2
+        ldx #$01
+        jsr GoMem
+        lda #$24
+        jsr write
+        lda #$25
+        jsr write
+        lda #$33
+        jsr write
+        jsr altaveu
+        cli
+        rts
+pantlliu:
+        jsr borrunapant
+        sei
+        lda #$65
+        clrx
+        jsr GoMem
+        lda #3
+        sta divers
+        clrx
+        jsr printf
+        jsr retic
+
+tan:
+        lda #$82
+        ldx #$01
+        jsr GoMem
+        lda #$34
+        jsr write
+        lda #$21
+        jsr write
+        lda #$2e
+        jsr write
+;
+atu:
+        lda #$c2
+        ldx #$01
+        jsr GoMem
+        lda #$21
+        jsr write
+        lda #$34
+        jsr write
+        lda #$35
+        jsr write
+        jsr altaveu
+        cli
+        rts
+pantanul:
+        jsr borrunapant
+        sei
+        lda #$64
+        clrx
+        jsr GoMem
+        lda #3
+        sta divers
+        ldx #anula-lliure
+        jsr printf
+        jsr retic
+; 
+        jsr no
+        jsr si
+        jsr altaveu
+        cli
+        rts
+no:
+        lda #$82
+        ldx #$01
+        jsr GoMem
+        lda #$2e
+        jsr write
+        lda #$2f
+        jsr write
+        rts
+si:
+        lda #$c2
+        ldx #$01
+        jsr GoMem
+        lda #$33
+        jsr write
+        lda #$29
+        jsr write
+        rts
+;
+pantatur:
+        jsr borrunapant
+        sei
+        lda #$64
+        clrx
+        jsr GoMem
+        lda #4
+        sta divers
+        clrx
+        jsr printf
+        jsr retic
+        lda #$c2
+        ldx #$01
+        jsr lliu
+        jsr altaveu
+        cli
+        rts        
+
+pantaocup:
+        jsr borrunapant
+        sei
+        lda #$64
+        clrx
+        jsr GoMem
+        lda #4
+        sta divers
+        ldx #ocupat-aturat
+        jsr printf
+        jsr retic
+fin:
+        lda #$c2
+        ldx #$01
+        jsr GoMem
+        lda #$26
+        jsr write
+        lda #$29
+        jsr write
+        lda #$2e
+        jsr write
+        jsr altaveu
+        cli
+        rts
+        
+;---------------------- INICIALIZA EL DISPLAY --------------------------------
+; Inicializa el display de la siguiente manera:
+;
+; - Logically "AND" of Graphic and Text Display
+; - Cursor blink ON
+; - Cursor display ON
+; - Text display ON
+; - CG ROM mode
+; - 8 line width cursor
+; - Text display 2480x64 DOT (fuentes de 8x8)
+; - Graphic display 240x64 DOT
+
+
+IniDisplay:
+
+        bclr 7,CmdDsp
+        LDA CmdDsp
+        STA porta
+
+        nop
+        nop
+        nop
+        nop
+
+        bset 7,CmdDsp
+        LDA CmdDsp
+        sta porta               ;reset
+
+        lda #$84
+        jsr WrtCmd
+
+        lda #$00
+        jsr WrtData
+        lda #$00
+        jsr WrtData
+        lda #$40
+        jsr WrtCmd      ;- Define la direcci¢n para empezar a escribir.
+
+        lda #$20        ;ancho de display 32 columnas.
+        jsr WrtData
+        lda #$00
+        jsr WrtData
+        lda #$41
+        jsr WrtCmd      ;Number of Text area Command.
+
+
+        clra
+        jsr WrtData
+        lda #$10
+        jsr WrtData
+        lda #$42
+        jsr WrtCmd
+;
+        lda #$20
+        jsr WrtData
+        clra
+        jsr WrtData
+        lda #$43
+        jsr WrtCmd
+
+
+        clra
+        ldx #$10
+        jsr GoMem
+        lda #$b0
+        jsr WrtCmd
+        clrx
+noat:
+        lda #$00
+        jsr WrtData
+        incx
+        cpx #$0
+        bne noat
+noat2:
+        lda #$00
+        jsr WrtData
+        incx
+        cpx #$0
+        bne noat2
+
+        lda #$b2
+        jsr WrtCmd
+
+        lda #$00
+        jsr WrtData
+        lda #$00
+        jsr WrtData
+        lda #$21        ;- Posiciona el cursor en la posici¢n 0,0
+        jsr WrtCmd
+
+        lda #$94        ;- Text display ON
+        jsr WrtCmd      ;- Text display on
+
+        lda #$a7
+        jsr WrtCmd      ;Cursor pattern select.
+
+        jsr borrunapant
+        RTS
+
+        
+
+
+;------------------- Graphics home addres command --------------------------
+
+GoMem:
+
+        STA sava
+        stx savx
+        
+        LDA sava
+        jsr WrtData
+        LDA savx
+        jsr WrtData
+        lda #$24
+        jsr WrtCmd      ;Address point set
+        RTS
+blok:
+        lda #$b0        ;en x viene num. de bytes a borrar,tambien guardado en var
+        jsr WrtCmd      ;puntero situado por gomem antes de llamar
+blok1:                  ;en lmem y hmem el puntero de inicio de ram
+        clra            ;para borrar atributos, le suma 1000 a la direccion
+        jsr WrtData     ;de inicio y escribe 00.
+        decx
+        bne blok1
+        lda #$b2
+        jsr WrtCmd
+bloc2:
+        lda hmem
+        add #$10
+        tax
+        lda lmem
+        jsr GoMem
+        lda #$b0
+        jsr WrtCmd
+        ldx var
+bloc3:
+        clra
+        jsr WrtData
+        decx
+        bne bloc3
+        lda #$b2
+        jsr WrtCmd
+        rts        
+       
+;----------------- Borra la pantalla de texto con 00 --------------------------
+
+borrunapant:
+        sei
+       lda #$00
+       ldx #$00
+       jsr GoMem
+
+txtclr:
+        lda #$b0
+        jsr WrtCmd
+
+        ldx #$ff
+        stx cnt
+
+buc:
+        lda #BORRA
+        jsr WrtData
+        jsr busy2
+
+        dec cnt
+        bne buc
+borr1:
+        ldx #$ff
+        stx cnt
+buc2:
+        lda #BORRA
+        jsr WrtData
+        jsr busy2
+
+        dec cnt
+        bne buc2
+
+        lda #$b2
+        jsr WrtCmd
+        cli
+        RTS
+;----------------- dibuja reticula teclas
+
+retic:
+        sei
+        lda #$60
+        ldx #$01
+        jsr GoMem
+        lda #$b0
+        jsr WrtCmd
+        clrx
+retic1:
+        lda rtcula,x
+        cmp #$ff
+        beq finret
+        jsr WrtData
+        incx
+        bra retic1
+finret:
+        lda #$b2
+        jsr WrtCmd
+        cli
+        rts
+;------------------Pone numeros en reticula
+
+setnum:
+        lda #$83
+        sta lmem
+        ldx #$01
+        stx hmem
+        lda #$10
+        sta var
+setnm:
+        lda #3
+        sta cont
+setn:
+        lda lmem
+        ldx hmem
+        jsr GoMem
+        lda var
+        jsr WrtData
+        lda #$c4
+        jsr WrtCmd
+        inc var
+        lda lmem
+        add #$4
+        sta lmem
+        dec cont
+        bne setn
+        rts
+altaveu:
+        lda #$d7
+        ldx #$01
+        jsr GoMem
+        lda #$9e
+        jsr Write
+        lda #$9f
+        jsr Write
+        lda #$a0
+        jsr write
+;
+        lda #$db
+        jsr GoMem
+        lda #$33         ;S
+        jsr write
+        lda #$2f         ;O
+        jsr write
+        lda #$33         ;S
+        jsr write
+        rts
+LLI:
+        lda #$d3
+        ldx #$01
+lliu:
+        jsr GoMem
+        lda #$2c
+        jsr write
+        lda #$2c
+        jsr write
+        lda #$29
+        jsr write
+        rts
+flecha:
+        lda #$cf
+        ldx #$01
+        jsr GoMem
+        lda #$9d
+        jsr write
+        lda #$9a
+        jsr write
+        rts 
+write:
+        jsr WrtData
+        lda #$c0
+        jsr WrtCmd
+        rts                
+;----------------- Borra la pantalla de graficos con 00 ----------------------
+
+GrClrScr:
+        ldx #$00
+        lda #$00
+        jsr GoMem
+
+        lda #$b0
+        jsr WrtCmd
+
+        lda #$10
+        STA CntH
+BucG0:
+        lda #$00
+        STA CntL
+
+bucG:
+        lda #$00
+        jsr WrtData
+        jsr busy2
+
+        dec CntL
+        bne bucG
+
+        dec CntH
+        bne BucG0
+
+        lda #$b2
+        jsr WrtCmd
+        RTS
+;------------------ Pone atributos: GoMem situa addr. x lleva num.bytes y a=att
+
+setatt:
+        sta atrib     
+seta:
+        lda #$b0
+        jsr WrtCmd
+set1:
+        lda atrib
+        jsr WrtData
+        decx
+        bne set1
+        lda #$b2
+        jsr WrtCmd
+        rts
+
+;------------------ Comprueba que el display est‚ libre ---------------------
+busy:
+        clra
+        sta pcb         ;portb como entradas
+
+        bclr 4,CmdDsp   ;CE
+        bclr 3,CmdDsp   ;/RD activado
+        LDA CmdDsp
+        STA porta
+Bus1:
+        LDA portb
+        and #$03
+        cmp #$03
+        bne Bus1
+
+Bus3:
+        lda #$ff
+        STA CmdDsp
+        STA porta
+        RTS
+
+
+
+;------------------ Comprueba que el display est‚ libre ---------------------
+busy2:
+        clra
+        sta pcb         ;portb como entradas
+
+        bclr 4,CmdDsp   ;CE
+        bclr 3,CmdDsp   ;/RD activado
+        LDA CmdDsp
+        STA porta
+bus21:
+        LDA portb
+        and #$08
+        cmp #$08
+        bne bus21
+
+        lda #$ff
+        STA CmdDsp
+        STA porta
+        RTS
+
+
+
+;---------------- Transmite al display un comando ---------------------------
+WrtCmd:
+
+        STA sava
+        jsr busy
+        lda #$ff
+        sta pcb         ;PORTB como salidas.
+
+        bclr 4,CmdDsp
+        bclr 2,CmdDsp   ;/WR activado
+        LDA CmdDsp
+        STA porta
+
+        LDA sava
+        STA portb
+        lda #$ff
+        STA CmdDsp
+        STA porta
+        clra
+        STA portb
+        RTS
+
+pretim:
+        lda #$20
+        sta tcrh
+        lda #$10
+        sta tcrl
+        rts
+
+;---------------- Transmite al display un dato -----------------------------
+WrtData:
+
+        STA sava
+        jsr busy
+        lda #$ff
+        sta pcb         ;PORTB como salidas.
+
+        bclr 5,CmdDsp
+        LDA CmdDsp
+        STA porta
+
+        bclr 4,CmdDsp
+        bclr 2,CmdDsp   ;/WR activado
+        LDA CmdDsp
+        STA porta
+
+        LDA sava
+        STA portb
+        lda #$ff
+        STA CmdDsp
+        STA porta
+        clra
+        STA portb
+        RTS
+
+
+
+
+
+
+
+;------------------ Transmite al display un buffer --------------------------
+
+test:
+        lda #$b0
+        jsr WrtCmd
+        clrx
+bucf:
+        txa
+        cmp #$D8
+        beq bucfin
+        jsr WrtData
+        jsr busy2
+        incx
+        bra bucf
+bucfin:
+        lda #$b2
+        jsr WrtCmd
+        RTS
+
+printf:
+        clr var
+        lda #$b0
+        jsr WrtCmd
+        lda divers
+        cmp #1
+        beq blk1
+        cmp #2
+        beq blk2
+        cmp #3
+        beq blk3
+        cmp #4
+        beq blk4
+        cmp #$8
+        beq blk8
+        bra blk1
+pbucf:
+        cmp #$fe
+        beq linfeed
+        cmp #$ff
+        beq pbucfin
+        jsr WrtData
+        incx
+        inc var
+        lda divers
+        cmp #1
+        beq blk1
+        cmp #2
+        beq blk2
+        cmp #3
+        beq blk3
+        cmp #4
+        beq blk4
+        cmp #$8
+        beq blk8
+
+        bra blk1
+pbucfin:
+        lda #$b2
+        jsr WrtCmd
+
+        RTS
+linfeed:
+        stx savx
+        lda #$20
+        sub var
+        tax
+otra:
+        LDA #BORRA
+        jsr WrtData
+        decx
+        bne otra
+        ldx savx
+        incx
+        clr var
+        lda divers
+        cmp #1
+        beq blk1
+        cmp #2
+        beq blk2
+        cmp #3
+        beq blk3
+        cmp #4
+        beq blk4
+        cmp #$8
+        beq blk8
+
+        bra blk1
+blk1:
+        lda mecanic,x
+        bra pbucf
+blk2:
+        lda cament,x
+        bra pbucf
+blk3:
+        lda lliure,x
+        bra pbucf
+blk4:
+        lda aturat,x
+        bra pbucf
+blk8:
+        lda eb,x
+        bra pbucf
+;
+;escribe numeros en pantalla (funcion "Mecanic")
+;GoMem pone principio de carga
+;
+putnum:
+        lda #$b0
+        jsr WrtCmd
+putnu:
+        lda numcero,x
+        cmp #$fe
+        beq newline
+        cmp #$ff
+        beq finchar
+        jsr WrtData
+        incx
+        bra putnu
+newline:
+        stx var
+        lda #$b2
+        jsr WrtCmd
+        lda dirnum
+        add #$20
+        sta dirnum
+        clrx
+        jsr GoMem
+        ldx var
+        incx
+        bra putnum
+finchar:
+        lda #$b2
+        jsr WrtCmd
+        inc contx
+        rts
+
+
+
+;bucle de 1 mS. x deu venir carregat amb els milisegons
+
+tems:
+        lda #$18
+        sta time        ;1 mS
+        sec
+        clra
+tems1:
+        rola
+        bcs tems2
+        bra tems1
+tems2:
+        dec time
+        bne tems1
+        decx
+        bne tems
+        rts
+
+                        
+;-------------- transmite al terminal el contenido del registro A -----------
+
+pcsend:
+        brclr 7,scsr,pcsend     ;mira si esta ocupado
+        STA scdat
+pcsnd:
+        brclr 6,scsr,pcsnd      ;espera para acabar de transmitir
+        RTS
+
+;conmuta a pagina 0 (mensajes de estado)
+dircero:
+
+        clra
+        jsr WrtData
+        clra
+        jsr WrtData
+        lda #$40
+        jsr WrtCmd
+        rts
+;-----------------------------------------------------------------------------
+fichero:
+        lda lineaL
+        jsr WrtData
+        lda lineaH
+        jsr WrtData
+        lda #$40
+        jsr WrtCmd
+        lda #$0c
+        sta tim4
+        bset 7,stat
+        rts
+
+;----------------- configuracion interface de comunicaciones ------------------
+scion:
+        lda #$00
+        STA SCCR1
+
+        lda #$0c        ;- TDRE interrupt disabled
+                         ;- TC interrupt disabled
+                        ;- SCI interrupt disabled
+                        ;- IDLE interrupt disbaled
+                        ;- After the last byte is transmitted,the TDO line
+                        ;  becomes a hight-impedance line.
+                        ;- Receiver disabled and RDRF, IDLE, OR, NF and FE
+                        ;  status bits are inhibited.
+        STA SCCR2
+
+                        
+        lda #$30        ;Baud rate a 9600
+                        ;para 1200 poner un #$33
+        STA baud
+        RTS
+;------------------------------------------------------------------------------
+
+;******************* DESACTIVA EL MODO SCI *******************************
+SCIOFF:       
+        LDA #$00
+        STA SCCR1       ;one start bit, eight data bits, one stop bit
+
+        LDA #$00        ;- TDRE interrupt disabled
+                        ;- TC interrupt disabled
+                        ;- SCI interrupt enabled
+                        ;- IDLE interrupt disbaled
+                        ;- Transmiter enabled
+                        ;- Receiver enabled
+                        ;  status bits are inhibited.
+        STA SCCR2
+        RTS
+
+;-----------------------------------------------------------------------------
+cua:                                         
+        ; 'ÚÄÄÄÄÂÄÄÄÂÄÄÄÂÄÄÄÂÄÄÄÂÄÄÄÂÄÄÄÄ¿'
+        ; '³    ³   ³   ³   ³   ³   ³    ³'
+        ; 'ÃÄÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÅÄÄÄÄ´'
+        ; '³    ³   ³   ³   ³   ³   ³    ³'
+        ; 'ÀÄÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÁÄÄÄÄÙ'
+rtcula:
+        fcb 0,90h,09ah,09ah,09ah,091h,09ah,09ah,09ah,091h,09ah,09ah
+        fcb 09ah,91h,09ah,09ah,09ah,09ah,091h,09ah,09ah,09ah,091h
+        fcb 09ah,09ah,09ah,091h,09ah,09ah,09ah,92h,0
+;
+        fcb 0,9bh,0,0,0,99h,0,0,0,99h,0,0,0,99h,0,0,0,0,99h,0,0,0,99h
+        fcb 0,0,0,99h,0,0,0,9ch,0
+         
+        fcb 0,93h,9ah,9ah,9ah,94h,9ah,9ah,9ah,94h,9ah,9ah,9ah,94h
+        fcb 9ah,9ah,9ah,9ah,94h,9ah,9ah,9ah,94h,9ah,9ah,9ah,94h,9ah
+        fcb 9ah,9ah,95h,0
+;
+        fcb 0,9bh,0,0,0,99h,0,0,0,99h,0,0,0,99h,0,0,0,0,99h,0,0,0,99h
+        fcb 0,0,0,99h,0,0,0,9ch,0
+
+        fcb 0,96h,9ah,9ah,9ah,97h,9ah,9ah,9ah,97h,9ah,9ah,9ah,97h
+        fcb 9ah,9ah,9ah,9ah,97h,9ah,9ah,9ah,97h,9ah,9ah,9ah,97h,9ah
+        fcb 9ah,9ah,98h,0,0ffh 
+MECANIC:
+        fcb 8ah,0,8ah,0,81h,82h,82h,0,81h,82h,83h,0,81h,82h,83h,0,8ah,0,85h,0
+        fcb 85h,0,81h,82h,83h,0feh
+MEC1:
+        fcb 84h,08dh,85h,0,84h,87h,0,0,84h,0,0,0,84h,87h,85h,0,84h,08bh,85h,0
+        fcb 85h,0,84h,0,0,0feh
+MEC2:
+        fcb 84h,0,85h,0,86h,87h,87h,0,86h,87h,88h,0,84h,0,85h,0,84h,0,08ah,0
+        fcb 85h,0,86h,87h,88h,0ffh
+Nummec:
+        fcb 8ah,0,85h,0,81h,83h,0feh
+        fcb 84h,8bh,85h,0,82h,82h,0feh
+        fcb 84h,0,8ah,0,0,0,0,87h,87h,87h,0ffh
+despla:
+        fcb 89h,82h,83h,0,81h,82h,82h,0,81h,82h,82h,0,89h,82h,83h,0,84h,0,0,0
+        fcb 81h,82h,83h,0feh
+;
+        fcb 84h,0,85h,0,84h,87h,0,0,86h,87h,87h,0,84h,87h,88h,0,84h,0,0,0
+        fcb 84h,87h,85h,0feh
+;
+        fcb 8eh,87h,88h,0,86h,87h,87h,0,87h,87h,88h,0,84h,0,0,0,8eh,87h,87h
+        fcb 0,84h,0,85h,0ffh
+cament:
+        fcb 81h,82h,83h,0,81h,82h,83h,0,8ah,0,8ah,0,81h,82h,82h,0,8ah,0,85h,0
+        fcb 82h,0a1h,82h,0feh
+;
+        fcb 84h,0,0,0,84h,87h,85h,0,84h,8dh,85h,0,84h,87h,0,0,84h,8bh,85h,0
+        fcb 0,0a1h,0,0feh
+;
+        fcb 0a3h,0a2h,0a4h,0,84H,0,85H,0,84H,0,85H,0,86H,87H,87H,0,84H,0,8AH
+        FCB 0,0,0a1h,0,0ffh        
+servei:
+        fcb 81h,82h,82h,0,81h,82h,82h,0,89h,82h,83h,0,84h,0,85h,0,81h,82h,82h
+        fcb 0,0,0a1h,0,0feh
+;
+        fcb 86h,87h,87h,0,84h,87h,0,0,84h,87h,88h,0,84h,0,85h,0,84h,87h,0,0,0
+        fcb 0a1h,0,0feh
+;
+        fcb 87h,87h,88h,0,86h,87h,87h,0,84h,0,85h,0,0A5H,0A6H,0A7H,0,86h,87h,87h,0
+        fcb 0,0a1h,0,0ffh
+lliure:
+        fcb 84h,0,0,0,84h,0,0,0,0a1h,0,84h,0,85h,0,89h,82h,83h,0
+        fcb 81h,82h,82h,0feh        
+;
+        fcb 84h,0,0,0,84h,0,0,0,0a1h,0,84h,0,85h,0,84h,87h,88h,0
+        fcb 84h,87h,0,0feh
+;
+        fcb 8eh,87h,87h,0,8eh,87h,87h,0,0a1h,0,86h,87h,88h,0,84h,0,85h
+        fcb 0,86h,87h,87h,0ffh
+;
+anula:
+        fcb 81h,82h,83h,0,8ah,0,85h,0,84h,0,85h,0,84h,0,0,0,0,84h,0,0,0
+        fcb 81h,82h,83h,0feh
+;
+        fcb 84h,87h,85h,0,84h,8bh,85h,0,84h,0,85h,0,84h,0,0,87h,0,84h,0,0
+        fcb 0,84h,87h,85h,0feh
+;
+        fcb 84h,0,85h,0,84h,0,8ah,0,86h,87h,88h,0,8eh,87h,87h,0,0,8eh,87h
+        fcb 87h,0,84h,0,85h,0ffh
+;
+aturat:
+        fcb 81h,82h,83h,0,82h,0a1h,82h,0,84h,0,85h,0,89h,82h,83h,0,81h,82h
+        fcb 83h,0,82h,0a1h,82h,0feh
+;
+        fcb 84h,87h,85h,0,0,0a1h,0,0,84h,0,85h,0,84h,87h,88h,0,84h,87h,85h,0
+        fcb 0,0a1h,0,0feh
+;
+        fcb 84h,0,85h,0,0,0a1h,0,0,86h,87h,88h,0,84h,0,85h,0,84h,0,85h,0,0,0a1h,0
+        fcb 0ffh
+ocupat:
+        fcb 81h,82h,83h,0,81h,82h,83h,0,84h,0,85h,0,89h,82h,83h,0,81h,82h,83h
+        fcb 0,82h,0a1h,82h,0feh
+;
+        fcb 84h,0,85h,0,84h,0,0,0,84h,0,85h,0,84h,87h,88h,0,84h,87h,85h,0,0,0a1h
+        fcb 0,0feh
+;
+        fcb 86h,87h,88h,0,86h,87h,88h,0,86h,87h,88h,0,84h,0,0,0,84h,0,85h,0,0
+        fcb 0a1h,0,0ffh
+numcero:
+        fcb 81h,82h,83h,0feh
+        fcb 84h,8ch,85h,0feh
+        fcb 86h,87h,88h,0ffh
+numuno:
+;        fcb 0,0,8fh,0feh
+        fcb 0,8ch,85h,0feh
+        fcb 0,0,85h,0feh
+        fcb 0,0,85h,0ffh
+numdos:
+        fcb 81h,82h,83h,0feh
+        fcb 0,8ch,0,0feh
+        fcb 86h,87h,87h,0ffh
+numtres:
+        fcb 81h,82h,83h,0feh
+        fcb 0,0a9h,0a8h,0feh
+        fcb 86h,87h,88h,0ffh
+numcuatro:
+        fcb 0,8ch,85h,0feh
+        fcb 8ch,87h,87h,0feh
+        fcb 0,0,85h,0ffh
+numcinco:
+        fcb 89h,82h,82h,0feh
+        fcb 82h,82h,85H,0feh
+        fcb 86h,87h,88h,0ffh
+numseis:
+        fcb 81h,82h,82h,0feh
+        fcb 84h,87h,87H,0feh
+        fcb 86h,87h,88h,0ffh
+numsiete:
+        fcb 82h,82h,8ah,0feh
+        fcb 0,8ch,0,0feh
+        fcb 0A1h,0,0,0ffh
+numocho:
+        fcb 81h,82h,83h,0feh
+        fcb 0AAh,0,0A8h,0feh
+        fcb 86h,87h,88h,0ffh
+numnueve:
+        fcb 81h,82h,83h,0feh
+        fcb 86h,87h,85h,0feh
+        fcb 87h,87h,88h,0ffh
+borrachar:
+        fcb 0,0,0,0feh
+        fcb 0,0,0,0feh
+        fcb 0,0,0,0ffh
+
+;
+anagram:
+        fcb 0b3h,0b4h,0b5h,0,0bch,0bdh,0beh,0,0c5h,0c6h,0c7h,0,0,0ceh,0cfh
+        fcb 0d0h,0,0d7h,0d8h,0d9h,0feh
+;
+        fcb 0b6h,0b7h,0b8h,0,0c1h,0c0h,0bfh,0,0c8h,0c9h,0cah,0a9h,0,0d1h,0d2h
+        fcb 0d3h,0,0dah,0dbh,0dch,0feh
+;
+        fcb 0b9h,0bah,0bbh,0,0c2h,0c3h,0c4h,0,0cbh,0cch,0cdh,0,0,0d4h,0d5h,0d6h
+        fcb 0,0ddh,0deh,0dfh,0ffh
+;
+eb:
+        fcb 0abh,0ach,0,0afh,0b0h,0feh
+        fcb 0adh,0aeh,0,0b1h,0b2h,0ffh
+;
+;caracteres formato grande (SEGMENTOS)
+;                   B
+;            OOOO OOOOO OOOO      OOOOO    OOOOO    O          O         
+;           OOOOO OOOOO OOOOO     OOOOO    OOOOO    OO        OO   Y   
+;           OOOOO OOOOO OOOOO     OOOOO    OOOOO    OOO      OOO  OOOO
+;           OOO           OOO     OOO      OOOOO    OOOO    OOOO  OOOO
+;         A OOO           OOO C I OOO    J OOOOO   K OOOO  OOOO L OOOO
+;           OOO           OOO     OOO      OOOOO      OOO  OOO    OOOO
+;           OOO           OOO     OOO      OOOOO       OO  OO     
+;           OOO           OOO     OOO      OOOOO        O  O     
+;
+; OOO       OOO    OOO    OOO       OOO    O   O      OOO           OOO
+;  OOO      OOO    OOO    OOO      OOO     OO OO      OOO           OOO
+;   OOO     OOO    OOO    OOO     OOO      OOOOO       OOO    U    OOO
+;    OO     OOO    OOO    OOO     OO       OOOOO M      OOO       OOO
+;  Z OO   D OOO    OOO    OOO E   OO  X     OOO          OO O   O OO
+;   OOO     OOO    OOO    OOO     OOO       OOO        T  O OO OO O  V
+;  OOO      OOO    OOO    OOO      OOO       O              OOOOO
+; OOO       OOO    OOO    OOO       OOO      O               OOO
+;                   P
+;           OOO           OOO     OOO        OOO     Q   O    OOO       S
+;           OOO           OOO     OOO       OOOO       OO     OOO      OOO
+;           OOO           OOO     OOO      OOOOO      OOO     OOO      OOO
+;           OOO           OOO     OOO        OOO     OOOOO    OOOOO  OOOOO
+;         F OOO           OOO H   OOO N      OOO O   OOOOO    OOOOO  OOOOO
+;           OOOOO OOOOO OOOOO     OOOOO      OOO     OOOOO     OOOO  OOOO
+;           OOOOO OOOOO OOOOO     OOOOO      OOO      OOO       R 
+;            OOOO OOOOO OOOO      OOOOO      OOO      OO
+;                   G
+;
+bigchar:
+        fcb 0,0,0,0,0,0,0,0                 ;blancs    80h
+        fcb 0fh,1fh,1fh,1ch,1ch,1ch,1ch,1ch ;seg. A    81
+        fcb 1fh,1fh,1fh,00,00,00,00,00      ;     B     82
+        fcb 1eh,1fh,1fh,07,07,07,07,07      ;     C     83
+        fcb 1ch,1ch,1ch,1ch,1ch,1ch,1ch,1ch ;     D     84
+        fcb 7,7,7,7,7,7,7,7                 ;     E     85
+        fcb 1ch,1ch,1ch,1ch,1ch,1fh,1fh,0fh ;     F     86
+        fcb 0,0,0,0,0,1fh,1fh,1fh           ;     G     87
+        fcb 7,7,7,7,7,1fh,1fh,1eh           ;     H     88
+        fcb 1fh,1fh,1fh,1ch,1ch,1ch,1ch,1ch ;     I (cod89)
+        fcb 1fh,1fh,1fh,1fh,1fh,1fh,1fh,1fh ;     J      08a
+        fcb 10h,18h,1ch,1eh,0fh,07,03,01    ;     k      08bh
+        fcb 01,03,07,0fh,1eh,1ch,18h,10h    ;     L      08ch
+        fcb 11h,1bh,1fh,1fh,0eh,0eh,04,0    ;     M      08dh
+        fcb 1ch,1ch,1ch,1ch,1ch,1fh,1fh,1fh ;     N      08eh
+        fcb 7,0fh,1fh,7,7,7,7,7             ;     O      08fh
+        fcb 0h,0h,0h,1fh,10h,10h,10h,10h    ;Ú           90h
+        fcb 0,0,0,1fh,4,4,4,4               ;Â           91h
+        fcb 0,0,0,1fh,1,1,1,1               ;¿           92h       
+        fcb 10h,10h,10h,1fh,10h,10h,10h,10h ;Ã           93h
+        fcb 4,4,4,1fh,4,4,4,4               ;Å           94h
+        fcb 1,1,1,1fh,1,1,1,1               ;´           95h
+        fcb 10h,10h,10h,1fh,0,0,0,0         ;À           96h
+        fcb 4,4,4,1fh,0,0,0,0               ;Á           97h
+        fcb 1,1,1,1fh,0,0,0,0               ;Ù           98h
+        fcb 4,4,4,4,4,4,4,4                 ;³           99h
+        fcb 0,0,0,1fh,0,0,0,0               ;Ä           9ah
+        fcb 10h,10h,10h,10h,10h,10h,10h,10h ;vertical izq. 9bh
+        fcb 1,1,1,1,1,1,1,1,0ffh            ;vertical der. 9ch
+bigch:        
+;
+        fcb 2,4,8,1fh,8,4,2,0           ;<-            9dh
+        fcb 0fh,09h,09h,09h,09h,09h,09,0fh  ;caixa altaveu 9eh
+        fcb 06,0ah,12h,02h,02h,12h,0ah,06   ;bocina   "    9fh
+        fcb 0,1,5,15h,15h,5,1,0             ;ones de veu   a0h
+        fcb 0eh,0eh,0eh,0eh,0eh,0eh,0eh,0eh ;seg. P        a1h
+        fcb 2,6,0EH,1FH,1FH,1FH,0EH,0CH     ;seg. Q        a2h
+        FCB 1CH,1CH,1FH,1FH,0FH,0,0,0       ;SEG  R        A3H
+        fcb 7,7,1FH,1FH,1EH,0,0,0           ;SEG  S        A4H    
+        fcb 1ch,1ch,0eh,7,3,1,0,0           ;seg  T        A5h
+        fcb 0,0,0,0,11h,1bh,1fh,0eh         ;seg  U        A6h
+        fcb 7,7,0eh,1ch,18h,10h,0,0         ;seg  V        A7h
+        fcb 7,0eh,1ch,18h,18h,1ch,0eh,7     ;seg  X        A8h
+        FCB 0,0,0fh,0fh,0fh,0fh,0,0         ;seg  Y        A9H
+        fcb 1ch,0eh,7,3,3,7,0eh,1ch         ;seg  Z        AAH    
+;
+;
+;ANAGRAMA EB
+;
+ANA:
+        fcb 0fh,1fh,1fh,1ch,1ch,1ch,0eh,0eh ;abH cuadrante sup. izq. de la E
+        fcb 1eh,1fh,1fh,7,0,0,1ch,1ch       ;ach     "      "   der. "  "  "
+        fcb 0eh,0eh,1ch,1ch,1ch,1fh,1fh,0fh ;adh     "     inf. izq  "  "  "
+        fcb 1ch,1ch,0,0,7,1fh,1fh,1eh       ;aeh     "      "   der, "  "  "
+;
+        fcb 0fh,1fh,1fh,1ch,1ch,1ch,1dh,1dh ;afh     "     sup. izq. de la B
+        fcb 1eh,1fh,1fh,7,7,7,1bh,1ah       ;b0h     "      "   der, "  "  B
+        fcb 1dh,1dh,1ch,1ch,1ch,1dh,1dh,1dh ;b1h     "     inf  izq.       
+        fcb 1ah,1bh,7,7,7,1fh,1fh,1eh       ;b2h     "      "   der  
+
+RTX21:
+        fcb 0,0,1,2,2,4,4,4             ;b3h
+        fcb 7,1ah,2,2,2,2,4,14h         ;b4h
+        fcb 18h,4,4,6,6,6,4,4           ;b5h
+        fcb 4,5,2,0,0,0,0,0             ;b6h  
+        fcb 14h,4,7,0bh,9,9,9,8         ;b7h         R
+        fcb 4,8,10h,0,0,0,0,10h         ;b8h
+        fcb 0,0,0,8,11h,11h,1bh,4       ;b9h
+        fcb 0ffh
+bigch1:
+        fcb 18h,18h,10h,10h,10h,0,0,0   ;bah
+        fcb 10h,10h,10h,10h,10h,10h,0ah,0ch     ;bbh
+
+        fcb 0,1,2,2,4,4,4,4             ;bch
+        fcb 0eh,11h,0,0,1,1,1,9         ;bdh
+        fcb 4,18h,10h,10h,0,0,0,0       ;beh
+        fcb 0,0,0,0,0,0,0,0             ;bfh
+        fcb 9,12h,2,2,2,2,6,4,          ;c0h         T
+        fcb 4,2,3,0,0,0,0,0             ;c1h
+        fcb 0,0,0,8,8,10,8,7            ;c2h
+        fcb 4,4,4,0ch,8,8,10h,0         ;c3h
+        fcb 0,0,0,0,0,0,0,0             ;c4h
+
+        fcb 1,2,2,2,2,2,2,1             ;c5h
+        fcb 18h,4,4,4,7,3,4,6           ;c6h
+        fcb 6,9,11h,12h,0,0,0,0         ;c7h
+        fcb 0,0,0,0,0,0,0,0             ;c8h         X   
+        fcb 6,4,4,4,0ch,0ch,0ch,8       ;c9h
+        fcb 0,0,0,0,0,0,0,0             ;cah
+        fcb 0,0,0,8,14h,19h,11h,0eh     ;cbh
+        fcb 18h,10h,10h,18h,8,4,4,3     ;cch
+        fcb 0,0,0,0,8,10h,10h,0         ;cdh
+
+        fcb 0,0,0,0,0,0,0,0             ;ceh
+        fcb 3,0ch,8,8,10h,18h,8,0       ;cfh
+        fcb 18h,4,4,4,6,6,4,4           ;d0h
+        fcb 0,0,0,0,0,0,0,0             ;d1h
+        fcb 0,0,0,1,3,6,8,8             ;d2h         2
+        fcb 0ch,8,18h,10h,0,0,0,0       ;d3h
+        fcb 0,1,1,2,3,6,4,4             ;d4h    
+        fcb 10h,0,0,0,10h,8,7,7         ;d5h
+        fcb 0,0,0,0,8,8,18h,0           ;d6h
+        fcb 0ffh
+bigch2:
+        fcb 0,0,0,0,0,0,1,0             ;d7h
+        fcb 2,2,6,6,0ch,14h,4,4         ;d8h
+        fcb 0,0,0,0,0,0,0,0             ;d9h
+        fcb 0,0,0,0,0,0,0,0             ;dah
+        fcb 4,4,0ch,8,8,8,8,8           ;dbh         1
+        fcb 0,0,0,0,0,0,0,0             ;dch
+        fcb 0,0,0,0,0,0,1,1             ;ddh
+        fcb 18h,10h,10h,10h,10h,10h,0,0 ;deh
+        fcb 0,0,0,0,0,0,0,0             ;dfh
+        fcb 0ffh
+
+        
+;============================ INTERRUPCIONES    =============================
+
+server:
+        bclr 2,stat
+yastatot:
+        jmp yasta
+
+retrox:
+        jmp retro
+sisx:
+        jmp sis
+unox:
+        jmp uno
+dosx:
+        jmp dos
+tresx:
+        jmp tres
+cuatrox:
+        jmp cuatro
+        
+
+
+IRQ:
+        ;
+        ;pulsacion teclado
+        
+        ldx #$1
+        jsr tems
+        lda #$08
+        sta keyb
+next:
+        rol keyb
+        lda keyb
+        bcs yastatot
+        sta portc
+        lda portc
+        and #$0f
+        tsta
+        beq next
+;
+        ldx #$8
+        jsr tems       ;bucle 8 mS.
+        lda portc
+        cmp #$0
+        beq yasta
+        sta keyb
+
+        lda keyb        
+        cmp #$14        ;->
+        beq avancex
+        cmp #$18        ;<-
+        beq retrox
+        bclr 7,stat     ;flag de pantalla de estados
+        brclr 0,flag,caso
+        lda #1
+        sta tim        
+        jmp yasta
+;
+
+caso:
+        brclr 2,stat,rotul      ;esta en funcion de texto recibido?
+        brset 2,flag,rotul
+        bset 2,flag             ;no habia pasado. lo apunta.
+        clra
+        jsr WrtData
+        clra
+        jsr WrtData
+        lda #$40
+        jsr WrtCmd
+        lda #$8
+        sta tim4
+rotul:
+        cmp #$48        ;sos
+        beq sos
+        cmp #$21        ;veu
+        beq voze
+        cmp #$81        ;num.6 en MECANIC y fitxer DEMO en SERVEI
+        beq sisx
+        cmp #$22        ;LLI
+        beq libre                
+        cmp #$44        ;cero o "tan", "no", "anu"
+        beq cero
+        cmp #$24        ;back-space?
+        beq back
+        cmp #$42        ;el uno?
+        beq unox
+;
+        cmp #$41        ;el dos?
+        beq dosx
+;
+        cmp #$88        ;el tres?
+        beq tresx
+;
+        cmp #$84        ;el 4?
+        beq cuatrox
+;
+        cmp #$82        ;el 5?
+        bne nocin
+        jmp cinco
+nocin:
+;
+        cmp #$12        ;el 7,ATU,LLI,SI,FIN,OCU,DES
+        beq siete
+;
+        cmp #$11        ;el 8?
+        bne noch
+        jmp ocho
+noch:
+        cmp #$28
+        bne nueno
+        jmp nueve
+nueno:
+yasta:
+
+        lda portc        ;espera que suelten la tecla
+        cmp keyb
+        beq yasta
+        lda #$f0
+        sta portc
+        cli
+        rti
+avancex:
+        jmp avance
+
+sos:
+        jmp alarm
+back:
+        jmp bspace
+cero:
+        brset 0,stat,numec0x
+        brset 1,stat,libanu     ;pulsac. de "TAN"
+        brset 2,stat,servici     ;pulsacion de ANU
+        brset 3,stat,desplazno    ;    "     de "ANU"
+        brset 6,stat,nulono      ;    "     de "NO" en ANUL-LA
+        bra yasta
+voze:
+        jmp veu
+libanu:
+        bclr 1,stat
+        bset 0,stat
+        jmp yasta
+libre:
+        jmp lliur
+desplazno:
+        bclr 3,stat
+        bset 6,stat
+        bra yasta
+desplaz:
+        bclr 3,stat
+        bset 4,stat
+        bra yasta
+nulono:
+        bclr 6,stat
+        bset 3,stat
+        bra yasta
+nulosi:
+        bclr 6,stat
+        bset 1,stat
+        bra yasta
+numec0x:
+        jmp numec0
+siete:
+        brset 0,stat,sete       ;funcion "MECANIC"
+        brset 1,stat,libatu      ;   "    LLIURE, puls.ATU
+        brset 2,stat,servici    ;   "    puls. DES
+        brset 3,stat,desplaz    ;   "     "    OCU
+        brset 4,stat,finocu     ;   "    OCUPAT, puls. de FIN
+        brset 5,stat,lliatu     ;   "    ATURAT   "    de LLI
+        brset 6,stat,nulosi     ;   "    ANUL-LA  "    de SI
+        bra yasta
+servici:
+        jmp server
+sete:
+        jmp sietex
+finocu:
+        bclr 4,stat
+        bset 1,stat             ;pone estado LLIURE
+        jmp yasta
+;
+lliatu:
+        bclr 5,stat
+        bset 1,stat
+        jmp yasta
+;
+        jmp yasta
+libatu:
+        bclr 1,stat
+        bset 5,stat
+        jmp yasta
+avance:
+        jsr puedo
+        bcs notcan
+        lda lineaH
+        ora lineal
+        cmp #$23        
+        beq notcan
+
+        clc
+        lda lineaL
+        adc #$20
+        sta lineaL
+        lda lineaH
+        adc #$0
+        sta lineaH
+        jsr fichero
+        bset 0,flag
+        lda #$ff
+        sta tim
+notcan:
+        jmp yasta
+retro:
+        jsr puedo
+        bcs notcan
+        lda lineal
+        bne retr
+        lda lineaH
+        cmp #02
+        beq notcan
+retr:
+        clc
+        lda lineaL
+        sbc #$20
+        sta lineaL
+        lda lineaH
+        sbc #$0
+        sta lineaH
+        jsr fichero
+        bset 0,flag
+        lda #$ff
+        sta tim
+        bra notcan
+puedo:
+        lda stat
+        and #$18        ;mira si esta en desplaza. o ocupado
+        beq nopue
+        clc             ;vuelve sin carry
+        rts
+nopue:
+        sec             ;vuelv. con carry
+        rts                
+sis:
+        brclr 0,stat,esdemo      ;es entrada de numero de mecanic
+        lda #$6                ;codigo del 6
+        bra numec
+esdemo:
+        jmp demo
+numec0:
+        lda #$0                ;carga codigo del 0
+        bra numec
+uno:
+        lda #$1
+        bra numec
+dos:
+        lda #$2
+        bra numec
+tres:
+        lda #$3
+        bra numec
+cuatro:
+        lda #$4
+        bra numec
+cinco:
+        lda #$5
+        bra numec
+sietex:
+        lda #$7
+        bra numec
+ocho:
+        lda #$8
+        bra numec
+nueve:
+        lda #$9
+
+numec:
+        brclr 0,stat,posnm
+        ldx contx               ;posicion del caracter
+        cpx #$3                 ;maximo de caracteres
+        beq posnm
+        sta savchar             ;guarda momentaneamente
+        cpx #$0 
+        beq primer
+        cpx #$1
+        beq segon
+        lda #$f6
+        ldx #$10
+        jsr GoMem
+        clra            ;normal atributte
+        ldx #$3
+        jsr setatt
+        lda #$fa        ;pone blinking nueva pos. del cursor
+        ldx #$10
+        jsr GoMem
+        lda #$08
+        ldx #$03
+        jsr setatt
+        lda #$fa        ;desplaza cursor una pos. a derecha
+        ldx #$00
+        jsr GoMem
+;
+;
+        jsr poncurs
+        
+;
+        lda #$b6
+posnum:
+        sta dirnum
+        clrx
+        jsr GoMem
+        ldx #$0c                 ;espacios que ocupa un caracter en la tabla
+        lda savchar
+        fcb 42h              ;mul, calcula direccion del code del numero
+        TAX
+        jsr putnum        
+        brclr 7,flag,posnm
+        bclr 7,flag
+        rts             ;llamada de bspace
+posnm:
+        jmp YASTA
+primer:
+        lda #$ee
+        ldx #$10
+        jsr GoMem
+        clra            ;normal atributte
+        ldx #$3
+        jsr setatt
+        lda #$f2        ;pone blinking nueva pos. del cursor
+        ldx #$10
+        jsr GoMem
+        lda #$08
+        ldx #$03
+        jsr setatt
+        lda #$f2        ;desplaza cursor una pos. a derecha
+        ldx #$00
+        jsr GoMem
+;
+;
+        jsr poncurs
+        lda #$ae
+        bra posnum
+
+segon:
+        lda #$f2
+        ldx #$10
+
+        jsr GoMem
+        jsr noatrib       ;restablece atributo normal
+        lda #$f6        ;pone blinking nueva pos. del cursor
+        ldx #$10
+        jsr GoMem
+        lda #$08
+        ldx #$03
+        jsr setatt
+        lda #$f6        ;desplaza cursor una pos. a derecha
+        ldx #$00
+        jsr GoMem
+;
+        jsr poncurs
+        lda #$b2
+        jmp posnum
+
+
+lliur:
+        lda #$3
+        cmp contx       ;si no han entrado los 3 caracteres ­butifarra!
+        bne YASTAX
+        lda #$fa
+        ldx #$10
+        jsr GoMem
+        clra            ;normal atributte
+        ldx #$3
+        jsr setatt
+;
+        lda #$fa
+        ldx #$00
+        jsr GoMem
+        jsr borrcurs
+        lda #$d3
+        ldx #$11
+        jsr GoMem
+        lda #$8         ;blink "LLI"
+        ldx #$3
+        jsr setatt
+        bset 3,flag     ;avisa a main que han pulsado LLI
+yastax:
+        jmp yasta        
+demo:
+        clra
+        ldx #$02
+        jsr GoMem
+        lda #$b0
+        jsr WrtCmd        
+        clrx
+demo1:
+        lda testex,x
+        cmp #$ff
+        beq demo10
+        sub #$20
+        jsr WrtData
+        incx
+        bra demo1
+demo10:
+        clrx
+demo2:
+        lda teste1,x
+        cmp #$ff
+        beq demo11
+        sub #$20
+        jsr WrtData
+        incx
+        bra demo2
+;
+demo11:
+        clrx
+demo3:
+        lda teste2,x
+        cmp #$ff
+        beq demo12
+        sub #$20
+        jsr WrtData
+        incx
+        bra demo3
+;
+demo12:
+        clrx        
+demo4:
+        lda teste3,x
+        cmp #$1f
+        beq demo13
+        sub #$20
+        jsr WrtData
+        incx
+        bra demo4
+demo13:
+        lda #$b2
+        jsr WrtCmd
+        bclr 1,stat     ;*********actualiza stat ****DEMO******
+        bset 2,stat 
+        jmp YASTA        
+;
+veu:
+        lda #$d7
+        ldx #$11
+        jsr GoMem       ;pone el altavoz en video inverso
+        ldx #3
+        lda #$08
+        jsr setatt        
+        bset 5,flag     ;indica parpadeo
+        jmp yasta
+        
+alarm:
+        lda #$db
+        ldx #$11
+        jsr GoMem       ;pone el altavoz en blinking
+        ldx #3
+        lda #$08
+        jsr setatt        
+        bset 6,flag
+        jmp yasta
+;
+bspace:
+        brclr 0,stat,nobs
+        lda contx       ;mira en que punto esta
+        tsta
+        beq nobs
+        cmp #$3
+        beq chartres
+        cmp #$2
+        beq chardos
+        lda #$f2
+        ldx #$10
+
+bspac:
+        jsr GoMem
+        jsr noatrib
+        dec contx       ;dec 2 veces. La que toca y la incrementada por putnum
+        dec contx
+        lda #$0a        ;caracter de blancos
+        sta savchar
+        lda #$ae
+        bset 7,flag
+        jsr posnum
+        lda #$ee        ;repone cursor y atributo blink.
+        clrx
+        jsr GoMem
+        jsr poncurs                
+        lda #$ee
+        ldx #$10
+        jsr GoMem
+        lda #$8
+        ldx #$3
+        jsr setatt
+        ;
+        lda #$f2
+        ldx #$00
+        jsr GoMem
+        jsr borrcurs
+                
+        
+;
+        
+nobs:
+        jmp yasta
+;
+chardos:
+        lda #$f6
+        ldx #$10
+        jsr GoMem
+        jsr noatrib
+        dec contx
+        dec contx
+;
+        lda #$f6        ;borra cursor
+        ldx #$00
+        jsr GoMem
+        jsr borrcurs
+;
+        lda #$0a        ;caracter de blancos
+        sta savchar
+        bset 7,flag     ;indica llamada a subrutina posnum
+        lda #$b2
+        jsr posnum
+;
+        lda #$f2
+        clrx
+        jsr GoMem
+        jsr poncurs
+        lda #$f2
+        ldx #$10
+        jsr GoMem
+        lda #$8
+        ldx #$3
+        jsr setatt
+        jmp yasta
+        
+;
+;
+chartres:
+        lda #$fa
+        ldx #$10
+        jsr GoMem
+        jsr noatrib
+        dec contx       ;dec 2 veces. La que toca y la incrementada por putnum
+        dec contx
+        lda #$0a        ;caracter de blancos
+        sta savchar
+        bset 7,flag     ;indica llamada a subrutina posnum
+        lda #$b6
+        jsr posnum
+        lda #$fa
+        ldx #$00
+        jsr GoMem
+        jsr borrcurs
+;
+        lda #$f6
+        clrx
+        jsr GoMem
+        jsr poncurs
+        lda #$f6
+        ldx #$10
+        jsr GoMem
+        lda #$8
+        ldx #$3
+        jsr setatt
+
+        jmp yasta                
+;
+;pone cursor de pantallas de status
+;GoMem pone la direccion de principio
+poncurs:
+        lda #$87
+        jsr write
+        lda #$87
+        jsr write
+        lda #$87
+        jsr write
+        rts
+;borra el cursor de pantallas
+;GoMem pone la direccion de principio
+borrcurs:
+        clra            ;borra cursor
+        jsr write
+        clra
+        jsr write
+        clra
+        jsr write
+        rts        
+;
+;saca atributo de blinking al cursor se¤alado por GoMem
+noatrib:
+        clra            ;normal atributte
+        ldx #$3
+        jsr setatt
+        rts
+
+timer:
+        lda stat
+        and #$1c        ;debe estar en "SERVEI, DESPL., o OCUPAT"
+        beq offtim
+        dec tim
+        bne offtim
+
+altern1:
+        
+        brclr 0,flag,tim3
+        clra
+        jsr WrtData
+        clra
+        jsr WrtData
+        lda #$40
+        jsr WrtCmd
+        lda #$20
+        sta tim
+        bclr 7,stat     ;este bit puesto significa blink veu ¢ sos     
+        bclr 0,flag
+        bra offtim
+tim3:
+        bset 0,flag
+        jsr fichero       ;saca fichero 
+offtim:
+        brset 5,flag,atrveu     ;veu esta parpadeando
+otroflg:
+        brset 6,flag,atrsos     ;sos  "      "
+        bra salrti
+atrveu:
+        brset 7,stat,noatrveu
+        lda #$d7
+        ldx #$11
+        jsr GoMem       ;pone parpadeo
+        ldx #3
+        lda #8
+        jsr setatt        
+        bra otroflg
+noatrveu:
+        lda #$d7
+        ldx #$11
+        jsr GoMem       ;saca parpadeo
+        ldx #3
+        clra
+        jsr setatt
+        bra otroflg
+atrsos:
+        brset 7,stat,noatrsos
+        lda #$db
+        ldx #$11
+        jsr GoMem       ;pone el altavoz en blinking
+        ldx #3
+        lda #$08
+        jsr setatt        
+        bra salrti
+noatrsos:
+        lda #$db
+        ldx #$11
+        jsr GoMem       ;pone el altavoz en blinking
+        ldx #3
+        clra
+        jsr setatt        
+salrti:                
+        jsr pretim
+        bclr 5,tsr
+        rti
+SPI:
+SCI:
+SWI:
+
+        RTI
+marca:
+        fcb 'Electronica Barcelona S.L.',0FFH
+
+
+testex:
+        fcb 'Num.Expedient: 0001237          '
+        fcb 'Servei:        74               '        
+        fcb 'Client:        4321             '
+        fcb 'Subclient:     5678             '
+        fcb 'Nom i cognom:  JOSEP FIGUERES   '
+        FCB 'I BALANYA                       '
+        FCB 'Identificador: ABCDEFGHIJK1234  ',0ffh
+teste1:
+        FCB 'Matricula    : B-1234 BC        '
+        FCB 'Marc/Mod/colr: SEAT/131/BLANC   '
+        FCB 'Ubicacio vehi: 1234             '
+        fcb 'On es troben les claus: BAR MES '
+        FCB 'PROPER A UNA FARMACIA           '
+        FCB 'Persona contact.: LLUIS MARTI I '
+        fcb 'VALLMITJA. (familiar)           ',0ffh
+teste2:
+        fcb 'Situacio del vehicle: PASSAT EL '
+        FCB 'PONT DEL TREN, SEGON CARRER A   '
+        FCB 'L',27H,'ESQUERRA, AL FINAL            '
+        FCB '                                '
+        FCB '                                '
+        FCB '                                '
+        FCB 'Desti vehicle: TALLERES FERNAN- ',0ffh
+teste3:
+        FCB 'DEZ, CALLE BALMES 134. ALMERIA  '
+        FCB '                                '
+        FCB 'Codi producte: RP7              '
+        FCB 'Cost previst del servei: 002675 '
+        fcb 'FI',1fh       
+;==============================================================================
+
+
+;------------------- INICIALIZACION DE LOS VECTORES ----------------------
+                               ORG 1FF4H
+
+        FDB SPI
+        FDB SCI
+        FDB TIMER
+        FDB IRQ
+        FDB SWI
+        FDB ENTRY
+
+;------------------------------------------------------------------------------
+
+
+
+
+
+
+
+;-------------------- CONFIGURACION REGISTROS --------------------------------
+
+                                ORG 1FDFH       'OPTION REGISTER
+
+        FCB 0C8H               ;RAM0 = 1
+                               ;RAM1 = 1
+;-----------------------------------------------------------------------------
+
+        END
+
+

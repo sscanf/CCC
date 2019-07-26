@@ -1,0 +1,99 @@
+%!PS-Adobe-2.0
+%%Creator: Tango Schematic V1.31
+%%Title: BUS
+%%CreationDate: Fri Sep 30 11:15:26 1994
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%BoundingBox: 258 258 680 549
+%%EndComments
+/SCHdict 25 dict def
+SCHdict begin
+/a1 0 def /a2 0 def /a3 0 def /a4 0 def /a5 0 def
+/a6 0 def /a7 0 def /a8 0 def /a9 0 def /s0 () def
+/EX {/exec load} bind def
+/m {.072 mul} bind def
+/pa { %def
+	/a6 exch def /a1 exch def /a5 exch m def
+	/a4 exch m def /a3 exch m def /a2 exch m def
+	/a7 a1 cos a5 mul a2 add def
+	/a8 a1 sin a5 mul a3 add def
+	/a9 a1 a6 add cos a5 mul a2 add def
+	/s0 a1 a6 add sin a5 mul a3 add def
+	gsave
+		1 setlinecap a4 setlinewidth
+		newpath
+		a2 a3 a5 a1 a1 a6 add arc stroke
+	grestore
+	} bind def
+/pj { %def
+	/a1 exch m def
+	gsave
+		m exch m exch translate
+		gsave
+			newpath
+			0 0 a1 0 360 arc closepath
+			fill
+		grestore
+	grestore
+	} bind def
+/pr { %def
+	gsave
+		/a5 exch def
+		4 {m 4 1 roll} repeat
+		newpath
+		a5 1 eq
+			{
+			/a4 exch def /a3 exch def /a2 exch def /a1 exch def
+			/a6 a3 a1 add 2 div def /a7 a4 a2 add 2 div def
+			a1 a7 a6 a4 a3 a7 a6 a2
+			}
+			{3 index 3 1 roll exch 2 copy 5 index} ifelse
+		moveto lineto lineto lineto closepath
+		a5 2 eq
+			{fill}
+			{a5 3 eq {30} {10} ifelse m setlinewidth stroke} ifelse
+	grestore
+	} bind def
+/pt { %def
+	/a5 exch m def /a4 exch m def /a3 exch m def
+	/a2 exch m def /a1 exch m def
+	gsave
+		1 setlinecap a5 setlinewidth
+		newpath
+		a3 a4 moveto a1 a2 lineto stroke
+	grestore
+	} bind def
+/pps { %def
+	gsave
+		newpath
+		m exch m exch moveto
+	} bind def
+/ppp { %def
+	m exch m exch lineto
+	} bind def
+/ppe { %def
+		m exch m exch lineto
+		closepath eofill
+	grestore
+	} bind def
+/ps { %def
+	/s0 exch def /a1 exch def /a2 exch m def
+	gsave
+		/Helvetica findfont a2 1.36 mul scalefont setfont
+		m exch m exch translate
+		a1 dup 4 lt
+			{90 mul rotate} {4 sub 90 mul rotate -1 1 scale} ifelse
+		newpath
+		0 0 moveto s0 show
+	grestore
+	} bind def
+%%EndProlog
+0 setlinecap
+%%Page: 0 1
+save
+3594 m 3594 m translate
+0.168 0.168 scale
+restore
+showpage
+end
+%%Trailer

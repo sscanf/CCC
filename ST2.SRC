@@ -1,0 +1,1682 @@
+;******************************************************************************
+;*                                                                            *
+;* NOMBRE       : ST.SRC                                                      *
+;* DESCRIPCION  : PLACA ST                                                    *
+;* LENGUAJE     : ENSAMBLADOR PARA MC68HC705/C8                               *
+;* EDITOR       : NE.COM                                                      *
+;* OBSERVACIONES: No ejecuitarlo en un C4 porque utiliza la ram extendida.    *
+;*                                                                            *
+;*                                                                            *
+;******************************************************************************
+
+;Definici¢n del byte flag.
+;
+;
+; bit 0 - Se ha recibido un mensaje del modem. 
+; bit 1 - Est  recibiendo los slots (tambi‚n indica que el mensaje tiene SLOTS).
+; bit 2 - Se ha recibido un mensaje serie.
+; bit 3 - Time out del timer
+; bit 4 - El indicativo recibido coincide con el que est  esperando.
+; bit 5 - Ha informado al CGC que el SQL se ha abierto.
+; bit 6 - 
+; bit 7 - 0- Mira SQL, alarga tiempo de PTT / 1 - No mira SQL y PTT corto.
+;
+;
+;Definici¢n del byte flag+1
+;
+; bit 0 - 
+; bit 1 - Est  en modo test
+; bit 2 - 
+; bit 3 - 
+; bit 4 - 
+; bit 5 - 
+; bit 6 - 
+; bit 7 - 
+;
+;
+;
+
+;Definici¢n del byte PenTx
+;          
+;
+; bit 0 -  Pendiente TX mensaje RQC
+; bit 1 -  
+; bit 2 -  Pendiente TX mensaje FI VEU
+; bit 3 -  Pendiente TX mensaje FLOTA
+; bit 4 -  Pendiente TX mensaje MOD
+; bit 5 -  Pendiente TX mensaje ANU
+; bit 6 -
+; bit 7 -  
+;
+
+;Definici¢n del byte MsgRx
+;          
+;
+; bit 0 -  Recibido mensaje RQC
+; bit 1 -  Recibido mensaje AHYC
+; bit 2 -  Recibido mensaje RQQ
+; bit 3 -  Recibido mensaje ACK
+; bit 4 -  Recibido mensaje NACK
+; bit 5 -  Recibido mensaje HEAD
+; bit 6 -
+; bit 7 -  
+;
+
+;============================ CONSTANTES ====================================
+
+TIME_OUT equ 02h        ;Timeout 2 segundos
+
+;Definicion mensajes ST -> CGC
+
+DES      equ 01h
+OCU      equ 02h
+PAR      equ 03h
+FIN      equ 04h
+ERR      equ 05h
+EME      equ 06h
+VEU      equ 07h
+TAN      equ 08h
+MEC      equ 09h
+LLI      equ 10h
+SQL      equ 11h
+NOSQL    equ 22h
+
+
+ACK      equ 08h
+AHYC     equ 02H
+
+;Definicion mensajes CGC -> ST
+
+cASI     equ 15h
+cVEU     equ 0ah
+cFIVEU   equ 0bh
+cFLOTA   equ 0ch
+cMOD     equ 16h
+cANU     equ 09h
+cTEST    equ 10h
+cPTT     equ 20h
+cNOPTT   equ 21h
+
+; Definici¢n de los ports
+
+PORTA    equ 00h
+PORTB    equ 01h
+PORTC    equ 02h
+PORTD    equ 03h
+PCA      equ 04h
+PCB      equ 05h
+PCC      equ 06h
+MR       equ 0ah         ;miscellaneous register.
+ACR      equ 0eH         ;CONTROL ENTRADAS ANALOG.
+ARR      equ 0fH         ;REG. LECTURA ANALOGICA.
+
+
+;============================= SEGMENTO DE RAM ============================
+
+SCDAT   equ 0011h       ;Serial Comunications Data Register.
+SCCR1   equ 000eh       ;Serial Comunication Register 1.
+SCCR2   equ 000fh       ;Serial Comunication Register 2.
+SCSR    equ 0010h       ;Serial comunication Status Register.
+SPCR    equ 000ah       ;Serial peripheral control register.
+SPSR    equ 000bh       ;Serial peripheral status register.
+SPDR    equ 000ch       ;Serial peripheral data i/o register.
+
+BAUD    equ 000dh       ;Baud Rate Register.
+TCR     equ 0012h       ;Timer Control Register.
+TSR     equ 0013h       ;Timer Status Register.
+ENTRY   equ 0100h       ;DIRECCION COMIENZO ROM.
+OPTREG  equ 0fdfh       ;OPTION REGISTER.
+TCRH    equ 0018h       ;TIMER COUNT REGISTER (HIGH).
+TCRL    equ 0019h       ;TIMER COUNT REGISTER (LOW).
+COPRR   equ 001dh       ;COP reset Register.
+COPCR   equ 001eh       ;COP Control Register.
+
+
+;============================= PRIMER SEGMENTO DE RAM ======================
+                       ORG 30H
+sava     res 1
+temp     res 1
+
+BuffRx   res 56  ; - 8 SLOTS con CRC cada uno.
+BuffTx   res 10  ;
+slot1    res 6
+slot2    res 6
+slot3    res 6
+slot4    res 6
+slot5    res 6
+slot6    res 6
+slot7    res 6
+slot8    res 6
+
+MiPrefx   res 1   ; - Prefijo repetidor (8 bits)
+MiIndic   res 2   ; - Indicativo central
+RcIndic   res 2   ; - Indicativo del £ltimo que he recibido.
+RcPrefx   res 1
+IndicDest res 2
+
+RxMsgL   res 1
+TxMsgL   res 1
+MdmStat  res 1   ;Modem Status Register.
+MdmCtrl  res 1   ;Modem Control Register.
+flag     res 2
+RxMsgLn  res 1   ;Total largo mensaje (recepci¢n).
+TxMsgLn  res 1   ;Total largo mensaje (transmisi¢n)
+EspRx    res 1
+PenTx    res 1
+MsgRx    res 1
+tiempo   res 1
+tiempo1  res 1
+time     res 1
+time1    res 1
+PuntSer  res 1
+intentos res 1
+NumBlock res 1 
+TotBytes res 1
+RxBytes  res 1
+CgcLeng  res 1
+TotBlk   res 1
+CmIndicH res 1
+CmIndicL res 1
+
+;=============================== ROM =========================================
+
+                                 PSCT
+
+                               org ENTRY
+
+        lda #$82        
+        sta $1fdf       
+                                               
+;- - - - - - - - - - - - - - PROGRAMACION PORTS - - - - - - - - - - - - - - - -
+        lda #$ff
+        sta PCA
+
+        lda #$01
+        sta PCB
+        lda #$ff
+        sta pcc       
+;- - - - - - - - - - - - - - - - - resET - - - - - - - - - - - - - - - - - - -
+
+        bset 6,MR                     ;INT2 NO PERMITIDO
+
+        sei
+        bset 3,portc    ;/STR
+        bset 6,portc    ;RTS
+
+        clr RxMsgL      ;Contador bytes Tx
+        clr TxMsgL      ;Contador bytes Rx
+        clr flag
+        clr flag+1
+        clr MdmCtrl
+        clr MsgRx
+        clr EspRx
+        clr PenTx
+        clr PuntSer
+
+        lda #$5
+        sta RxBytes
+
+        lda #$1f
+        sta MiIndic
+        lda #$ff
+        sta MiIndic+1   ;El indicativo de la central es 1 1111 1111 1111 (13 bits)
+
+        lda #$01
+        sta MiPrefx
+
+        jsr INISPI      ;INICIALIZA EL MODO SPI
+        jsr SCION       ;Activa modo sci
+
+;- - - - - - - - - - - - - - - resETEA EL MODEM - - - - - - - - - - - - - - -
+        lda #$04
+        sta MdmCtrl
+        jsr CtrlOut
+        clra
+        sta MdmCtrl
+        jsr CtrlOut     ;resetea el modem
+        
+        bset 5,TCR
+        jsr pretim      ;Pone en marcha el timer
+
+
+;=============================== MAIN =======================================
+        
+        cli
+        jsr RxMsgFx             ;Pone el modem en recepci¢n.
+
+reint:
+        lda #$5
+        sta intentos            ;total 5 intentos
+main0:
+        bclr 3,flag
+        lda #TIME_OUT           ;2 segundos para cada intento
+        sta tiempo         
+        sta time
+        lda #$05           
+        sta tiempo1        
+        sta time1          
+                           
+main:   
+        brset 0,flag,jDoRxMsg   ;Ha recibido un mensaje.
+        brset 2,flag,RxSerie    ;Espera un buffer s‚rie.
+        brset 3,flag,tpo        ;Mira si ha pasado el tiempo
+        brset 1,portb,mSQL      ;Se abre el SQL, informa al CGC
+;        brset 1,portb,main
+
+        brclr 5,flag,main        
+        brclr 6,portc,main      ;Si est  comunicando no avisa del SQL
+        bclr 5,flag
+        clrx
+        stx CgcLeng
+        lda #NOSQL
+        jsr TxMsgCGC
+        bra main
+
+tpo:
+        lda PenTx               ;Mira si hay alg£n mensaje pendiente de ACK
+        beq reint
+
+        jsr DoTxMsg             ;Transmite el mensaje pendiente
+        dec intentos
+        bne main0
+        
+        lda #$5
+        sta RxBytes
+
+        clrx 
+        stx CgcLeng
+        lda #ERR
+        jsr TxMsgCGC            ;Avisa al CGC de que no ha habido comunicacion
+        bclr 0,flag+1
+        
+        clr PenTx
+        clr EspRx
+        bset 6,portc            ;Desactiva RTS para indicar que est  libre.
+        jmp reint
+
+jDoRxMsg:
+
+        jsr DoRxMsg
+        bra main0
+
+mSQL:
+        brclr 6,portc,main      ;Si est  comunicando no avisa del SQL
+        brset 5,flag,main
+
+        bset 5,flag
+        clrx
+        stx CgcLeng
+        lda #SQL
+        jsr TxMsgCGC
+        bra main
+
+;------------------ HA RECIBIDO UN MENSAJE DEL PC --------------------------
+
+RxSerie:
+        lda slot1             ;Guarda el indicativo y el prefijo.
+        sta MiPrefx
+        sta RcPrefx
+        lda slot1+1
+        sta CmIndicH
+        sta RcIndic
+        lda slot1+2
+        sta CmIndicL
+        sta RcIndic+1
+
+        lda slot1+3         
+        cmp #cPTT
+        beq mPTT                ;Quieren poner PTT
+        cmp #cNOPTT
+        beq mNOPTT
+        cmp #cTEST
+        beq jtest
+
+        jsr DoTxMsg             ;Transmite el mensaje
+        bclr 2,flag
+        jmp main0
+
+mPTT:
+        bset 0,portb            ;Activa PTT emisora.
+        bra FinSeri
+
+mNOPTT:
+        bclr 0,portb
+        bra FinSeri
+
+FinSeri:
+        bclr 2,flag
+        jmp main
+
+
+jTest:
+         jmp test
+;------------------ TRANSMITE UN MENSAJE AL MODEM --------------------------
+;El tipo de mensaje ha de estar en a
+;
+
+DoTxMsg:
+        
+        bclr 6,portc    ;RTS - indica que est  comunicando.
+
+        cmp #cASI
+        beq mASI
+        cmp #cVEU
+        beq mVeu
+        cmp #cFIVEU
+        beq MFiVeu
+        cmp #cFLOTA
+        beq mCamIndi
+        cmp #cMOD
+        beq mMod
+        cmp #cANU
+        beq mAnu
+
+        bset 6,portc   ;El comando no ha sido reconocido, se libera.
+RetOk:
+        rts
+;- - - - - - - - - - - - - - EL MENSAJE ES VEU  - - - - - - - - - - - - - 
+mVeu:
+        clr EspRx         ;Para el mensaje VEU no espera ACK
+        clr PenTx         ;S¢lo lo transmite una vez
+        jsr TxRQQ         ;Transmite un RQQ con el comando que indica a
+        bset 6,portc      ;RTS Off
+        bra RetOk
+
+;- - - - - - - - - - - - - - EL MENSAJE ES FI VEU - - - - - - - - - - - - 
+
+mFiVeu:
+        jsr TxRQQ         ;Transmite un RQQ con el comando que indica a.
+        clr EspRx         ;No espera ACK.
+        clr PenTx         ;No espera mas mensajes.
+        bset 6,portc      ;RTS Off
+        bra RetOk
+
+
+;- - - - - - - - - - - - - -  MENSAJE ANU - - - - - - - - - - - - - - - - -
+
+mAnu:
+        sta PenTx
+        jsr TxRQQ         ;Transmite un RQQ con el comando que indica a.
+        lda #ACK
+        sta EspRx         ;Espera ACK
+        bra RetOk
+        
+
+;- - - - - - - - - - - - - -  MENSAJE ASI - - - - - - - - - - - - - - - - -
+mASI:
+        sta PenTx
+        lda #AHYC        ;El movil le ha de constestar con un AHYC
+        sta EspRx
+
+        lda slot1+4      ;Total n£mero de bloques a transmitir
+        sta TotBytes
+        lda #$8
+        sta TotBlk
+        lda #48
+        sta RxBytes      ;Total a recibir 48 bytes (1 bloque).
+        jsr TxRqcAsi     ;Indica al movil que va transmitir un ASI
+        bra RetOk
+                                                
+;- - - - - - - - - - - - -  MENSAJE MOD - - - - - - - - - - - - - - - - - - -
+
+mMod:
+        sta PenTx
+        lda #48
+        sta RxBytes      ;Total a recibir 48 bytes (1 bloque).
+        
+        lda slot1+4      ;Total n£mero de bloques a transmitir
+        sta TotBytes
+        lda #$8
+        sta TotBlk
+        jsr TxRqcMOD     ;Indica al movil que va a transmitir un ASI
+        lda #AHYC        ;El movil le ha de constestar con un AHYC
+        sta EspRx
+        bra RetOk
+
+;- - - - - - - - - - - -  MENSAJE CAM_INDI - - - - - - - - - - - - - - - - -
+
+mCamIndi:
+
+        sta PenTx
+        jsr TxRQQ
+
+        lda #$6
+        sta RxBytes
+
+        lda #1
+        sta TotBytes
+        lda #1
+        sta TotBlk
+        lda #AHYC
+        sta EspRx
+        bra RetOk
+
+;------------------------- RECIBE UN MENSAJE DEL MODEM ---------------------
+;
+;Si est  comunicando, por ejemplo est  haciendo RQC, no atender  al que ha
+;transmitido hasta que acabe con este.
+;S¢lo atender  al que acaba de transmitir si es el indicativo con el que est 
+;comunicando.
+
+
+DoRxMsg:
+        bclr 0,flag
+        bclr 6,portc    ;Est  ocupado (RTS)
+
+        brset 4,flag,GesRx ;El indicativo recibido es el que estoy esperando.
+
+nomi:        
+        lda PenTx       ;Mira si est  comunicando.
+        beq GesRx       ;El byte PenTx indica si tiene alg£n mensaje pendiente
+        jmp main        ;de recibir un ACK, por lo tanto si no es 0 es que
+                        ;est  comunicando o intentando comunicarse con alg£n movil.
+GesRx:
+        lda EspRx       
+        bne SiEspe      ;Mira si est  esperando un mensaje en especial.
+
+        lda RcIndic
+        sta CmIndicH
+        lda RcIndic+1
+        sta CmIndicL    ;En CmIndic est  el indicativo que con el que ha de
+        bra RxMsg       ;comunicar
+        
+
+SiEspe:
+        lda MsgRx
+        cmp EspRx             
+        beq RxMsg       ;Si no es el mensaje que est  esperando lo rechaza.
+        rts
+
+RxMsg:
+        
+        brset 0,MsgRx,jrRQC
+        brset 1,MsgRx,jrAHYC
+        brset 2,MsgRx,jrRQQ
+        brset 3,MsgRx,jrACK
+        brset 4,MsgRx,jrNACK
+        rts
+
+jrRQC   jmp rRQC
+jrAHYC  jmp rAHYC
+jrRQQ   jmp rRQQ
+jrACK   jmp rACK
+jrNACK  jmp rNACK
+jrHEAD  jmp rHEAD
+;- - - - - - - - - - - - - RECIBE UN MENSAJE RQC - - - - - - - - - - - - - -
+;
+;Cuando recibe un mensaje RQC quiere decir que un movil va a transmitir el
+;N£mero de mec nico.
+;El ST ha de transmitir un AHYC para que el movil transmita el n£mero de
+;mec nico.
+;La ST se pone en modo OCUPADO para que el CGC no transmita nada hasta que
+;se libere, si en un cierto tiempo el movil no ha constestado el n£mero de
+;mec nico, se libera automaticamente.
+
+rRQC:
+        bclr 6,portc    ;RTS On (ocupado)
+
+        bclr 0,MsgRx    ;Borra flag que indica RQC recibido
+        clr intentos
+        clr PenTx       ;
+        clr EspRx       ;
+        jsr TxAHYC      ;Da permiso al movil para que transmita un HEAD
+
+wHEAD:
+        bclr 3,flag
+        lda #TIME_OUT
+        sta tiempo         
+        sta time
+        lda #$05
+        sta tiempo1
+        sta time1
+
+wHED:
+        brset 5,MsgRx,rHEAD
+        brclr 3,flag,wHED
+        bra FinRQC
+
+rHEAD:
+        bclr 5,MsgRx   ;Borra flag que indica HEAD recibido
+        clr EspRx
+
+        lda #$5
+        sta CgcLeng
+        lda #$9
+        jsr TxMsgCGC
+
+        bclr 5,MsgRx
+        
+        lda BuffRx+9
+        jsr sciOut
+
+        lda BuffRx+10
+        jsr sciOut
+
+        lda BuffRx+11
+        jsr sciOut
+
+        lda BuffRx+12
+        jsr sciOut
+
+        lda BuffRx+13
+        jsr sciOut
+
+        jsr TxACK       ;Transmite OK
+
+FinRQC:
+        bclr 0,flag+1
+        bclr 0,flag
+        bset 6,portc    ;RTS Off
+        rts
+
+
+;- - - - - - - -  HA RECIBIDO UN MENSAJE RQQ - - - - - - - - - - - - - - - -
+
+rRQQ:
+        bclr 2,MsgRx    ;Borra flag que indica RQQ recibido.
+        lda BuffRx+5
+        clrx
+        stx CgcLeng
+        and #$1f
+        jsr TxMsgCGC    ;Transmite al CGC el comando del mensaje RQQ
+
+        bset 6,portc    ;RTS Off
+        
+        lda BuffRx+5
+        and #$1f
+        cmp #VEU
+        beq FinRQQ       ;Unicamente no devuelve ACK en el mensaje VEU
+salt1:
+        jsr TxACK
+FinRQQ:
+        bclr 7,flag
+        bclr 0,flag+1
+        bset 6,portc    ;rts off
+        rts
+
+
+;- - - - - - - - - - - -  HA RECIBIDO UN ACK  - - - - - - - - - - - - - - - -
+
+rACK:
+        bclr 3,MsgRx    ;Borra flag que indica ACK recibido.
+        clr PenTx       ;No hay mensajes pendientes.
+        clr EspRx       ;No espera ning£n mensaje.
+        bset 6,portc    ;RTS Off
+        rts
+
+;- - - - - - - - - - - - - HA RECIBIDO UN NACK - - - - - - - - - - - - - - -
+
+rNACK:
+        bclr 4,MsgRx    ;Borra flag que indica ACK recibido.
+        clr PenTx       ;No hay mensajes pendientes.
+        clr EspRx       ;No espera ning£n mensaje.
+        bset 6,portc    ;RTS Off
+        rts
+
+;- - - - - - - -  HA RECIBIDO UN MENSAJE AHYC - - - - - - - - - - - - - - - -
+;
+;Cuando recibe un AHYC quiere decir que antes ha transmitido un RQC
+;y el movil le ha constestado con un AHYC.
+;Una vez recibido el AHYC se inicia el proceso para transmitir 
+;los bloques.
+;
+;Cada bloque consta de 8 slots de 6 bytes, el n£mero de bloques de cada
+;head se especifica en TotBlk.;
+;En TotBytes ha de estar el n£mero de bloques a transmitir.
+;En RxBytes ha de estar el total de bytes de cada bloque.
+;
+
+rAHYC:
+
+        clr EspRx
+        clr PenTx
+        lda #$1
+        sta NumBlock        ;N£mero de bloque a transmitir.
+        bclr 1,MsgRx        ;Borra flag que indica AHYC recibido
+
+block:
+        ldx #$2
+bloc2:
+        bset 6,portc        ;Pide al CGC un bloque.
+        bclr 3,flag
+        lda #1
+        sta tiempo         
+        sta time
+        lda #$05           
+        sta tiempo1        
+        sta time1
+
+blk:
+        bset 0,portb        ;Activa PTT emisora.
+        brset 2,flag,RxBlk  ;Espera un bloque.
+        brclr 3,flag,blk
+
+        decx
+        beq NoBlk
+
+        bclr 6,portc        ;Vuelve a indicar al cgc que est  libre por si
+        bra bloc2           ;ha perdido la interrupt del primero.
+        
+NoBlk:
+        bclr 0,portb        ;Desactiva PTT emisora.
+        clrx
+        stx CgcLeng
+        lda #ERR
+        jsr TxMsgCGC        ;Avisa al CGC de que no ha habido comunicaci¢n.
+        jmp FinAHYC         ;Sale por time out
+
+RxBlk:
+        bclr 2,flag
+
+        bclr 6,portc        ;Indica al CGC que est  ocupado.
+        jsr IniCab          ;Prepara el encabezado del mensaje.
+
+        lda TotBlk
+        deca
+        rola
+        rola
+        rola
+        rola
+        sta BuffTx+7
+
+        lda #$20
+        sta BuffTx+8
+
+        lda MiIndic
+        ora BuffTx+8
+        sta BuffTx+8
+        lda MiIndic+1
+        sta BuffTx+9
+
+        lda NumBlock
+        clrx
+        rola
+        rolx
+        rola
+        rolx
+        rola
+        rolx
+        rola
+        rolx
+        rola
+        rolx
+        rola
+        rolx
+        rola
+        rolx
+        and #$80
+        ora BuffTx+7
+        sta BuffTx+7
+
+        txa
+        and #$03
+        ora BuffTx+6
+        sta BuffTx+6
+
+        lda RxBytes
+        add #$a
+        sta TxMsgLn         ;Largo mensaje a transmitir para un HEAD y 8 SLOTS.
+
+        lda #$5
+        sta intentos
+        inc NumBlock
+
+repeat:
+        jsr TxMsg           ;Transmite
+
+;Espera un ACK, si en 'TIME_OUT' segundos no lo ha recibido, repetir  la transmisi¢n
+;del bloque hasta un tope de 5 veces, si en ese tiempo el coche no ha recibido,
+;indica al CGC que ha habido un error.
+;El CGC tendr¡a que reiniciar la operaci¢n de ASI.
+
+        bclr 3,flag
+        bclr 0,flag
+        bclr 3,MsgRx
+        lda #TIME_OUT
+        sta tiempo         
+        sta time
+        lda #$05           
+        sta tiempo1        
+        sta time1
+        
+EspOk:
+        brset 0,flag,EsACK
+        brclr 3,flag,EspOk      ;No han pasado 'TIME_OUT' segundos.
+
+        dec intentos
+        bne repeat
+
+        clrx 
+        stx CgcLeng
+        lda #ERR
+        jsr TxMsgCGC            ;Indica al CGC que no ha habido comunicaci¢n
+        bra FinAHYC             ;regresa a main.
+
+EsACK:
+        brclr 4,flag,EspOk      ;El mensaje recibido no es del movil esperado,
+                                ;ignora este mensaje.
+        brclr 3,MsgRx,EspOk     ;El mensaje recibido no es un ACK. lo ignora.
+        dec TotBytes
+        beq FinAHYC
+        jmp block               ;Gestiona siguiente bloque.
+
+FinAHYC:
+        
+        bset 6,portc            ;Indica al CGC que est  libre.
+        bclr 0,flag
+        bclr 3,flag
+        bclr 3,MsgRx
+        lda #$5
+        sta RxBytes
+        bclr 0,flag+1
+        rts
+
+
+;========================== SUBRUTINAS =======================================
+
+;---------------------- TRANSMITE AL CGC UN MENSAJE --------------------------
+;
+;El mensaje ha de estar en a
+;
+TxMsgCGC:
+        sei
+        sta sava
+        lda #$ec
+        jsr sciOUT
+        lda #$a1
+        jsr sciOUT
+        lda RcPrefx
+        jsr sciOUT
+        lda RcIndic
+        jsr sciOUT
+        lda RcIndic+1
+        jsr sciOUT
+
+        lda sava
+        jsr sciOUT
+        lda CgcLeng
+        jsr sciOUT
+        cli
+        rts
+                   
+
+;----------------- ACTIVA EL PROCESO DE TRANSMISION -------------------------
+TxMsg:
+        bclr 6,portc    ;RTS On
+        brset 7,flag,_NoSql      ;Si el bit 7 de flag es 1 no mira SQL
+
+        brset 0,portb,_NoSql     ;Si el PTT ya est  puesto, no mira SQL
+        brclr 1,portb,TxMsg      ;Espera que el squelch est‚ cerrado
+
+_NoSql:
+
+        bset 0,portb             ;Activa PTT emisora.
+
+        bclr 3,flag
+        brset 7,flag,corto
+
+        lda #$5
+        sta tiempo
+        sta time
+        lda #$01
+        sta tiempo1        
+        sta time1          
+        bra esp
+
+corto:
+        lda #$03
+        sta tiempo
+        sta time
+        lda #$01
+        sta tiempo1        
+        sta time1          
+
+esp:   
+        brclr 3,flag,esp       ;Mira si ha pasado el tiempo
+
+ya:
+        bclr 7,flag
+        sei
+        clr TxMsgL
+        bclr 1,flag
+        bset 0,MdmCtrl  ;Tx enable.
+        bclr 1,MdmCtrl  ;Tx Parity Disable.
+        jsr CtrlOut     ;Pone el modem en transmisi¢n y transmite el BuffRx.
+
+        lda BuffTx
+        jsr DataOut
+        inc TxMsgL
+        cli        
+
+        bclr 3,flag
+        lda #1
+        sta tiempo         
+        sta time
+        lda #$05           
+        sta tiempo1        
+        sta time1
+
+WaitEnd:
+        brclr 0,MdmCtrl,WaitEn3  ;Espera un determinado tiempo, y si en ese
+        brclr 3,flag,WaitEnd     ;tiempo el modem no ha indicado que ha
+                                 ;transmitido el mensaje, pone el equipo y el 
+                                 ;modem en recepci¢n.
+
+        bclr 0,portb    ;Desactiva el PTT
+        bclr 0,MdmCtrl
+        jsr CtrlOut
+        clr TxMsgL
+
+Waiten3:
+        rts
+
+
+;----------------- ACTIVA EL PROCESO DE RECEPCION  -------------------------
+RxMsgFx:
+        clr RxMsgL
+        lda #$8
+        sta RxMsgLn
+
+        bset 2,MdmCtrl  ;Rx enable.
+        bclr 3,MdmCtrl  ;Rx format 0
+        jsr CtrlOut     ;Pone el modem en recepci¢n.
+        rts
+
+
+;------------------------- TANSMITE UN ACK ---------------------------------
+
+TxACK:
+        jsr IniCab        ;Prepara el encabezado del mensaje.
+        clr BuffTx+9
+        lda MiIndic
+        ldx MiIndic+1
+
+        clc
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        
+        stx BuffTx+8
+        and #$03
+        ora #$20
+        sta BuffTx+7
+
+        lda #$0a
+        sta TxMsgLn       ;Total largo del mensaje a transmitir.
+        jsr TxMsg         ;Activa proceso transmisi¢n buffer.
+        bset 6,portc      ;rts off
+        rts
+
+;------------------------- TANSMITE UN RQQ ---------------------------------
+
+TxRQQ:
+        sta sava
+
+        jsr IniCab
+        clr BuffTx+9
+        lda MiIndic
+        ldx MiIndic+1
+
+        clc
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+
+        stx BuffTx+8
+        and #$03
+        ora #$58
+        sta BuffTx+7
+        lda sava
+        ora BuffTx+9
+        sta BuffTx+9
+
+        lda #$0a
+        sta TxMsgLn       ;Total largo del mensaje a transmitir.
+        jsr TxMsg         ;Activa proceso transmisi¢n buffer.
+        rts
+
+;------------------------- TANSMITE UN AHYC ---------------------------------
+
+TxAHYC:
+        sta sava
+
+        jsr IniCab
+        clr BuffTx+9
+        lda MiIndic
+        ldx MiIndic+1
+
+        clc
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        
+        stx BuffTx+8
+        and #$03
+        ora #$54
+        sta BuffTx+7
+
+        lda #$0a
+        sta TxMsgLn       ;Total largo del mensaje a transmitir.
+        jsr TxMsg         ;Activa proceso transmisi¢n buffer.
+        rts
+
+;-------------------- TANSMITE UN RQC PARA ASI ---------------------------------
+
+TxRqcASI:
+
+        jsr IniCab
+        clr BuffTx+9
+        lda MiIndic
+        ldx MiIndic+1
+
+        clc
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        
+        stx BuffTx+8
+        and #$03
+        ora #$5c
+        sta BuffTx+7
+
+        lda #$0a
+        sta TxMsgLn       ;Total largo del mensaje a transmitir.
+        jsr TxMsg         ;Activa proceso transmisi¢n buffer.
+        rts
+
+;-------------------- TANSMITE UN RQC PARA MOD ---------------------------------
+
+TxRqcMOD:
+
+        jsr IniCab
+        clr BuffTx+9
+        lda MiIndic
+        ldx MiIndic+1
+
+        clc
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        rora
+        rorx
+        ror BuffTx+9
+        
+        stx BuffTx+8
+        and #$03
+        ora #$5c
+        sta BuffTx+7
+
+        lda BuffTx+9
+        ora #$02
+        sta BuffTx+9
+
+        lda #$0a
+        sta TxMsgLn       ;Total largo del mensaje a transmitir.
+        jsr TxMsg         ;Activa proceso transmisi¢n buffer.
+        rts
+
+;--------------- PREPARA EL ENCABEZADO DE LOS MENSAJES -----------------------
+ 
+
+IniCab:
+;       Compone el preambulo y el SINCT
+
+        lda #$aa
+        sta BuffTx
+        sta BuffTx+1      ;Preambulos
+        lda #$3b
+        sta BuffTx+2
+        lda #$28
+        sta BuffTx+3      ;SINCT
+
+;       Compone el prefijo y el indicativo fuente
+
+
+        lda MiPrefx
+        ora #$80
+        sta BuffTx+4      ;Prefijo
+
+
+        lda CmIndicH
+        ldx CmIndicL
+        clc
+        rolx
+        rola
+        rolx
+        rola
+        rolx
+        rola
+        stx BuffTx+6      ;Los bits 8 altos del indicativo
+        sta BuffTx+5      ;Los 5 bits bajos del indicativo + bit 4 a 1
+        rts
+
+;- - - - - - - - TRANSMITE EL ACUMULADOR AL CONTROL REGISTER - - - - - - - - -
+CtrlOut:
+
+        lda #$ff
+        sta PCA
+
+        bset 2,PORTC    ;A1     (direcciona el control register)
+        bset 1,PORTC    ;A0
+        bclr 3,PORTC    ;A2
+
+        lda MdmCtrl
+        sta PORTA
+
+        bclr 0,PORTC    ;/STB
+        nop
+        nop
+        nop
+        bset 0,PORTC
+        nop
+        nop
+        nop
+        rts
+
+; - - - - - - - - - - LEE EL STATUS REGISTER DEL MODEM - - - - - - - - - - - -
+StatusIn:
+
+        clra
+        sta PCA
+
+        bset 2,PORTC    ;A1     (direcciona el control register)
+        bset 1,PORTC    ;A0
+        bset 3,PORTC    ;A2
+        bclr 0,PORTC
+        nop
+        nop
+        nop
+        lda PORTA
+        bset 0,PORTC
+        nop
+        nop
+        nop
+        rts
+
+
+;- - - - - - - - - - - TRANSMITE UN BYTE AL TX DATA BuffRx - - - - - - - - -
+
+DataOut:    
+
+
+        bset 2,PORTC    ;A1     (direcciona el control register)
+        bclr 1,PORTC    ;A0
+        bclr 3,PORTC    ;A2
+        sta sava
+        lda #$ff
+        sta PCA
+        lda sava
+        sta PORTA
+
+        bclr 0,PORTC
+        nop
+        nop
+        nop
+        bset 0,PORTC
+        nop
+        nop
+        rts
+
+
+
+
+;- - - - - - - - - - - RECIBE UN BYTE DEL RX DATA BuffRx - - - - - - - - -
+
+DataIn:
+
+        bset 2,PORTC    ;A1     (direcciona el control register)
+        bclr 1,PORTC    ;A0
+        bset 3,PORTC    ;A2
+        bclr 0,PORTC
+        nop
+        nop
+        nop
+
+        clra
+        sta PCA
+        lda PORTA
+
+        bset 0,PORTC
+        nop
+        nop
+        nop
+        rts
+
+
+
+;---------------TRANSMITE AL CGC EL CONTENIDO DEL REGISTRO A ------------------
+
+SciOut:
+        brclr 7,SCSR,SciOut        ;MIRA SI ESTA OCUPADO
+        sta SCDAT
+espera:
+        brclr 6,SCSR,espera     ;ESPERA PARA ACABAR DE TRANSMITIR
+        rts
+
+
+;-----------------------------------------------------------------------------
+
+;------------------CONFIGURACION INTERFACE DE COMUNICACIONES ------------------
+SCION:
+        LDA #$00
+        STA SCCR1
+
+        LDA #$2C        ;- TDRE interrupt disabled
+                        ;- TC interrupt disabled
+                        ;- SCI interrupt enabled
+                        ;- IDLE interrupt disbaled
+                        ;- After the last byte is transmitted, the TDO line
+                        ;  becomes a hight-impedance line.
+                        ;- Receiver disabled and RDRF, IDLE, OR, NF and FE
+                        ;  status bits are inhibited.
+        STA SCCR2
+
+                        ;calculos para cristal de 4 Mhz.
+                        ;
+        LDA #$30        ;Baud rate a 9600 - #$30
+                        ;          a 4800 - #$31
+                        ;          a 1200 - #$33
+        STA BAUD
+        RTS
+;------------------------------------------------------------------------------
+
+;------------------- DESACTIVA EL MODO SCI --------------------------------
+SCIOFF:        
+        LDA #$00
+        STA SCCR1       ;one start bit, eight data bits, one stop bit
+
+        LDA #$00        ;- TDRE interrupt disabled
+                        ;- TC interrupt disabled
+                        ;- SCI interrupt enabled
+                        ;- IDLE interrupt disbaled
+                        ;- Transmiter enabled
+                        ;- Receiver enabled
+                        ;  status bits are inhibited.
+        STA SCCR2
+        RTS                     
+
+;-----------------------------------------------------------------------------
+
+test:
+        bset 0,portb            ;Activa PTT emisora.
+
+        lda #$aa
+        sta BuffTx
+        lda #$aa
+        sta BuffTx+1
+        lda #$aa
+        sta BuffTx+2
+        lda #$aa
+        sta BuffTx+3
+        lda #$aa
+        sta BuffTx+4
+        lda #$aa
+        sta BuffTx+5
+        lda #$aa
+        sta BuffTx+6
+        lda #$aa
+        sta BuffTx+7
+        lda #$aa
+        sta BuffTx+8
+        lda #$aa
+        sta BuffTx+9
+        
+tst:
+        bset 1,flag+1   ;Indica que est  en modo test.
+        bclr 7,flag
+        sei
+        clr TxMsgL
+        bclr 1,flag
+        bset 0,MdmCtrl  ;Tx enable.
+        bclr 1,MdmCtrl  ;Tx Parity Disable.
+        jsr CtrlOut     ;Pone el modem en transmisi¢n y transmite el BuffRx.
+
+        lda #$0a
+        jsr DataOut
+        inc TxMsgL
+        cli        
+
+WaitTest:
+
+        brset 0,MdmCtrl,WaitTest
+        bra tst 
+
+
+;----------------------------------- INICIALIZACION SPI ----------------------------------------
+
+;***************************** IMPORTANTE *************************************
+;                                                      __
+;PARA QUE EL MICRO ACEPTE SER MASTER SE HA DE PONER EL SS A POSITIVO (PATA 37),
+; SI NO ES ASI EL MICRO RECHAZA EL BIT 4 DEL SPCR (MASTER),
+;
+;******************************************************************************
+
+INISPI:
+        LDA #$53        ;Serial Peripheral Interrupt Disable
+        STA SPCR        ;Serial Peripheral System Enable
+                        ;Master mode
+                        ;SCK line idles in low state
+                        ;     __ 
+                        ;When SS is low, first edge of SCK invokes first data
+                        ;sample.
+                        ;Internal Processor Clock Divided by 32
+
+        RTS
+;-----------------------------------------------------------------------------------------------
+
+pretim:
+
+        lda #$ff
+        sta tcrH
+        lda #$0f
+        sta tcrL
+        rts
+
+
+bucle:
+        deca
+        rolx
+        tsta
+        bne bucle
+        rts
+
+;======================== RUTINAS INTERRUPT =================================
+
+
+
+;----------------------------- IRQ ------------------------------------------
+irq:
+
+        jsr StatusIn            ;Lee el status register del modem
+        sta MdmStat
+
+        brset 3,MdmStat,jTxBuff     ;Transmite siguiente byte del BuffRx
+CntIrq1 brset 0,MdmStat,jRxBuff     ;Recibe un byte del modem.
+CntIrq2 brset 4,MdmStat,jFinTx      ;Tx Idle
+CntIrq3 brset 6,MdmStat,jrxSYNC     ;Recibe un word SYNC
+CntIrq4 brset 7,MdmStat,jrxSYNT     ;Recibe un word SYNT
+CntIrq5:brset 5,MdmStat,jTimer      ;Interrupci¢n timer
+CntIrq6:
+FinIrq:
+        rti
+
+
+
+;------------------------------ JUMPS ---------------------------------------
+jTxBuff jmp TxBuff
+jRxBuff jmp RxBuff
+jFinTx  jmp FinTx
+jrxSYNC jmp rxSYNC
+jrxSYNT jmp rxSYNT
+jTimer  jmp TimerRq
+
+;------------------------Rutina transmisi¢n BuffRx ---------------------------
+
+TxBuff:
+
+        ldx TxMsgL
+        cpx TxMsgLn     ;Tope de largo en bytes del mensaje a transmitir.
+                        ;Para un mensaje short data  - 0AH
+                        ;Para un mensaje con 1 slot  - 0dh
+                        ;Para un mensaje con 2 slots - 13h
+        beq CntIrq1
+
+
+        lda BuffTx,x
+        jsr DataOut
+
+        cpx #$4
+        bne SigTx
+
+        bset 1,MdmCtrl  ;Activa paridad interna.
+        jsr CtrlOut
+
+SigTx:
+        inc TxMsgL
+        bra CntIrq1
+
+
+;------------------------Rutina de recepci¢n del BuffRx ---------------------
+
+RxBuff:
+        jsr DataIn
+        bclr 0,flag     ;reseteo el flag que indica mensaje recibido.
+
+        ldx RxMsgL      ;Puntero del buffer de recepci¢n
+        sta BuffRx,x
+        inc RxMsgL
+        incx
+
+        cpx RxMsgLn     ;Mira si es final de mensaje
+        bne CntIrq2
+
+        brset 1,MdmStat,nojmp    ;El CRC no es correcto, rechazo mensaje.
+        jmp FinRxMsg
+nojmp:
+
+        brclr 1,flag,NoSLOTS        ;No est  recibiendo los SLOTS
+
+        bra NoHEAD      ;Ya ha recibido todos los SLOTS.
+
+
+NoSLOTS:
+        lda BuffRx+2    ;Miro el tipo de mensaje por si han de venir SLOTS.
+        and #$03        ;Para saber si es un HEAD se ha de leer el 'CAT', este
+        sta sava        ;queda comprendido entre el byte 2 y el 3 del BuffRx.
+
+        ldx BuffRx+3    
+        txa
+        and #$80
+        tax
+        lda sava
+
+        clc
+        rolx
+        rola            ;Ahora el 'CAT' est  en el acumulador.
+        cmp #$0
+        beq NoHEAD      ;No es un HEAD.
+
+        sta NumBlock
+
+        lda BuffRx+3    ;Ahora miro la cantidad de SLOTS que han de venir.
+        and #$70
+        clc
+        rora
+        rora
+        rora
+        rora
+        inca
+
+        ldx #$8         ;Multiplica a x 8
+        fcb 42h         ;mul
+        add RxMsgLn
+        sta RxMsgLn
+cnt1:
+        bset 1,flag     ;Flag para indicar que vienen SLOTS
+        bset 3,MdmCtrl
+        jsr CtrlOut     ;Indica al modem que ahora vienen SLOTS.
+        jmp CntIrq2
+
+
+NoHEAD:
+        bclr 1,flag
+
+        lda BuffRx
+        and #$7f
+        sta RcPrefx     ;Memorizo el prefijo recibido.
+        
+        brclr 7,BuffRx+3,nHEAD ;El mensaje recibido es un HEAD
+        jmp iHEAD
+
+nHEAD:
+        lda BuffRx+5
+        sta temp
+        ldx BuffRx+4
+        lda BuffRx+3
+        and #$3
+
+        clc
+        rol temp
+        rolx
+        rola
+        rol temp
+        rolx
+        rola
+        rol temp
+        rolx
+        rola
+
+        and #$1f
+        sta RcIndic
+        stx RcIndic+1     ;Memorizo el indicativo recibido.
+        
+        lda BuffRx+1    ;ff
+        ldx BuffRx+2    ;f8
+        
+        clc
+        rora
+        rorx
+        rora
+        rorx
+        rora
+        rorx
+
+        sta IndicDest   ;Memorizo el indicativo destino byte alto
+        stx IndicDest+1 ;Memorizo el indicativo destino byte bajo
+        
+        lda MiIndic
+        cmp IndicDest
+        bne NoIndi
+
+        lda MiIndic+1
+        cmp IndicDest+1
+        bne NoIndi
+
+        brclr 0,flag+1,NoPrx
+
+        lda MiPrefx
+        cmp RcPrefx
+        bne NoIndi
+
+NoPrx:
+        bset 0,flag+1
+        lda RcPrefx
+        sta MiPrefx
+
+        bset 4,flag     ;Indica que el indicativo recibido coincide con el
+        jmp NoInd       ;que est  esperando.
+        
+NoIndi:
+        bclr 4,flag     ;El indicativo recibido no coincide.
+NoInd:
+        bset 0,flag     ;Indica que se ha recibido un mensaje.
+        bset 7,flag
+
+
+        lda BuffRx+3
+        and #$1c
+        
+        cmp #$1c
+        beq iRQC     ;El mensaje recibido es un RQC
+        
+        cmp #$14
+        beq iAHYC    ;El mensaje recibido es un AHYC
+        
+        cmp #$18
+        beq iRQQ     ;El mensaje recibido es un RQQ
+
+        cmp #$00
+        beq iNACK    ;El mensaje recibido es un NACK
+
+        cmp #$04
+        beq iACK     ;El mensaje es un ACK
+        jmp FinRxMsg
+
+iRQC:
+        bset 0,MsgRx
+        jmp FinRxMsg
+iAHYC:
+        bset 1,MsgRx
+        jmp FinRxMsg
+iRQQ:
+        bset 2,MsgRx
+        jmp FinRxMsg
+iACK:
+        bset 3,MsgRx
+        jmp FinRxMsg
+iNACK:
+        bset 4,MsgRx
+        jmp FinRxMsg
+
+iHEAD:        
+        lda BuffRx+5
+        sta RcIndic+1
+        lda BuffRx+4
+        and #$1f
+        sta RcIndic
+        bset 5,MsgRx
+        bset 0,flag
+        bset 7,flag
+        jmp FinRxMsg
+
+
+FinRxMsg:
+
+        lda #$00
+        sta MdmCtrl
+        jsr CtrlOut
+
+        jsr RxMsgFx      ;Reinicializa la recepci¢n.
+        jmp CntIrq2
+
+TimerRq:
+         lda MdmCtrl
+         and #$0f
+         sta MdmCtrl
+         jsr CtrlOut
+         jmp CntIrq6
+
+
+;------------------------FINALIZA TRANSMISION -------------------------------
+
+FinTx:
+        brset 1,flag+1,FiTx       ;Est  en modo test
+
+        bclr 0,portb    ;Desactiva el PTT
+FiTx:
+        bclr 0,MdmCtrl
+        jsr CtrlOut
+        clr TxMsgL
+        jmp CntIrq3
+
+;------------------------RECIBE EL WORD DE SYNC -------------------------
+
+rxSYNC:
+        clr RxMsgL
+        jmp CntIrq4
+
+;------------------------RECIBE EL WORD DE SYNT -------------------------
+
+rxSYNT:
+        clr RxMsgL
+        jmp CntIrq5
+
+
+;---------------------------RECEPCION SERIE SCI -----------------------------
+
+sci:
+        lda SCSR
+        lda SCDAT
+
+        brset 2,flag,FinSerie ;Si ya tiene un mensaje en memoria no acepta 
+                              ;otro hasta que se procese este.
+
+        cmp #$a1
+        bne esData
+        
+        ldx PuntSer
+        beq EsData
+        decx
+
+        lda slot1,x
+        cmp #$ec
+        bne esData
+        clr PuntSer
+        bra FinSerie
+
+esData:
+        lda SCDAT
+        ldx PuntSer
+        bclr 0,PORTC
+        sta slot1,x
+        inc PuntSer
+        incx
+        cpx RxBytes
+        bne FinSerie
+        bset 2,flag
+        clr PuntSer
+
+FinSerie:
+        rti
+
+;------------------------- INTERRUPCION DEL TIMER ---------------------------
+
+timer:
+        dec time
+        bne TimerEnd
+
+        lda tiempo
+        sta time
+
+        dec time1
+        bne TimerEnd
+
+        lda tiempo
+        sta time
+        lda tiempo1
+        sta time1
+        bset 3,flag
+
+TimerEnd:
+        
+;        lda #$55        ;refresco del watch dog
+;        sta COPRR
+;        lda #$aa
+;        sta COPRR
+
+        bclr 5,TSR
+        jsr pretim
+        rti
+
+
+spi:
+swi:
+        rti
+
+
+;======================== VECTOres INTERRUPCION ===============================
+                               org 1ff4h
+
+        fdb spi
+        fdb sci
+        fdb timer
+        fdb irq
+        fdb swi
+        fdb entry
+
+;------------------------------------------------------------------------------
+;-------------------- CONFIGURACION REGISTROS --------------------------------
+                                org 1fdfh       'option register
+
+        fcb 082h               ;ram0 = 1
+                               ;ram1 = 1
+;-----------------------------------------------------------------------------
+
+        END

@@ -1,0 +1,41 @@
+;PALASM Design Description
+
+;---------------------------------- Declaration Segment ------------
+TITLE    CONTROLADOR MEMORIA  RTX-21/CPU CON RAM DS1245Y EN CS1
+PATTERN  
+REVISION 1
+AUTHOR   OSCAR CASAMITJANA
+COMPANY  ELECTRONICA BARCELONA S.L.
+DATE     01/04/93
+
+CHIP  U3  PALCE16V8
+
+;---------------------------------- PIN Declarations ---------------
+PIN  18..14    CS[1..5]                             COMBINATORIAL ;
+PIN  19         CE                                   COMBINATORIAL ;
+PIN  9          RW                                   COMBINATORIAL ;
+PIN  3..8       A[19..14]                            COMBINATORIAL ;
+PIN  2          MREQ                                 COMBINATORIAL ;
+
+;----------------------------------- Boolean Equation Segment ------
+EQUATIONS
+CE = /(/A[19]*/A[18]*/A[17]*/A[16]*/A[15]*/MREQ)
+CS[2] =A[19]*/A[18]*/MREQ
+CS[3] =((A[19]*A[18]*/A[17])+(A[19]*A[18]*A[17]*/A[16]))*/MREQ
+/CS[4]=A[19]*A[18]*A[17]*A[16]*/MREQ
+
+/CS[1] = ((/A[19]*A[18])+(/A[19]*/A[18]*A[17])+(/A[19]*/A[18]*/A[17]*A[16])
++(/A[19]*/A[18]*/A[17]*/A[16]*A[15]))*/MREQ
+
+;----------------------------------- Simulation Segment ------------
+SIMULATION
+
+TRACE_ON CE CS[1] CS[2] CS[3] CS[4] A[19] A[18] A[17] A[16] A[15] MREQ
+;SETF A[19] A[18] A[17] A[16] /A[15] /MREQ
+
+SETF /A[19] A[18] A[17] A[16] /A[15] /MREQ     ;CS1
+SETF A[19] A[18] A[17] A[16] /A[15] /MREQ      ;CS4
+SETF A[19] /A[18] /A[17] /A[16] /A[15] /MREQ   ;CS2
+
+;-------------------------------------------------------------------
+

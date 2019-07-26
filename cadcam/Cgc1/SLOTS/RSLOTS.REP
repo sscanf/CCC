@@ -1,0 +1,1124 @@
+
+
+    Aperture Information                                          RSLOTS.PCB
+
+                                        
+
+                         Aperture and Tool Descriptions
+    ========================================================================
+
+    Code   Shape    X    Y     Hole  Type   Comment
+    ------------------------------------------------------------------------
+    D10    Mt Hole  200  200   000   Draw   
+    D11    Ellipse  050  050   000   Draw   
+    D12    Sq Rect  050  050   000   Draw   
+    D13    Ellipse  060  060   000   Draw   
+    D14    Sq Rect  060  060   000   Draw   
+    D15    Sq Rect  070  070   000   Draw   
+    D16    Ellipse  070  070   000   Draw   
+    D17    Mt Hole  188  188   000   Draw   
+    D18    Mt Hole  098  098   000   Draw   
+    D19    Mt Hole  156  156   000   Draw   
+    
+
+
+    Code   Hole Diameter
+    --------------------
+    T01    124
+    T02    034
+    T03    038
+    T04    046
+    T05    022
+    T06    137
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  1
+
+    Aperture Information                                          RSLOTS.PCB
+
+                                        
+
+                          Aperture and Tool Assignments
+    ========================================================================
+
+    Item                     Normal  S Mask   Plane   Thermal  Drl Sym  Tool
+    ------------------------------------------------------------------------
+    DRAW APERTURE            D11      -        -       -        -        -
+    LINE_010                  *       -        -       -        -        -
+    LINE_012                  *       -        -       -        -        -
+    LINE_016                  *       -        -       -        -        -
+    LINE_018                  *       -        -       -        -        -
+    LINE_020                  *       -        -       -        -        -
+    LINE_040                  *       -        -       -        -        -
+    P_EL_0060_0060_038_AL     *       *        *       *        -        -
+    P_SQ_0060_0060_038_AL     *       *        *       *        -        -
+    P_SQ_0070_0070_046_AL     *       *        *       *        -        -
+    V_CR_040_020              *       *        *       *        -        -
+    HOLE_020                  -       -        -       -        *       T02
+    HOLE_038                  -       -        -       -        *       T03
+    HOLE_046                  -       -        -       -        *       T04
+    
+
+    - : Not applicable.                   * : Aperture/tool is not assigned.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  2
+
+    Component Locations                                           RSLOTS.PCB
+
+                                        
+
+    Ref Designator    Pattern           Location
+    ========================================================================
+
+    CN1               MOLEX30           09500 08400
+    CN2               MOLEX30           08500 09400
+    CN3               MOLEX30           08500 08700
+    CN4               MOLEX30           11800 09400
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  1
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+    DRC Clearances (in mils)
+    ------------------------
+
+                   Top   Bot  Mid1  Mid2  Mid3  Mid4  Mid5  Mid6  Mid7  Mid8
+
+      Pad-to-Pad    13    13    13    13    13    13    13    13    13    13
+     Pad-to-Line    13    13    13    13    13    13    13    13    13    13
+    Line-to-Line    13    13    13    13    13    13    13    13    13    13
+    
+    Hole-to-Hole    13
+    
+
+    DRC Report Options
+    ------------------
+
+    Clearance Violations:             enabled
+    Text Violations:                  enabled
+    Net List Violations:              enabled
+    Single Node Routes:               enabled
+    Unconnected Pins:                 enabled
+    Unplaced Nodes:                   enabled
+    
+
+    DRC Errors
+    ----------
+
+    CLEARANCE VIOLATION
+       Line at (10750,8450) to (10750,8550) [Top layer]
+       Pad CN1-26 at (10700,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10500,8550) to (10750,8550) [Top layer]
+       Pad CN1-26 at (10700,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10650,8200) to (10650,8450) [Top layer]
+       Pad CN1-25 at (10700,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9650,8750) to (9650,8850) [Bottom layer]
+       Pad CN3-26 at (9700,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9750,8900) to (9750,9450) [Bottom layer]
+       Pad CN2-25 at (9700,9400) 
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  1
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9650,9550) to (9950,9550) [Top layer]
+       Pad CN2-26 at (9700,9500) 
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Line at (10050,9550) to (10650,9550) [Top layer]
+       Pad CN4-26 at (10600,9500) 
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Line at (10650,9050) to (10650,9450) [Bottom layer]
+       Pad CN4-25 at (10600,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9650,8050) to (9650,8450) [Top layer]
+       Pad CN1-3 at (9600,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8950,8350) to (9950,8350) [Bottom layer]
+       Pad CN1-3 at (9600,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8550,8600) to (8550,8750) [Top layer]
+       Pad CN3-3 at (8600,8700) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8650,8150) to (8650,8750) [Top layer]
+       Pad CN3-3 at (8600,8700) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8650,9250) to (8650,9450) [Bottom layer]
+       Pad CN2-3 at (8600,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11650,9250) to (11650,9450) [Bottom layer]
+       Pad CN4-3 at (11700,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (8650,8150) 
+       Via at (8600,8150) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (11650,9250) 
+       Line at (11276,9224) to (11700,9300) [Top layer]
+       Calculated clearance:  12
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  2
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Pad CN3-2 at (8500,8800) 
+       Line at (8550,8750) to (8550,9300) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-4 at (8600,8800) 
+       Line at (8550,8750) to (8550,9300) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9750,8900) to (9750,9450) [Bottom layer]
+       Pad CN2-27 at (9800,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9850,8900) to (9850,9450) [Bottom layer]
+       Pad CN2-27 at (9800,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-28 at (10800,8500) 
+       Line at (10750,8450) to (10750,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-29 at (9900,8700) 
+       Line at (9850,8650) to (10500,8650) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-22 at (10500,8500) 
+       Line at (10500,8550) to (10750,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-24 at (10600,8500) 
+       Line at (10500,8550) to (10750,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-22 at (10500,8500) 
+       Line at (10500,8550) to (10500,8650) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-30 at (9900,8800) 
+       Line at (9850,8750) to (9850,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-28 at (9800,8800) 
+       Line at (9850,8750) to (9850,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  3
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Line at (10400,8500) to (10450,8400) [Top layer]
+       Pad CN1-19 at (10400,8400) 
+       Calculated clearance:  4
+    CLEARANCE VIOLATION
+       Line at (10450,8000) to (10450,8400) [Top layer]
+       Pad CN1-19 at (10400,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10350,8250) to (10350,8450) [Bottom layer]
+       Pad CN1-19 at (10400,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9300,8800) to (9350,8700) [Top layer]
+       Pad CN3-19 at (9400,8700) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9350,8600) to (9350,8700) [Top layer]
+       Pad CN3-19 at (9400,8700) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9350,8900) to (9350,9450) [Bottom layer]
+       Pad CN2-19 at (9400,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9450,8900) to (9450,9450) [Bottom layer]
+       Pad CN2-19 at (9400,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10950,9350) to (10950,9450) [Bottom layer]
+       Pad CN4-19 at (10900,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10850,9250) to (10850,9450) [Bottom layer]
+       Pad CN4-19 at (10900,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-20 at (9400,9500) 
+       Line at (9350,9450) to (9350,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-18 at (9300,9500) 
+       Line at (9350,9450) to (9350,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-18 at (11000,9500) 
+       Line at (10950,9450) to (10950,9550) [Top layer]
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  4
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-20 at (10900,9500) 
+       Line at (10950,9450) to (10950,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-22 at (9500,8800) 
+       Line at (9450,8750) to (9450,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-20 at (9400,8800) 
+       Line at (9450,8750) to (9450,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10250,8450) to (10250,8550) [Top layer]
+       Pad CN1-18 at (10300,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9350,8750) to (9350,8850) [Bottom layer]
+       Pad CN3-18 at (9300,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11050,9450) to (11050,9650) [Bottom layer]
+       Pad CN4-18 at (11000,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-17 at (9300,8700) 
+       Line at (9300,8800) to (9350,8700) [Top layer]
+       Calculated clearance:  4
+    CLEARANCE VIOLATION
+       Pad CN3-17 at (9300,8700) 
+       Line at (9350,8600) to (9350,8700) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-15 at (9200,9400) 
+       Line at (9250,8850) to (9250,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-17 at (9300,9400) 
+       Line at (9250,8850) to (9250,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-17 at (10300,8400) 
+       Line at (10350,8250) to (10350,8450) [Bottom layer]
+       Calculated clearance:  10
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  5
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Pad CN4-17 at (11000,9400) 
+       Line at (10950,9350) to (10950,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Pad CN1-16 at (10200,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10250,8450) to (10250,8550) [Top layer]
+       Pad CN1-16 at (10200,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9150,8750) to (9150,9350) [Bottom layer]
+       Pad CN3-16 at (9200,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9150,9450) to (9150,9650) [Top layer]
+       Pad CN2-16 at (9200,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11150,9450) to (11150,9700) [Top layer]
+       Pad CN4-16 at (11100,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11050,9450) to (11050,9650) [Bottom layer]
+       Pad CN4-16 at (11100,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-15 at (9200,8700) 
+       Line at (9250,8400) to (9250,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-17 at (9300,8700) 
+       Line at (9250,8400) to (9250,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9350,8900) to (9350,9450) [Bottom layer]
+       Pad CN2-17 at (9300,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-6 at (9700,8500) 
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  6
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Pad CN1-8 at (9800,8500) 
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-10 at (9900,8500) 
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-12 at (10000,8500) 
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-14 at (10100,8500) 
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-4 at (9600,8500) 
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-2 at (9500,8500) 
+       Line at (9300,8550) to (10250,8550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-20 at (9400,8800) 
+       Line at (9350,8750) to (9350,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8550,8550) to (9550,8550) [Bottom layer]
+       Pad CN1-2 at (9500,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8950,8350) to (9950,8350) [Bottom layer]
+       Pad CN1-1 at (9500,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8550,8600) to (8550,8750) [Top layer]
+       Pad CN3-1 at (8500,8700) 
+       Calculated clearance:  10
+    OPEN NET:  GND
+       Subnet #1
+          CN1-2 at (9500,8500) 
+          CN1-1 at (9500,8400) 
+          CN3-1 at (8500,8700) 
+          CN3-2 at (8500,8800) 
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  7
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+          CN2-1 at (8500,9400) 
+          CN2-2 at (8500,9500) 
+       Subnet #2
+          CN4-2 at (11800,9500) 
+          CN4-1 at (11800,9400) 
+    CLEARANCE VIOLATION
+       Line at (9950,8350) to (9950,8450) [Top layer]
+       Pad CN1-11 at (10000,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10050,8050) to (10050,8450) [Bottom layer]
+       Pad CN1-11 at (10000,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8950,8350) to (8950,8750) [Top layer]
+       Pad CN3-11 at (9000,8700) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9050,8500) to (9050,8750) [Top layer]
+       Pad CN3-11 at (9000,8700) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8950,8950) to (8950,9450) [Bottom layer]
+       Pad CN2-11 at (9000,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9050,8900) to (9050,9450) [Bottom layer]
+       Pad CN2-11 at (9000,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11250,8050) to (11250,9450) [Bottom layer]
+       Pad CN4-11 at (11300,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11350,8950) to (11350,9450) [Bottom layer]
+       Pad CN4-11 at (11300,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-12 at (9000,8800) 
+       Line at (8950,8750) to (8950,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-10 at (8900,8800) 
+       Line at (8950,8750) to (8950,8850) [Bottom layer]
+       Calculated clearance:  10
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  8
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Pad CN1-10 at (9900,8500) 
+       Line at (9950,8450) to (9950,8600) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-12 at (10000,8500) 
+       Line at (9950,8450) to (9950,8600) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8850,8750) to (8850,8950) [Bottom layer]
+       Pad CN3-10 at (8900,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-7 at (8800,8700) 
+       Line at (8850,8250) to (8850,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-9 at (8900,8700) 
+       Line at (8850,8250) to (8850,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-9 at (9900,8400) 
+       Line at (9850,8250) to (9850,8450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-7 at (9800,8400) 
+       Line at (9850,8250) to (9850,8450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-9 at (8900,9400) 
+       Line at (8950,8950) to (8950,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-9 at (11400,9400) 
+       Line at (11350,8950) to (11350,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9950,8350) to (9950,8450) [Top layer]
+       Pad CN1-9 at (9900,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8950,8350) to (9950,8350) [Bottom layer]
+       Pad CN1-9 at (9900,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page  9
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Line at (8950,8350) to (8950,8750) [Top layer]
+       Pad CN3-9 at (8900,8700) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8850,9050) to (8850,9450) [Bottom layer]
+       Pad CN2-9 at (8900,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11450,9050) to (11450,9450) [Bottom layer]
+       Pad CN4-9 at (11400,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-8 at (8800,8800) 
+       Line at (8850,8750) to (8850,8950) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8750,8750) to (8750,8850) [Bottom layer]
+       Pad CN3-8 at (8800,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (8700,8150) 
+       Via at (8750,8150) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-5 at (8700,8700) 
+       Line at (8750,8150) to (8750,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-7 at (8800,8700) 
+       Line at (8750,8150) to (8750,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-7 at (9800,8400) 
+       Line at (9750,8150) to (9750,8450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-5 at (9700,8400) 
+       Line at (9750,8150) to (9750,8450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-7 at (8800,9400) 
+       Line at (8850,9050) to (8850,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-7 at (11500,9400) 
+       Line at (11450,9050) to (11450,9450) [Bottom layer]
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 10
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8950,8350) to (9950,8350) [Bottom layer]
+       Pad CN1-7 at (9800,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8750,9150) to (8750,9450) [Bottom layer]
+       Pad CN2-7 at (8800,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11550,9150) to (11550,9450) [Bottom layer]
+       Pad CN4-7 at (11500,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-6 at (8700,8800) 
+       Line at (8750,8750) to (8750,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8650,8750) to (8650,9150) [Bottom layer]
+       Pad CN3-6 at (8700,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (8700,8150) 
+       Via at (8650,8150) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-5 at (9700,8400) 
+       Line at (9650,8050) to (9650,8450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-5 at (8700,8700) 
+       Line at (8650,8150) to (8650,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-5 at (8700,9400) 
+       Line at (8750,9150) to (8750,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-5 at (11600,9400) 
+       Line at (11550,9150) to (11550,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (8950,8350) to (9950,8350) [Bottom layer]
+       Pad CN1-5 at (9700,8400) 
+       Calculated clearance:  10
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 11
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Line at (8650,9250) to (8650,9450) [Bottom layer]
+       Pad CN2-5 at (8700,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11650,9250) to (11650,9450) [Bottom layer]
+       Pad CN4-5 at (11600,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-4 at (8600,8800) 
+       Line at (8650,8750) to (8650,9150) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9150,8750) to (9150,9350) [Bottom layer]
+       Pad CN3-14 at (9100,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9050,9450) to (9050,9700) [Top layer]
+       Pad CN2-14 at (9100,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9150,9450) to (9150,9650) [Top layer]
+       Pad CN2-14 at (9100,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (11150,9450) to (11150,9700) [Top layer]
+       Pad CN4-14 at (11200,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-13 at (9100,8700) 
+       Line at (9050,8500) to (9050,8750) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-13 at (11200,9400) 
+       Line at (11250,8050) to (11250,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-13 at (10100,8400) 
+       Line at (10050,8050) to (10050,8450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9050,8900) to (9050,9450) [Bottom layer]
+       Pad CN2-13 at (9100,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 12
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Pad CN2-12 at (9000,9500) 
+       Line at (9050,9450) to (9050,9700) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10550,8100) to (10550,8450) [Top layer]
+       Pad CN1-23 at (10600,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10650,8200) to (10650,8450) [Top layer]
+       Pad CN1-23 at (10600,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9550,8900) to (9550,9450) [Bottom layer]
+       Pad CN2-23 at (9600,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10750,9150) to (10750,9450) [Bottom layer]
+       Pad CN4-23 at (10700,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10650,9050) to (10650,9450) [Bottom layer]
+       Pad CN4-23 at (10700,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (10850,8850) 
+       Via at (10800,8850) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (10750,8850) 
+       Via at (10800,8850) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-24 at (9600,9500) 
+       Line at (9550,9450) to (9550,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-22 at (9500,9500) 
+       Line at (9550,9450) to (9550,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-22 at (10800,9500) 
+       Line at (10750,9450) to (10750,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-24 at (10700,9500) 
+       Line at (10750,9450) to (10750,9550) [Top layer]
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 13
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-24 at (9600,8800) 
+       Line at (9650,8750) to (9650,8850) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9550,8750) to (9550,8850) [Bottom layer]
+       Pad CN3-24 at (9600,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (10700,8850) 
+       Via at (10750,8850) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-30 at (9900,9500) 
+       Line at (9650,9550) to (9950,9550) [Top layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Pad CN2-28 at (9800,9500) 
+       Line at (9650,9550) to (9950,9550) [Top layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Pad CN4-28 at (10500,9500) 
+       Line at (10050,9550) to (10650,9550) [Top layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Pad CN4-30 at (10400,9500) 
+       Line at (10050,9550) to (10650,9550) [Top layer]
+       Calculated clearance:  11
+    CLEARANCE VIOLATION
+       Pad CN2-21 at (9500,9400) 
+       Line at (9550,8900) to (9550,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9550,8750) to (9550,8850) [Bottom layer]
+       Pad CN3-22 at (9500,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9450,9450) to (9450,9550) [Top layer]
+       Pad CN2-22 at (9500,9500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10850,9450) to (10850,9550) [Top layer]
+       Pad CN4-22 at (10800,9500) 
+       Calculated clearance:  10
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 14
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Via at (10900,8850) 
+       Via at (10850,8850) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN1-21 at (10500,8400) 
+       Line at (10550,8100) to (10550,8450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-21 at (9500,9400) 
+       Line at (9450,8900) to (9450,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-21 at (10800,9400) 
+       Line at (10750,9150) to (10750,9450) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10400,8500) to (10450,8400) [Top layer]
+       Pad CN1-21 at (10500,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10450,8000) to (10450,8400) [Top layer]
+       Pad CN1-21 at (10500,8400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10850,9250) to (10850,9450) [Bottom layer]
+       Pad CN4-21 at (10800,9400) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (10950,8850) 
+       Via at (10900,8850) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-20 at (10900,9500) 
+       Line at (10850,9450) to (10850,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-20 at (9400,9500) 
+       Line at (9450,9450) to (9450,9550) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10850,8450) to (10850,8700) [Bottom layer]
+       Pad CN1-28 at (10800,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 15
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       Pad CN2-29 at (9900,9400) 
+       Line at (9850,9450) to (9950,9450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-30 at (9900,9500) 
+       Line at (9850,9450) to (9950,9450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-30 at (10400,9500) 
+       Line at (10050,9450) to (10450,9450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN4-29 at (10400,9400) 
+       Line at (10050,9450) to (10450,9450) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN3-30 at (9900,8800) 
+       Line at (9800,8850) to (10550,8850) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (10850,8450) to (10850,8700) [Bottom layer]
+       Pad CN1-30 at (10900,8500) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (9950,8750) to (9950,8850) [Bottom layer]
+       Pad CN3-30 at (9900,8800) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad CN2-29 at (9900,9400) 
+       Line at (9850,8900) to (9850,9450) [Bottom layer]
+       Calculated clearance:  10
+    HOLE CLEARANCE VIOLATION
+       Via at (9700,9304) 
+       Via at (9700,9272) 
+       Calculated clearance:  12
+    HOLE CLEARANCE VIOLATION
+       Via at (10556,9304) 
+       Via at (10556,9272) 
+       Calculated clearance:  12
+    
+
+    Unconnected Pins
+    ----------------
+
+       CN1-28 at (10800,8500) 
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 16
+
+    Design Rule Check Report                                      RSLOTS.PCB
+
+                                        
+
+    ========================================================================
+
+       CN1-30 at (10900,8500) 
+       CN1-29 at (10900,8400) 
+    
+    
+    Unplaced Nodes
+    -------------
+
+       No unplaced nodes detected.
+    
+    DRC Summary
+    -----------
+
+          171 errors detected
+            3 unconnected pins detected
+            0 unplaced nodes detected
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    13-Feb-80  20:42                                                 Page 17

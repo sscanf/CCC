@@ -1,0 +1,349 @@
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+
+#include <D:\PROJECTS\TRUNKING\MAP27.H>
+#include <D:\PROJECTS\TRUNKING\MAP_DL.H>
+#include <D:\PROJECTS\TRUNKING\MAP_NET.H>
+
+
+#define NumBase 2872;
+
+extern void MAP_init( COM_CONFIG *cc  );	/* Initialize system */
+extern void MAP_restore(void);
+extern void send_link_signal( int s, int par );
+
+void GestioStatus(void);
+void disconnect(int ident);
+void SetupVOICE (int ident);
+void GestionConnect(void);
+void RadioInt ();
+void SendMST (void);
+void RadioManagement (char control);
+void SendClear (void);
+
+int  SendStatus (int, char);
+
+int r;
+
+BYTE  flota;
+WORD  ident;
+
+void main(void)
+{
+
+	COM_CONFIG *puerto;
+	GENERIC_APPL_MESSAGE *mens;
+
+   int ident;
+	int numr;
+
+
+	puerto->MAP27_port_address=COM2;
+	puerto->modem_port_address=COM2;
+
+	flota=0x14;
+
+	clrscr();
+	MAP_init (puerto);
+
+	clrscr();
+
+	for (;;)
+	{
+		while (!kbhit())
+		{
+				MAP_scheduler ();
+
+			if (receive_network_message(mens))
+			{
+				switch (mens->message_type)
+				{
+					case RECEIVE_STATUS:
+
+						ident = MKWORD( mens->msg[1], mens->msg[2]);
+
+						numr = ident-NumBase;
+						printf ("Recibido status %d de %d\n",mens->msg[4],numr+20);
+
+					break;
+
+					case RADIO_SETTINGS:
+
+						printf ("Recibido RADIO_SETTINGS\n");
+					break;
+
+					case INCOMING_VOICE_MODEM:
+
+						ident = MKWORD( mens->msg[1], mens->msg[2]);
+
+						numr = ident-NumBase;
+						printf ("Conectado por voz con unidad %d\n",numr+20);
+
+					break;
+
+					case CLEARED_A:
+					case CLEARED_N:
+						printf ("Desconectado \n",numr+20);
+					break;
+
+					default:
+					break;
+				}
+			}
+			r=receive_network_status();
+			switch (r)
+			{
+				case SEND_FAIL:
+					printf ("Sin respuesta ...\n");
+				break;
+
+				case 4:
+					printf ("Mensaje transmitido con exito ...\n");
+				break;
+
+				case SEND_IN_PROGRESS:
+					GestionConnect();
+				break;
+
+				case SEND_PENDING:
+					printf ("%d",r);
+				break;
+
+				default:
+
+				break;
+			}
+
+		}
+
+		switch (getch())
+		{
+
+			case 'l':
+				SetupVOICE(ident);
+			break;
+
+			case 'm':
+				SendMST ();
+			break;
+
+			case 'i':
+				RadioInt();
+			break;
+
+			case 'c':
+				disconnect(ident);
+			break;
+
+			case 's':
+				RadioManagement (0xa0);
+			break;
+
+
+			case 'S':
+				GestioStatus();
+			break;
+
+			case 'q':
+				MAP_restore();
+				exit (0);
+			break;
+
+		 default:
+			break;
+		}
+
+
+	}
+
+}
+
+
+void GestioStatus(void)
+{
+
+	char numero[10];
+	char StrStat[10];
+	int num,r;
+	int ByteStat;
+	int ident;
+
+	printf ("Entre n£mero a llamar ");
+	gets (numero);
+
+	printf ("Entre n£mero de status (1-31) :");
+	gets (StrStat);
+
+	num  = atoi (numero);
+	ident=(num-20)+NumBase;
+
+	ByteStat=atoi (StrStat);
+
+	if (SendStatus (ident, (char)ByteStat)==-1)
+		printf ("Mensaje no transmitido ...\n");
+	else
+		printf ("Mensaje Transmitido ...\n");
+}
+
+void RadioManagement (char control)
+{
+	GENERIC_APPL_MESSAGE *mensaje;
+
+	mensaje->len=4;
+	mensaje->message_type = RADIO_MANAGEMENT;
+	mensaje->msg[0]=control;
+	mensaje->msg[1]=0;
+	mensaje->msg[2]=0;
+
+	printf ("Preparando para recepcion de estados ... ");
+
+	if (!send_network_message( mensaje ))
+		printf ("Mensaje no transmitido ...\n");
+	else
+		printf ("Transmito mensaje\n");
+
+}
+
+
+int SendStatus (int ident, char status)
+{
+	GENERIC_APPL_MESSAGE *mensaje;
+
+	mensaje->len=7;
+	mensaje->message_type = SEND_STATUS;
+	mensaje->msg[0]=flota;	// Called party PFIX1
+	mensaje->msg[1]=HIBYTE (ident);   // Called party IDENT1
+	mensaje->msg[2]=LOBYTE (ident);   // Called party IDENT1
+	mensaje->msg[3]=1;
+	mensaje->msg[4]=0;
+	mensaje->msg[5]=status;
+
+	if (!send_network_message( mensaje )) return (-1);
+		else
+			return (0);
+}
+
+
+void SendClear (void)
+{
+	GENERIC_APPL_MESSAGE *mensaje;
+
+	mensaje->len=4;
+	mensaje->message_type = CLEARED_N;
+	mensaje->msg[0]=flota;
+	mensaje->msg[1]=HIBYTE (ident);
+	mensaje->msg[2]=LOBYTE (ident);
+	mensaje->msg[3]=0;
+
+	if (!send_network_message( mensaje ))
+		printf ("Mensaje no transmitido ...\n");
+	else
+		printf ("Transmito mensaje\n");
+
+}
+
+void SetupVOICE (int ident)
+{
+	GENERIC_APPL_MESSAGE *mensaje;
+	char numero[10];
+	int num,r;
+
+	printf ("Entre n£mero a llamar ");
+	gets (numero);
+
+	num  = atoi (numero);
+	ident=(num-20)+NumBase;
+
+	ident=ident;
+
+	printf ("Generando llamada VOZ... ");
+
+	mensaje->len=7;
+	mensaje->message_type = SETUP_VOICE_MODEM; //SEND_STATUS;
+	mensaje->msg[0]=flota;	// Called party PFIX1
+	mensaje->msg[1]=HIBYTE (ident);   // Called party IDENT1
+	mensaje->msg[2]=LOBYTE (ident);   // Called party IDENT1
+	mensaje->msg[3]=1;
+	mensaje->msg[4]=0;
+	mensaje->msg[5]=0x8;
+
+	if (!send_network_message( mensaje ))
+		printf ("Mensaje no transmitido ...\n");
+	else
+		printf ("Transmito mensaje\n");
+}
+
+
+void RadioInt ()
+{
+	GENERIC_APPL_MESSAGE *mensaje;
+
+	printf ("Radio Interrogaci¢n... ");
+
+	mensaje->len=2;
+	mensaje->message_type = RADIO_INTERROGATION;
+	mensaje->msg[0]=1;
+	if (!send_network_message( mensaje ))
+		printf ("Mensaje no transmitido ...\n");
+	else
+		printf ("Transmito mensaje\n");
+}
+
+void disconnect(int ident)
+{
+	GENERIC_NETWORK_MESSAGE *mensaje;
+
+	printf ("Desconectando ... ");
+
+	mensaje->message_type = DISCONNECT; //SEND_STATUS;
+	if (!send_network_message( mensaje ))
+		printf ("Mensaje no transmitido ...\n");
+	else
+		printf ("Transmito mensaje\n");
+
+
+}
+
+void GestionConnect(void)
+{
+	printf ("Conectado ...\n");
+}
+
+void SendMST (void)
+{
+	char mens[88];
+	GENERIC_NETWORK_MESSAGE *mensaje;
+	char numero[10];
+	int num;
+	int ident;
+
+	printf ("Entre mensaje (M ximo 87 car.):");
+	gets (mens);
+	printf ("Entre direcci¢n destion :");
+	gets (numero);
+
+
+	num  = atoi (numero);
+	ident=(num-20)+NumBase;
+
+	ident=ident;
+
+	printf ("Generando llamada MST... ");
+
+	mensaje->len=strlen (mens)+5;
+	mensaje->message_type = SEND_MST;
+	mensaje->msg[0]=flota;		 // Called party PFIX1
+	mensaje->msg[1]=HIBYTE (ident);   // Called party IDENT1
+	mensaje->msg[2]=LOBYTE (ident);   // Called party IDENT1
+	mensaje->msg[3]=1;
+	mensaje->msg[4]=0;
+	mensaje->msg[5]=0x87;
+
+	strncpy (mensaje->msg+6,mens,strlen (mens));
+
+	if (!send_network_message( mensaje ))
+		printf ("Mensaje no transmitido ...\n");
+	else
+		printf ("Transmito mensaje\n");
+}

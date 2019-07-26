@@ -1,0 +1,4 @@
+LIST T,S,X,C
+LOAD RTX
+END
+

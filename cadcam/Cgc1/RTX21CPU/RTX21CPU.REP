@@ -1,0 +1,1427 @@
+
+
+    Library Contents                                            DISCRETE.LIB
+
+                                        
+
+    ========================================================================
+
+    +12V              +15V              +5V               -12V              
+    -15V              -5V               7805              7905              
+    AND2              AND3              AND4              AND6              
+    AND8              ANTENNA           BAT               BNC               
+    BREAKER           BRIDGE            CAP               COAX              
+    CRYSTAL           DIACNBI           DIACNPN           DIACPNP           
+    DIODE             DUALD             DUALD2            DUALMOSN          
+    FUSE              GND               GNDANALOG         GNDDIGITAL        
+    GNDEARTH          IND               INDI              INVERTER          
+    JFETN             JFETN4            JFETP             JFETP4            
+    JUMPER            LAMP              LAMPNEON          LAMPPILOT         
+    LED               METER             MICROPHONE        MOSENHN4          
+    MOSENHP4          MOSFETN           MOSFETN4          MOTORAC           
+    MOTORSERVO        NAND2             NAND3             NAND4             
+    NAND6             NAND8             NOR2              NOR3              
+    NOR4              NPN               NPN2B             NPNDARL           
+    OR2               OR3               OR4               PHONEJACK         
+    PHONEJACK2        PHONEJACKSTEREO   PHONEJACKSTEREO2  PLUGACF           
+    PLUGACM           PNP               PNP2B             PNPDARL           
+    POLCAP            POT               PUSHBUTTONNC      PUSHBUTTONNO      
+    PWR               RELAY1B           RELAY1BB          RELAY1BBM         
+    RELAY1BM          RELAY1BMB         RELAY1M           RELAY1MB          
+    RELAY1MBM         RELAY1MM          RELAY2B           RELAY2BM          
+    RELAY2M           RELAY3B           RELAY3BM          RELAY3M           
+    RES               RES10SIPB         RES10SIPDT        RES10SIPI         
+    RES14DIPB         RES14DIPDT        RES14DIPI         RES16DIPB         
+    RES16DIPDT        RES16DIPI         RES4SIPISOL       RES5SIPISOL       
+    RES6SIPB          RES6SIPI          RES6SIPISOL       RES7DIPISOL       
+    RES8DIPISOL       RES8SIPB          RES8SIPDT         RES8SIPI          
+    SCR               SHEETIN           SHEETOUT          SOURCEAC          
+    SOURCECURRENT     SOURCEVOLT        SPEAKER           SWITCH10DIPISOL   
+    SWITCH12DIPISOL   SWITCH2DIP        SWITCH2DIPISOL    SWITCH3DIPISOL    
+    SWITCH4DIPISOL    SWITCH5DIPISOL    SWITCH6DIP        SWITCH6DIPISOL    
+    SWITCH7DIP        SWITCH7DIPISOL    SWITCH8DIP        SWITCH8DIPISOL    
+    SWITCH9DIPISOL    SWITCHDPDT        SWITCHDPSTNC      SWITCHDPSTNO      
+    SWITCHROTARY10    SWITCHSPDT        SWITCHSPSTNC      SWITCHSPSTNO      
+    TESTPOINT         THYRIS            TMOSN             TMOSN4            
+    TMOSN4A           TMOSN5            TMOSNA            TMOSP             
+    TMOSP4            TRANZORB          TRIAC             TUNNEL            
+    TZ                UJTN              UJTP              V+                
+    V-                VARCAP            VARIND            VARINDI           
+    VARRES            VARXFMR           VARXFMRI          VCC               
+    VDD               VEE               VSS               XFMR              
+    XFMRCT            XFMRCTI           XFMRI             XFMRISOL          
+    XFMRSD            XFMRSDI           XFMRSU            XFMRSUI           
+    XNOR2             XOR2              
+    
+    Total Parts: 182
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  1
+
+    Library Contents                                             NAT_LIN.LIB
+
+                                        
+
+    ========================================================================
+
+    ADC0800PCDA       ADC0800PDA        ADC0801LCJA       ADC0801LCNA       
+    ADC0801LJA        ADC0802LCJA       ADC0802LCNA       ADC0802LCVA       
+    ADC0802LCWMB      ADC0802LJA        ADC0803LCJA       ADC0803LCNA       
+    ADC0803LCVA       ADC0803LCWMB      ADC0804LCJA       ADC0804LCNA       
+    ADC0804LCVA       ADC0804LCWMB      ADC0805LCNA       ADC0808CCJA       
+    ADC0808CCNA       ADC0808CCVA       ADC0808CJA        ADC0809CCNA       
+    ADC0809CCVA       LF111HC           LF13508DC         LF13508NA         
+    LF13509DC         LF13509NA         LF13741H          LF13741N          
+    LF147D            LF147J            LF155AH           LF155H            
+    LF155J            LF156AH           LF156H            LF156J            
+    LF157AH           LF157H            LF157J            LF198AHC          
+    LF198HC           LF211HC           LF255H            LF256H            
+    LF257H            LF298HC           LF311HC           LF347BJ           
+    LF347BN           LF347D            LF347J            LF347M            
+    LF347N            LF347WM           LF351H            LF351J            
+    LF351M            LF351N            LF353H            LF353J            
+    LF353M            LF353N            LF355AH           LF355BH           
+    LF355BJ           LF355BN           LF355H            LF355J            
+    LF355M            LF355N            LF356AH           LF356BH           
+    LF356BJ           LF356BM           LF356BN           LF356H            
+    LF356J            LF356M            LF356N            LF357AH           
+    LF357BH           LF357BJ           LF357BN           LF357H            
+    LF357J            LF357M            LF357N            LF398AHC          
+    LF398ANE          LF398HC           LF398NE           LF400ACH          
+    LF400CH           LF401ACD          LF401CD           LF411ACH          
+    LF411AMH          LF411CH           LF411MH           LF412ACH          
+    LF412AMH          LF412CH           LF412MH           LF441ACN          
+    LF441AMH          LF441CH           LF441CJ           LF441CM           
+    LF441CN           LF442ACH          LF442ACN          LF442AMH          
+    LF442CH           LF442CJ           LF442CN           LF444ACN          
+    LF444AMD          LF444CD           LF444CJ           LF444CM           
+    LF444CN           LF444CWM          LF455H            LF455N            
+    LF456H            LF456N            LF457H            LF457N            
+    LH0003CH          LH0003H           LH0004CH          LH0004H           
+    LH0020CG          LH0020G           LH0021-200K       LH0022CH          
+    LH0022H           LH0024CH          LH0024H           LH0032ACG         
+    LH0032AG          LH0032CG          LH0032G           LH0042CH          
+    LH0042H           LH0044ACH         LH0044AH          LH0044CH          
+    LH0044H           LH0052CH          LH0052H           LH0061CK          
+    LH0061K           LH0062CH          LH0062DCD         LH0062DD          
+    LH0062H           LH0082CD          LH0086CD          LH0086D           
+    LH101ACK          LH101AK           LH101CK           LH101K            
+    LH4101CD          LH4101D           LH4104CG          LH4104G           
+    LH4105CG          LH4105G           LM101A-14AJ       LM101AH           
+    LM101AJ           LM107H            LM107J            LM108-8J          
+    LM108H            LM109HA           LM109KA           LM10BH            
+    LM10BLH           LM10CH            LM10CLH           LM10CLN           
+    LM10CLWM          LM10CN            LM10CWM           LM10H             
+    LM111HC           LM111J8           LM111JA           LM112H            
+    LM117HA           LM117HVHA         LM117HVKA         LM117KA           
+    LM117PA           LM117TB           LM118-8J          LM118H            
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  2
+
+    Library Contents                                             NAT_LIN.LIB
+
+                                        
+
+    ========================================================================
+
+    LM11CH            LM11CLH           LM11CLN           LM11CN            
+    LM11H             LM120-12HA        LM120-12KA        LM120-15HA        
+    LM120-15KA        LM120-5.0HA       LM120-5.0KA       LM122HC           
+    LM123KA           LM124AJ           LM124J            LM12CK            
+    LM12CLK           LM12LK            LM13080N          LM133KA           
+    LM13600AN         LM13600M          LM13600N          LM13700AN         
+    LM13700M          LM13700N          LM137HB           LM137HVHB         
+    LM137HVKA         LM137KA           LM138KA           LM139AJA          
+    LM139JA           LM140-12KA        LM140-15KA        LM140-5.0KA       
+    LM140A-12KA       LM140A-15KA       LM140A-5.0KA      LM140LA-12HA      
+    LM140LA-15HA      LM140LA-5.0HA     LM143H            LM144H            
+    LM145-5.0KA       LM145-5.2KA       LM1458J           LM1458M           
+    LM1458N           LM146J            LM148J            LM149J            
+    LM150KA           LM1558J           LM1558M           LM1558N           
+    LM158AH           LM158AJ           LM158H            LM158J            
+    LM18272N          LM192J            LM193AHC          LM193HC           
+    LM196KB           LM201A-14J        LM201AH           LM201AJ           
+    LM201AN           LM207H            LM207J            LM208-8J          
+    LM208H            LM211HC           LM211J8           LM211JA           
+    LM212H            LM218-8J          LM218H            LM224AJ           
+    LM224J            LM2390-5.0TB      LM2390-8.0TB      LM239AJA          
+    LM239JA           LM246J            LM248J            LM249J            
+    LM258AH           LM258H            LM2900N           LM2901JA          
+    LM2901MA          LM2901NA          LM2902M           LM2902N           
+    LM2903MA          LM2903NE          LM2904M           LM2904N           
+    LM2905NB          LM2924J           LM2924N           LM293AHC          
+    LM293HC           LM2940-10TB       LM2940-5.0TB      LM2940-8.0TB      
+    LM301A-14J        LM301AH           LM301AJ           LM301AN           
+    LM307H            LM307J            LM307M            LM307N            
+    LM308-8J          LM3080AN          LM3080N           LM308H            
+    LM308M            LM308N            LM309HA           LM309KA           
+    LM309KCA          LM311HC           LM311J8           LM311JA           
+    LM311MA           LM311NA           LM311NE           LM312H            
+    LM317HA           LM317KA           LM317LZA          LM317PA           
+    LM317TB           LM318-8J          LM318H            LM318M            
+    LM318N            LM320-12HA        LM320-12KA        LM320-12KCA       
+    LM320-12PA        LM320-12TB        LM320-15HA        LM320-15KA        
+    LM320-15KCA       LM320-15PA        LM320-15TB        LM320-5.0HA       
+    LM320-5.0KA       LM320-5.0KCA      LM320-5.0PA       LM320-5.0TB       
+    LM320L-12ZA       LM320L-15ZA       LM320L-5.0ZA      LM322HC           
+    LM322NA           LM323KA           LM324AJ           LM324AM           
+    LM324J            LM324M            LM3301N           LM3302JA          
+    LM3302NA          LM330TB           LM333KA           LM333TB           
+    LM337HB           LM337HVHB         LM337HVKA         LM337KA           
+    LM337PA           LM337TB           LM338KA           LM339AJA          
+    LM339AMA          LM339ANA          LM339JA           LM339MA           
+    LM339NA           LM340-12KA        LM340-12KCA       LM340-12TB        
+    LM340-15KA        LM340-15KCA       LM340-15TB        LM340-5.0KA       
+    LM340-5.0KCA      LM340-5.0TB       LM3401N           LM340A-12KA       
+    LM340A-12TB       LM340A-15KA       LM340A-15TB       LM340A-5.0KA      
+    LM340A-5.0TB      LM340LA-12ZA      LM340LA-15ZA      LM340LA-5.0ZA     
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  3
+
+    Library Contents                                             NAT_LIN.LIB
+
+                                        
+
+    ========================================================================
+
+    LM343H            LM344H            LM345-5.0KA       LM345-5.2KA       
+    LM346J            LM346M            LM346N            LM348J            
+    LM348M            LM348N            LM34J             LM34N             
+    LM350TB           LM358AH           LM358AM           LM358AN           
+    LM358H            LM358J            LM358M            LM358N            
+    LM359J            LM359M            LM359N            LM3900N           
+    LM3905NB          LM392M            LM392N            LM393AHC          
+    LM393AJA          LM393ANE          LM393HC           LM393JA           
+    LM393MA           LM393NE           LM396KB           LM4250CH          
+    LM4250CJ          LM4250CN          LM4250H           LM4250J           
+    LM4250M           LM555CHC          LM555CJA          LM555CMA          
+    LM555CNB          LM555HC           LM555JA           LM556CJA          
+    LM556CMA          LM556CNA          LM556JA           LM604ACN          
+    LM604AMJ          LM604CM           LM604CN           LM604IJ           
+    LM604IN           LM607ACH          LM607ACJ          LM607ACN          
+    LM607AMH          LM607AMJ          LM607BCH          LM607BCJ          
+    LM607BCN          LM607BMH          LM607BMJ          LM607CH           
+    LM607CJ           LM607CM           LM607CN           LM611AIN          
+    LM611CM           LM611CN           LM611IM           LM611IN           
+    LM611MJ           LM614AIJ          LM614CM           LM614CN           
+    LM614IJ           LM614IM           LM614IN           LM614MJ           
+    LM6164J           LM6165J           LM6264J           LM6264N           
+    LM6265J           LM6265N           LM6364J           LM6364N           
+    LM6365J           LM6365N           LM675T            LM741AH           
+    LM741CH           LM741CJ           LM741CM           LM741CN           
+    LM741EH           LM741EN           LM741H            LM7805CKCA        
+    LM7805CTB         LM7812CKCA        LM7812CTB         LM7815CKCA        
+    LM7815CTB         LM78L05ACHA       LM78L05ACZA       LM78L12ACHA       
+    LM78L12ACZA       LM78L15ACHA       LM78L15ACZA       LM7905ACZA        
+    LM7905CKCA        LM7905CTB         LM7912CKCA        LM7912CTB         
+    LM7915CKCA        LM7915CTB         LM79L12ACZA       LM79L15ACZA       
+    LM833M            LM833N            LM837M            LM837N            
+    LMC660AID         LMC660AMD         LMC660CN          LMC668ACJ         
+    LMC668CJ          LMC668CN          LMC669D           LMC669M           
+    LMC669N           LMC688AC-8J       LMC688AC-8N       LMC688C-8J        
+    LMC688C-8N        LP124J            LP2902M           LP2902N           
+    LP311NE           LP324J            LP324M            LP324N            
+    LP339MA           LP339NA           TL081CPN          TL082CPN          
+    
+    Total Parts: 560
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  4
+
+    Library Contents                                             SCHEVAL.LIB
+
+                                        
+
+    ========================================================================
+
+    +5                1N4148            80C51BH-1N        82A442            
+    82C441            CAP               CONN15PIN         CONN62PIN         
+    CONN9PIN          DIP7SWITCH        GND               IDC2X10M          
+    IMSG171           INDUCTOR          JMP3PIN           LM334             
+    OSCILLATOR        PAL16R8ACN        POLCAP            RES               
+    RESPAC10PIN       RESPACK4          SN7406N           SN74F151D         
+    SN74LS00N         SN74LS138N        SN74LS244N        SN74LS245N        
+    SN74LS373N        SN74LS74AN        SWITCHSPDT        TMM2018A-35P      
+    TMS2764-20J       TMS27C256J        TMS4464-12N       VCC               
+    
+    Total Parts: 36
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  5
+
+    Library Contents                                            MOTO_LIN.LIB
+
+                                        
+
+    ========================================================================
+
+    1488              1489              MC1413            
+    
+    Total Parts: 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  6
+
+    Library Contents                                                 UMC.LIB
+
+                                        
+
+    ========================================================================
+
+    UM62256D          
+    
+    Total Parts: 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  7
+
+    Library Contents                                             TI_7400.LIB
+
+                                        
+
+    ========================================================================
+
+    7400              7401              7402              7403              
+    7404              7405              7406              7407              
+    7408              7409              7410              74107             
+    74109             74111             74116             7412              
+    74120             74121             74122             74123             
+    74125             74126             74128             7413              
+    74130             74132             74136             7414              
+    74143             74145             74147             74148             
+    74150             74151             74153             74154             
+    74155             74156             74157             74159             
+    7416              74160             74161             74162             
+    74163             74164             74165             74166             
+    74167             7417              74170             74172             
+    74173             74174             74175             74176             
+    74177             74178             74180             74190             
+    74191             74192             74193             74194             
+    74195             74196             74197             74198             
+    74199             7420              7422              74221             
+    7423              74246             74247             7425              
+    74251             74259             7426              74265             
+    7427              74273             74276             74278             
+    74279             7428              74283             74284             
+    74285             74290             74293             74298             
+    7430              7432              7433              74365             
+    74366             74367             74368             7437              
+    74376             7438              7439              74390             
+    74393             7440              7442              7445              
+    7446              7447              7448              7450              
+    7451              7453              7454              7470              
+    7472              7473              7474              7475              
+    7476              7483              7485              7486              
+    7490              7491              7492              7493              
+    7494              7495              7496              7497              
+    74LS107           74LS11            74LS112           74LS113           
+    74LS114           74LS125           74LS126           74LS137           
+    74LS138           74LS139           74LS15            74LS158           
+    74LS160           74LS161           74LS162           74LS163           
+    74LS169           74LS171           74LS181           74LS183           
+    74LS19            74LS21            74LS24            74LS240           
+    74LS241           74LS242           74LS243           74LS244           
+    74LS245           74LS248           74LS253           74LS257           
+    74LS258           74LS261           74LS266           74LS280           
+    74LS292           74LS294           74LS295           74LS297           
+    74LS299           74LS31            74LS320           74LS321           
+    74LS322           74LS323           74LS348           74LS352           
+    74LS353           74LS354           74LS355           74LS356           
+    74LS373           74LS374           74LS375           74LS377           
+    74LS378           74LS379           74LS381           74LS382           
+    74LS384           74LS385           74LS386           74LS395           
+    74LS396           74LS399           74LS422           74LS423           
+    74LS440           74LS441           74LS442           74LS444           
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  8
+
+    Library Contents                                             TI_7400.LIB
+
+                                        
+
+    ========================================================================
+
+    74LS445           74LS446           74LS449           74LS465           
+    74LS466           74LS467           74LS468           74LS49            
+    74LS490           74LS51            74LS54            74LS540           
+    74LS541           74LS55            74LS56            74LS57            
+    74LS590           74LS591           74LS592           74LS593           
+    74LS594           74LS595           74LS596           74LS597           
+    74LS598           74LS599           74LS600           74LS601           
+    74LS603           74LS604           74LS606           74LS607           
+    74LS610           74LS611           74LS612           74LS613           
+    74LS620           74LS621           74LS623           74LS624           
+    74LS625           74LS626           74LS627           74LS628           
+    74LS629           74LS630           74LS636           74LS637           
+    74LS638           74LS639           74LS640           74LS641           
+    74LS642           74LS644           74LS645           74LS646           
+    74LS647           74LS648           74LS649           74LS651           
+    74LS652           74LS653           74LS668           74LS669           
+    74LS670           74LS671           74LS672           74LS673           
+    74LS674           74LS68            74LS681           74LS682           
+    74LS684           74LS685           74LS686           74LS687           
+    74LS688           74LS69            74LS690           74LS691           
+    74LS693           74LS696           74LS697           74LS699           
+    74LS73            74LS76            74LS78            74S124            
+    74S133            74S134            74S135            74S140            
+    74S182            74S260            74S350            74S436            
+    74S64             74S65             SN7400N           SN7401N           
+    SN7402N           SN7403N           SN7404N           SN7405N           
+    SN7406N           SN7407N           SN7408J           SN7408N           
+    SN7409N           SN74107N          SN74109N          SN7410N           
+    SN74111N          SN74116N          SN74120N          SN74121N          
+    SN74122N          SN74123N          SN74125N          SN74126N          
+    SN74128N          SN7412N           SN74130N          SN74132N          
+    SN74136N          SN7413N           SN74143N          SN74145N          
+    SN74147N          SN74148N          SN7414N           SN74150N          
+    SN74151AN         SN74153N          SN74154N          SN74155N          
+    SN74156N          SN74157N          SN74159N          SN74160N          
+    SN74161N          SN74162N          SN74163N          SN74164N          
+    SN74165N          SN74166N          SN74167N          SN7416N           
+    SN74170N          SN74172N          SN74173N          SN74174N          
+    SN74175N          SN74176N          SN74177N          SN74178N          
+    SN7417N           SN74180N          SN74190N          SN74191N          
+    SN74192N          SN74193N          SN74194N          SN74195N          
+    SN74196N          SN74197N          SN74198N          SN74199N          
+    SN7420N           SN74221N          SN7422N           SN7423N           
+    SN74246N          SN74247N          SN74251N          SN74259N          
+    SN7425N           SN74265N          SN7426N           SN74273N          
+    SN74276N          SN74278N          SN74279N          SN7427N           
+    SN74283N          SN74284N          SN74285N          SN7428N           
+    SN74290N          SN74293N          SN74298N          SN7430N           
+    SN7432N           SN7433N           SN74365AN         SN74366AN         
+    SN74367AN         SN74368AN         SN74376N          SN7437N           
+    SN7438N           SN74390N          SN74393N          SN7439N           
+
+                                        
+
+    23-Oct-94  13:49                                                 Page  9
+
+    Library Contents                                             TI_7400.LIB
+
+                                        
+
+    ========================================================================
+
+    SN7440N           SN7442AN          SN7445N           SN7446AN          
+    SN7447AN          SN7448N           SN7450N           SN7451N           
+    SN7453N           SN7454N           SN7470N           SN7472N           
+    SN7473N           SN7474N           SN7475N           SN7476N           
+    SN7483AN          SN7485N           SN7486N           SN7490AN          
+    SN7491AN          SN7492AN          SN7493AN          SN7494N           
+    SN7495AN          SN7496N           SN7497N           SN74LS00D         
+    SN74LS00N         SN74LS01D         SN74LS01N         SN74LS02D         
+    SN74LS02N         SN74LS03D         SN74LS03N         SN74LS04D         
+    SN74LS04N         SN74LS05D         SN74LS05N         SN74LS08D         
+    SN74LS08J         SN74LS08N         SN74LS09D         SN74LS09N         
+    SN74LS107AD       SN74LS107AN       SN74LS109AD       SN74LS109AN       
+    SN74LS10D         SN74LS10N         SN74LS112AD       SN74LS112AN       
+    SN74LS113AD       SN74LS113AN       SN74LS114AD       SN74LS114AN       
+    SN74LS11D         SN74LS11N         SN74LS122D        SN74LS122N        
+    SN74LS123D        SN74LS123N        SN74LS125AD       SN74LS125AN       
+    SN74LS126AD       SN74LS126AN       SN74LS12D         SN74LS12N         
+    SN74LS132D        SN74LS132N        SN74LS136D        SN74LS136N        
+    SN74LS137D        SN74LS137N        SN74LS138D        SN74LS138N        
+    SN74LS139AD       SN74LS139AN       SN74LS13D         SN74LS13N         
+    SN74LS145D        SN74LS145N        SN74LS147D        SN74LS147N        
+    SN74LS148D        SN74LS148N        SN74LS14D         SN74LS14N         
+    SN74LS151D        SN74LS151N        SN74LS153D        SN74LS153N        
+    SN74LS155AD       SN74LS155AN       SN74LS156D        SN74LS156N        
+    SN74LS157D        SN74LS157N        SN74LS158D        SN74LS158N        
+    SN74LS15D         SN74LS15N         SN74LS160AD       SN74LS160AN       
+    SN74LS161AD       SN74LS161AN       SN74LS162AD       SN74LS162AN       
+    SN74LS163AD       SN74LS163AN       SN74LS164D        SN74LS164N        
+    SN74LS165AD       SN74LS165AN       SN74LS166AD       SN74LS166AN       
+    SN74LS169BD       SN74LS169BN       SN74LS170D        SN74LS170N        
+    SN74LS171D        SN74LS171N        SN74LS173AD       SN74LS173AN       
+    SN74LS174D        SN74LS174N        SN74LS175D        SN74LS175N        
+    SN74LS181DW       SN74LS181N        SN74LS183D        SN74LS183N        
+    SN74LS190D        SN74LS190N        SN74LS191D        SN74LS191N        
+    SN74LS192D        SN74LS192N        SN74LS193D        SN74LS193N        
+    SN74LS194AD       SN74LS194AN       SN74LS195AD       SN74LS195AN       
+    SN74LS196D        SN74LS196N        SN74LS197D        SN74LS197N        
+    SN74LS19AD        SN74LS19AJ        SN74LS19AN        SN74LS20D         
+    SN74LS20N         SN74LS21D         SN74LS21N         SN74LS221D        
+    SN74LS221N        SN74LS22D         SN74LS22N         SN74LS240DW       
+    SN74LS240N        SN74LS241DW       SN74LS241N        SN74LS242D        
+    SN74LS242N        SN74LS243D        SN74LS243N        SN74LS244DW       
+    SN74LS244N        SN74LS245DW       SN74LS245N        SN74LS247D        
+    SN74LS247N        SN74LS248D        SN74LS248N        SN74LS24AD        
+    SN74LS24AJ        SN74LS24AN        SN74LS251D        SN74LS251N        
+    SN74LS253D        SN74LS253N        SN74LS257BD       SN74LS257BN       
+    SN74LS258BD       SN74LS258BN       SN74LS259BD       SN74LS259BN       
+    SN74LS261D        SN74LS261N        SN74LS266D        SN74LS266N        
+    SN74LS26D         SN74LS26N         SN74LS273DW       SN74LS273N        
+    SN74LS279AD       SN74LS279AN       SN74LS27D         SN74LS27N         
+    SN74LS280D        SN74LS280N        SN74LS283D        SN74LS283N        
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 10
+
+    Library Contents                                             TI_7400.LIB
+
+                                        
+
+    ========================================================================
+
+    SN74LS28D         SN74LS28N         SN74LS290D        SN74LS290N        
+    SN74LS292N        SN74LS293D        SN74LS293N        SN74LS294N        
+    SN74LS295BD       SN74LS295BN       SN74LS297N        SN74LS298D        
+    SN74LS298N        SN74LS299DW       SN74LS299N        SN74LS30D         
+    SN74LS30N         SN74LS31D         SN74LS31N         SN74LS320N        
+    SN74LS321N        SN74LS322ADW      SN74LS322AN       SN74LS323DW       
+    SN74LS323N        SN74LS32D         SN74LS32N         SN74LS33D         
+    SN74LS33N         SN74LS348D        SN74LS348N        SN74LS352D        
+    SN74LS352N        SN74LS353D        SN74LS353N        SN74LS354DW       
+    SN74LS354N        SN74LS355DW       SN74LS355N        SN74LS356DW       
+    SN74LS356N        SN74LS365AD       SN74LS365AN       SN74LS366AD       
+    SN74LS366AN       SN74LS367AD       SN74LS367AN       SN74LS368AD       
+    SN74LS368AN       SN74LS373DW       SN74LS373N        SN74LS374DW       
+    SN74LS374N        SN74LS375D        SN74LS375N        SN74LS377DW       
+    SN74LS377N        SN74LS378D        SN74LS378N        SN74LS379D        
+    SN74LS379N        SN74LS37D         SN74LS37N         SN74LS381ADW      
+    SN74LS381AN       SN74LS382ADW      SN74LS382AN       SN74LS384N        
+    SN74LS385DW       SN74LS385N        SN74LS386AD       SN74LS386AN       
+    SN74LS38D         SN74LS38N         SN74LS390D        SN74LS390N        
+    SN74LS393D        SN74LS393N        SN74LS395AD       SN74LS395AN       
+    SN74LS396D        SN74LS396N        SN74LS399D        SN74LS399N        
+    SN74LS40D         SN74LS40N         SN74LS422D        SN74LS422N        
+    SN74LS423D        SN74LS423N        SN74LS42D         SN74LS42N         
+    SN74LS440DW       SN74LS440N        SN74LS441DW       SN74LS441N        
+    SN74LS442DW       SN74LS442N        SN74LS444DW       SN74LS444N        
+    SN74LS445D        SN74LS445N        SN74LS446D        SN74LS446N        
+    SN74LS449D        SN74LS449N        SN74LS465DW       SN74LS465N        
+    SN74LS466DW       SN74LS466N        SN74LS467DW       SN74LS467N        
+    SN74LS468DW       SN74LS468N        SN74LS47D         SN74LS47N         
+    SN74LS48D         SN74LS48N         SN74LS490D        SN74LS490J        
+    SN74LS490N        SN74LS49D         SN74LS49N         SN74LS51D         
+    SN74LS51N         SN74LS540DW       SN74LS540N        SN74LS541DW       
+    SN74LS541N        SN74LS54D         SN74LS54N         SN74LS55D         
+    SN74LS55N         SN74LS56JG        SN74LS56P         SN74LS57JG        
+    SN74LS57P         SN74LS590N        SN74LS591N        SN74LS592N        
+    SN74LS593DW       SN74LS593N        SN74LS594N        SN74LS595N        
+    SN74LS596N        SN74LS597N        SN74LS598DW       SN74LS598N        
+    SN74LS599N        SN74LS600ADW      SN74LS600AN       SN74LS601ADW      
+    SN74LS601AN       SN74LS603ADW      SN74LS603AN       SN74LS604JD       
+    SN74LS604N        SN74LS606JD       SN74LS606N        SN74LS607JD       
+    SN74LS607N        SN74LS610JD       SN74LS610N        SN74LS611JD       
+    SN74LS611N        SN74LS612JD       SN74LS612N        SN74LS613JD       
+    SN74LS613N        SN74LS620DW       SN74LS620N        SN74LS621DW       
+    SN74LS621N        SN74LS623DW       SN74LS623N        SN74LS624D        
+    SN74LS624N        SN74LS625D        SN74LS625N        SN74LS626D        
+    SN74LS626N        SN74LS627D        SN74LS627N        SN74LS628D        
+    SN74LS628N        SN74LS629D        SN74LS629N        SN74LS630N        
+    SN74LS636DW       SN74LS636N        SN74LS637DW       SN74LS637N        
+    SN74LS638DW       SN74LS638N        SN74LS639DW       SN74LS639N        
+    SN74LS640DW       SN74LS640N        SN74LS641DW       SN74LS641N        
+    SN74LS642DW       SN74LS642N        SN74LS644DW       SN74LS644N        
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 11
+
+    Library Contents                                             TI_7400.LIB
+
+                                        
+
+    ========================================================================
+
+    SN74LS645DW       SN74LS645N        SN74LS646DW       SN74LS646NT       
+    SN74LS647DW       SN74LS647NT       SN74LS648DW       SN74LS648JT       
+    SN74LS648NT       SN74LS649DW       SN74LS649NT       SN74LS651DW       
+    SN74LS651NT       SN74LS652DW       SN74LS652NT       SN74LS653DW       
+    SN74LS653NT       SN74LS668D        SN74LS668N        SN74LS669D        
+    SN74LS669N        SN74LS670D        SN74LS670N        SN74LS671DW       
+    SN74LS671N        SN74LS672DW       SN74LS672N        SN74LS673DW       
+    SN74LS673N        SN74LS674DW       SN74LS674N        SN74LS681DW       
+    SN74LS681N        SN74LS682DW       SN74LS682N        SN74LS684DW       
+    SN74LS684N        SN74LS685DW       SN74LS685N        SN74LS686DW       
+    SN74LS686NT       SN74LS687DW       SN74LS687NT       SN74LS688DW       
+    SN74LS688N        SN74LS68D         SN74LS68N         SN74LS690DW       
+    SN74LS690N        SN74LS691DW       SN74LS691N        SN74LS693DW       
+    SN74LS693N        SN74LS696DW       SN74LS696N        SN74LS697DW       
+    SN74LS697N        SN74LS699DW       SN74LS699N        SN74LS69D         
+    SN74LS69N         SN74LS73AD        SN74LS73AN        SN74LS74AD        
+    SN74LS74AN        SN74LS75D         SN74LS75N         SN74LS76AD        
+    SN74LS76AN        SN74LS78AD        SN74LS78AN        SN74LS83AD        
+    SN74LS83AN        SN74LS85D         SN74LS85N         SN74LS86AD        
+    SN74LS86AN        SN74LS90D         SN74LS90N         SN74LS91D         
+    SN74LS91N         SN74LS92D         SN74LS92N         SN74LS93D         
+    SN74LS93N         SN74LS95BD        SN74LS95BN        SN74LS96D         
+    SN74LS96N         SN74S00D          SN74S00N          SN74S02D          
+    SN74S02N          SN74S03D          SN74S03N          SN74S04D          
+    SN74S04N          SN74S05D          SN74S05N          SN74S08D          
+    SN74S08J          SN74S08N          SN74S09D          SN74S09N          
+    SN74S10D          SN74S10N          SN74S112AD        SN74S112AN        
+    SN74S113AD        SN74S113AN        SN74S114AD        SN74S114AN        
+    SN74S11D          SN74S11N          SN74S124D         SN74S124N         
+    SN74S132D         SN74S132N         SN74S133D         SN74S133N         
+    SN74S134D         SN74S134N         SN74S135D         SN74S135N         
+    SN74S138AD        SN74S138AN        SN74S139AD        SN74S139AN        
+    SN74S140D         SN74S140N         SN74S151D         SN74S151N         
+    SN74S153D         SN74S153N         SN74S157D         SN74S157N         
+    SN74S158D         SN74S158N         SN74S15D          SN74S15N          
+    SN74S162D         SN74S162N         SN74S163D         SN74S163N         
+    SN74S169D         SN74S169N         SN74S174D         SN74S174N         
+    SN74S175D         SN74S175N         SN74S181DW        SN74S181N         
+    SN74S182D         SN74S182N         SN74S194D         SN74S194N         
+    SN74S195D         SN74S195N         SN74S196D         SN74S196N         
+    SN74S197D         SN74S197N         SN74S20D          SN74S20N          
+    SN74S22D          SN74S22N          SN74S240DW        SN74S240N         
+    SN74S241DW        SN74S241N         SN74S244DW        SN74S244N         
+    SN74S251D         SN74S251N         SN74S253D         SN74S253N         
+    SN74S257D         SN74S257N         SN74S258D         SN74S258N         
+    SN74S260D         SN74S260N         SN74S280D         SN74S280N         
+    SN74S283D         SN74S283N         SN74S299DW        SN74S299N         
+    SN74S30D          SN74S30N          SN74S32D          SN74S32N          
+    SN74S350D         SN74S350N         SN74S373DW        SN74S373N         
+    SN74S374DW        SN74S374N         SN74S37D          SN74S37N          
+    SN74S381DW        SN74S381N         SN74S38D          SN74S38N          
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 12
+
+    Library Contents                                             TI_7400.LIB
+
+                                        
+
+    ========================================================================
+
+    SN74S40D          SN74S40N          SN74S436D         SN74S436N         
+    SN74S51D          SN74S51N          SN74S64D          SN74S64N          
+    SN74S65D          SN74S65N          SN74S74D          SN74S74N          
+    SN74S85D          SN74S85N          SN74S86D          SN74S86N          
+    
+    Total Parts: 1036
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 13
+
+    Library Contents                                              TI_PLD.LIB
+
+                                        
+
+    ========================================================================
+
+    10H16ET6          10H16P8-3         10H16TE6          16L8              
+    16L8-55           16N8-7            16R4              16R4-55           
+    16R6              16R6-55           16R8              16R8-55           
+    1810C-35          18N8-6            19L8              19R4              
+    19R6              19R8              20L8-5            20R4-5            
+    20R6-5            20R8-5            22V10             330-15            
+    506               507               610C-25           630-20            
+    82S105            82S167            839               840               
+    910C-30           B82S105BCFN       B82S105BCN        B82S105BMFK       
+    B82S105BMJ        B82S167BCFN       B82S167BCNT       B82S167BMFK       
+    B82S167BMJT       BPAD16N8-7CFN     BPAD16N8-7CJ      BPAD16N8-7CN      
+    BPAD18N8-6CFN     BPAD18N8-6CJ      BPAD18N8-6CN      BPAL16L8-10CFN    
+    BPAL16L8-10CJ     BPAL16L8-10CN     BPAL16L8-10MFK    BPAL16L8-10MJ     
+    BPAL16L8-12CFN    BPAL16L8-12CJ     BPAL16L8-12CN     BPAL16L8-12MFK    
+    BPAL16L8-12MJ     BPAL16L8-15CFN    BPAL16L8-15CJ     BPAL16L8-15CN     
+    BPAL16L8-15MFK    BPAL16L8-15MJ     BPAL16L8-15MW     BPAL16L8-20MFK    
+    BPAL16L8-20MJ     BPAL16L8-20MW     BPAL16L8-25CFN    BPAL16L8-25CJ     
+    BPAL16L8-25CN     BPAL16L8-30MFK    BPAL16L8-30MJ     BPAL16L8-30MW     
+    BPAL16L8-5CFN     BPAL16L8-5CJ      BPAL16L8-5CN      BPAL16L8-7CFN     
+    BPAL16L8-7CJ      BPAL16L8-7CN      BPAL16L8-7MFK     BPAL16L8-7MJ      
+    BPAL16R4-10CFN    BPAL16R4-10CJ     BPAL16R4-10CN     BPAL16R4-10MFK    
+    BPAL16R4-10MJ     BPAL16R4-12CFN    BPAL16R4-12CJ     BPAL16R4-12CN     
+    BPAL16R4-12MFK    BPAL16R4-12MJ     BPAL16R4-15CFN    BPAL16R4-15CJ     
+    BPAL16R4-15CN     BPAL16R4-15MFK    BPAL16R4-15MJ     BPAL16R4-15MW     
+    BPAL16R4-20MFK    BPAL16R4-20MJ     BPAL16R4-20MW     BPAL16R4-25CFN    
+    BPAL16R4-25CJ     BPAL16R4-25CN     BPAL16R4-30MFK    BPAL16R4-30MJ     
+    BPAL16R4-30MW     BPAL16R4-5CFN     BPAL16R4-5CJ      BPAL16R4-5CN      
+    BPAL16R4-7CFN     BPAL16R4-7CJ      BPAL16R4-7CN      BPAL16R4-7MFK     
+    BPAL16R4-7MJ      BPAL16R6-10CFN    BPAL16R6-10CJ     BPAL16R6-10CN     
+    BPAL16R6-10MFK    BPAL16R6-10MJ     BPAL16R6-12CFN    BPAL16R6-12CJ     
+    BPAL16R6-12CN     BPAL16R6-12MFK    BPAL16R6-12MJ     BPAL16R6-15CFN    
+    BPAL16R6-15CJ     BPAL16R6-15CN     BPAL16R6-15MFK    BPAL16R6-15MJ     
+    BPAL16R6-15MW     BPAL16R6-20MFK    BPAL16R6-20MJ     BPAL16R6-20MW     
+    BPAL16R6-25CFN    BPAL16R6-25CJ     BPAL16R6-25CN     BPAL16R6-30MFK    
+    BPAL16R6-30MJ     BPAL16R6-30MW     BPAL16R6-5CFN     BPAL16R6-5CJ      
+    BPAL16R6-5CN      BPAL16R6-7CFN     BPAL16R6-7CJ      BPAL16R6-7CN      
+    BPAL16R6-7MFK     BPAL16R6-7MJ      BPAL16R8-10CFN    BPAL16R8-10CJ     
+    BPAL16R8-10CN     BPAL16R8-10MFK    BPAL16R8-10MJ     BPAL16R8-12CFN    
+    BPAL16R8-12CJ     BPAL16R8-12CN     BPAL16R8-12MFK    BPAL16R8-12MJ     
+    BPAL16R8-15CFN    BPAL16R8-15CJ     BPAL16R8-15CN     BPAL16R8-15MFK    
+    BPAL16R8-15MJ     BPAL16R8-15MW     BPAL16R8-20MFK    BPAL16R8-20MJ     
+    BPAL16R8-20MW     BPAL16R8-25CFN    BPAL16R8-25CJ     BPAL16R8-25CN     
+    BPAL16R8-30MFK    BPAL16R8-30MJ     BPAL16R8-30MW     BPAL16R8-5CFN     
+    BPAL16R8-5CJ      BPAL16R8-5CN      BPAL16R8-7CFN     BPAL16R8-7CJ      
+    BPAL16R8-7CN      BPAL16R8-7MFK     BPAL16R8-7MJ      BPAL20L8-10CFN    
+    BPAL20L8-10CJT    BPAL20L8-10CNT    BPAL20L8-10MFK    BPAL20L8-10MJT    
+    BPAL20L8-12MFK    BPAL20L8-12MJT    BPAL20L8-15CFN    BPAL20L8-15CJT    
+    BPAL20L8-15CNT    BPAL20L8-20MFK    BPAL20L8-20MJT    BPAL20L8-20MW     
+    BPAL20L8-25CFN    BPAL20L8-25CJT    BPAL20L8-25CNT    BPAL20L8-5CFN     
+    BPAL20L8-5CJT     BPAL20L8-5CNT     BPAL20L8-7CFN     BPAL20L8-7CJT     
+    BPAL20L8-7CNT     BPAL20L8-7MFK     BPAL20L8-7MJT     BPAL20R4-10CFN    
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 14
+
+    Library Contents                                              TI_PLD.LIB
+
+                                        
+
+    ========================================================================
+
+    BPAL20R4-10CJT    BPAL20R4-10CNT    BPAL20R4-10MFK    BPAL20R4-10MJT    
+    BPAL20R4-12MFK    BPAL20R4-12MJT    BPAL20R4-15CFN    BPAL20R4-15CJT    
+    BPAL20R4-15CNT    BPAL20R4-20MFK    BPAL20R4-20MJT    BPAL20R4-20MW     
+    BPAL20R4-25CFN    BPAL20R4-25CJT    BPAL20R4-25CNT    BPAL20R4-5CFN     
+    BPAL20R4-5CJT     BPAL20R4-5CNT     BPAL20R4-7CFN     BPAL20R4-7CJT     
+    BPAL20R4-7CNT     BPAL20R4-7MFK     BPAL20R4-7MJT     BPAL20R6-10CFN    
+    BPAL20R6-10CJT    BPAL20R6-10CNT    BPAL20R6-10MFK    BPAL20R6-10MJT    
+    BPAL20R6-12MFK    BPAL20R6-12MJT    BPAL20R6-15CFN    BPAL20R6-15CJT    
+    BPAL20R6-15CNT    BPAL20R6-20MFK    BPAL20R6-20MJT    BPAL20R6-20MW     
+    BPAL20R6-25CFN    BPAL20R6-25CJT    BPAL20R6-25CNT    BPAL20R6-5CFN     
+    BPAL20R6-5CJT     BPAL20R6-5CNT     BPAL20R6-7CFN     BPAL20R6-7CJT     
+    BPAL20R6-7CNT     BPAL20R6-7MFK     BPAL20R6-7MJT     BPAL20R8-10CFN    
+    BPAL20R8-10CJT    BPAL20R8-10CNT    BPAL20R8-10MFK    BPAL20R8-10MJT    
+    BPAL20R8-12MFK    BPAL20R8-12MJT    BPAL20R8-15CFN    BPAL20R8-15CJT    
+    BPAL20R8-15CNT    BPAL20R8-20MFK    BPAL20R8-20MJT    BPAL20R8-20MW     
+    BPAL20R8-25CFN    BPAL20R8-25CJT    BPAL20R8-25CNT    BPAL20R8-5CFN     
+    BPAL20R8-5CJT     BPAL20R8-5CNT     BPAL20R8-7CFN     BPAL20R8-7CJT     
+    BPAL20R8-7CNT     BPAL20R8-7MFK     BPAL20R8-7MJT     BPAL22V10-15CFN   
+    BPAL22V10-15CNT   BPAL22V10-20MFK   BPAL22V10-20MJT   BPAL22V10ACFN     
+    BPAL22V10ACNT     BPAL22V10AMFK     BPAL22V10AMJT     BPAL22V10CFN      
+    BPAL22V10CNT      BPAL22VP10-20CFN  BPAL22VP10-20CNT  BPAL22VP10-25MFK  
+    BPAL22VP10-25MJT  BPALR19L8CFN      BPALR19L8CJW      BPALR19L8CNT      
+    BPALR19R4CFN      BPALR19R4CJW      BPALR19R4CNT      BPALR19R6CFN      
+    BPALR19R6CJW      BPALR19R6CNT      BPALR19R8CFN      BPALR19R8CJW      
+    BPALR19R8CNT      BPALT19L8CFN      BPALT19L8CJW      BPALT19L8CNT      
+    BPALT19R4CFN      BPALT19R4CJW      BPALT19R4CNT      BPALT19R6CFN      
+    BPALT19R6CJW      BPALT19R6CNT      BPALT19R8CFN      BPALT19R8CJW      
+    BPALT19R8CNT      BPLS506CFK        BPLS506CFN        BPLS506CJT        
+    BPLS506CNT        BPSG507CFK        BPSG507CFN        BPSG507CJT        
+    BPSG507CNT        BPSG507MFK        BPSG507MJT        CPAL16L8-55CJA    
+    CPAL16L8-55CN     CPAL16R4-55CJA    CPAL16R4-55CN     CPAL16R6-55CJA    
+    CPAL16R6-55CN     CPAL16R8-55CJA    CPAL16R8-55CN     CPAL22V10Z-25CFN  
+    CPAL22V10Z-25CJT  CPAL22V10Z-25CNT  CPAL22V10Z-35CFN  CPAL22V10Z-35CJT  
+    CPAL22V10Z-35CNT  EP1810C-35XJ      EP1810C-35XL      EP1810C-45XJ      
+    EP1810C-45XL      EP1810I-45XJ      EP1810I-45XL      EP330-15CFN       
+    EP330-15CJA       EP330-15CN        EP330-20IFN       EP330-20IJA       
+    EP330-20IN        EP330-25MBJA      EP610C-25XD       EP610C-25XJ       
+    EP610C-25XL       EP610C-25XP       EP610C-30XD       EP610C-30XJ       
+    EP610C-30XL       EP610C-30XP       EP610C-35XD       EP610C-35XJ       
+    EP610C-35XL       EP610C-35XP       EP610I-40XD       EP610I-40XJ       
+    EP610I-40XL       EP610I-40XP       EP630-20CJTB      EP630-20CNT       
+    EP630-25IJTB      EP630-25INT       EP630-25MBJTB     EP910C-30XD       
+    EP910C-30XJ       EP910C-30XL       EP910C-30XP       EP910C-35XD       
+    EP910C-35XJ       EP910C-35XL       EP910C-35XP       EP910C-40XD       
+    EP910C-40XJ       EP910C-40XL       EP910C-40XP       EP910I-45XD       
+    EP910I-45XJ       EP910I-45XL       EP910I-45XP       EPAL10016ET6CFN   
+    EPAL10016ET6CJT   EPAL10016P8-3CFK  EPAL10016P8-3CJT  EPAL10016TE6CFN   
+    EPAL10016TE6CJT   EPAL10H16ET6CFN   EPAL10H16ET6CJT   EPAL10H16P8-3CFK  
+    EPAL10H16P8-3CJT  EPAL10H16P8-6CFK  EPAL10H16P8-6CJT  EPAL10H16TE6CFN   
+    EPAL10H16TE6CJT   FPLA839CFN        FPLA839CJT        FPLA839CNT        
+    FPLA840CFN        FPLA840CJT        FPLA840CNT        PAL16L8A-2MFK     
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 15
+
+    Library Contents                                              TI_PLD.LIB
+
+                                        
+
+    ========================================================================
+
+    PAL16L8A-2MJ      PAL16L8A-2MW      PAL16L8AMFK       PAL16L8AMJ        
+    PAL16L8AMW        PAL16R4A-2MFK     PAL16R4A-2MJ      PAL16R4A-2MW      
+    PAL16R4AMFK       PAL16R4AMJ        PAL16R4AMW        PAL16R6A-2MFK     
+    PAL16R6A-2MJ      PAL16R6A-2MW      PAL16R6AMFK       PAL16R6AMJ        
+    PAL16R6AMW        PAL16R8A-2MFK     PAL16R8A-2MJ      PAL16R8A-2MW      
+    PAL16R8AMFK       PAL16R8AMJ        PAL16R8AMW        
+    
+    Total Parts: 431
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 16
+
+    Library Contents                                              NEC_MP.LIB
+
+                                        
+
+    ========================================================================
+
+    PD70322L/V25      
+    
+    Total Parts: 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 17
+
+    Library Contents                                            MOTO_MEM.LIB
+
+                                        
+
+    ========================================================================
+
+    10139             10143             10144             10145             
+    10146             10147             10148             10149             
+    10152             10415             1423              2016              
+    2018              2801              2802              2814              
+    41464             4180              511000            511001            
+    511002            514256            514258            60256             
+    6064              60L256            60L64             6164              
+    6164-55U          6164-55X          6164-70U          6164-70X          
+    6168              6168-55R          6168-55U          6168-55Y          
+    6168-70R          6168-70U          6168-70Y          61L64             
+    6206              6207              6208              62350             
+    62351             6256              6257              6264              
+    6268              6268-35R          6268-35U          6268-35Y          
+    6268-45R          6268-45U          6268-45Y          6269              
+    6287              6287-35U          6287-35X          6287-45U          
+    6287-45X          6288              6288-35U          6288-35X          
+    6288-45U          6288-45X          6290              6292              
+    6293              6294              6295              68HC34            
+    IMS1423-45P       MC10H145FN        MC10H145L         MC10H145P         
+    MCM10139F         MCM10139L         MCM10143F         MCM10143L         
+    MCM10144F         MCM10144L         MCM10145F         MCM10145L         
+    MCM10146F         MCM10146L         MCM10147F         MCM10147L         
+    MCM10148L         MCM10149-10F      MCM10149-10L      MCM10149-25F      
+    MCM10149-25L      MCM10152F         MCM10152L         MCM10415-15F      
+    MCM10415-15L      MCM10415-20F      MCM10415-20L      MCM1423-45P       
+    MCM2016H-45N      MCM2016H-55N      MCM2016H-70N      MCM2018-35N       
+    MCM2018-45N       MCM2801P          MCM2802P          MCM2814P          
+    MCM41464A-10P     MCM41464A-12P     MCM41464A-15P     MCM4180-22P       
+    MCM4180-25P       MCM4180-30P       MCM511000-10J     MCM511000-10P     
+    MCM511000-12J     MCM511000-12P     MCM511000-85J     MCM511000-85P     
+    MCM511001-10J     MCM511001-10P     MCM511001-12J     MCM511001-12P     
+    MCM511001-85J     MCM511001-85P     MCM511002-10J     MCM511002-10P     
+    MCM511002-12J     MCM511002-12P     MCM511002-85J     MCM511002-85P     
+    MCM514256-10J     MCM514256-10P     MCM514256-12J     MCM514256-12P     
+    MCM514256-85J     MCM514256-85P     MCM514258-10J     MCM514258-10P     
+    MCM514258-12J     MCM514258-12P     MCM514258-85J     MCM514258-85P     
+    MCM60256-10P      MCM60256-12P      MCM60256-85P      MCM6064-10P       
+    MCM6064-12P       MCM6064-15P       MCM60L256-10P     MCM60L256-12P     
+    MCM60L256-85P     MCM60L64-10P      MCM60L64-12P      MCM60L64-15P      
+    MCM6164-45C       MCM6164-55C       MCM6164C-55C      MCM6164C-70C      
+    MCM6168-45P       MCM6168-55P       MCM6168-70P       MCM61L64-45C      
+    MCM61L64-55C      MCM6206-45J       MCM6206-45P       MCM6206-55J       
+    MCM6206-55P       MCM6206-70J       MCM6206-70P       MCM6207-25J       
+    MCM6207-25L       MCM6207-25P       MCM6207-35J       MCM6207-35L       
+    MCM6207-35P       MCM6208-25J       MCM6208-25L       MCM6208-25P       
+    MCM6208-35J       MCM6208-35L       MCM6208-35P       MCM62350-22J      
+    MCM62350-22P      MCM62350-25J      MCM62350-25P      MCM62350-30J      
+    MCM62350-30P      MCM62351-22J      MCM62351-22P      MCM62351-25J      
+    MCM62351-25P      MCM62351-30J      MCM62351-30P      MCM6256B-10P      
+    MCM6256B-12P      MCM6256B-15P      MCM6257B-10P      MCM6257B-12P      
+    MCM6257B-15P      MCM6264-35J       MCM6264-35P       MCM6264-45J       
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 18
+
+    Library Contents                                            MOTO_MEM.LIB
+
+                                        
+
+    ========================================================================
+
+    MCM6264-45P       MCM6268-25P       MCM6268-35P       MCM6269-25P       
+    MCM6269-35P       MCM6287-25J       MCM6287-25P       MCM6287-35J       
+    MCM6287-35P       MCM6288-25P       MCM6288-30P       MCM6288-35P       
+    MCM6290-25J       MCM6290-25P       MCM6290-30J       MCM6290-30P       
+    MCM6290-35J       MCM6290-35P       MCM6292-25CN      MCM6292-25J       
+    MCM6292-30CN      MCM6292-30J       MCM6292-35CN      MCM6292-35J       
+    MCM6293-25J       MCM6293-25P       MCM6293-30J       MCM6293-30P       
+    MCM6293-35J       MCM6293-35P       MCM6294-25J       MCM6294-25P       
+    MCM6294-30J       MCM6294-30P       MCM6294-35J       MCM6294-35P       
+    MCM6295-25CN      MCM6295-25J       MCM6295-30CN      MCM6295-30J       
+    MCM6295-35CN      MCM6295-35J       MCM68HC34L        MCM68HC34P        
+    RBC512IE13        
+    
+    Total Parts: 249
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 19
+
+    Library Contents                                              TI_MEM.LIB
+
+                                        
+
+    ========================================================================
+
+    024EAD9-10        024GAD8-10        024HAC4-10        2150-20           
+    2732A-17          2764-17           27C010-20         27C128-20         
+    27C210-20         27C256            27C291-3          27C292-3          
+    27C49-4           27C512            27PC010-20        27PC128           
+    27PC210-20        27PC256           27PC291-3         27PC32            
+    27PC49-4          27PC512           27PC64            28C64-25          
+    4161-15           4164-12           4256-12           4256-8            
+    4256EC4-10        4256EL9-10        4256FC1-10        4256FL8-10        
+    4256GU8-10        4256GU9-10        4257-10           4416-12           
+    4461-12           4461-15           4464-12           44C251-10         
+    44C256-12         44C257-10         4500A-15          4502              
+    4C1024-10         4C1025-10         4C1027-10         4C1050-3          
+    54ALS229          54ALS232          54ALS233          54ALS234          
+    54ALS235          54ALS236          54ALS632          54ALS633          
+    54ALS634          54ALS635          61CD16-25         61CD256-35        
+    61CD64-25         64C16-25          64C64-25          68CE16-25         
+    68CE256-35        68CE64-25         69CE288-35        69CE72-25         
+    74ACT2151         74ACT2152-25      74ACT2153         74ACT2154-25      
+    74ACT7201A-25     74ACT7202-35      74ALS2232         74ALS2233         
+    74ALS2967         74ALS2968         74ALS6301         74ALS6302         
+    74ALS6310         74ALS6311         74BCT2827         74BCT2828         
+    74BCT29827        74BCT29828        9914              SM61CD16-25FG     
+    SM61CD16-25JD     SM61CD16-35FG     SM61CD16-35JD     SM61CD16-45FG     
+    SM61CD16-45JD     SM61CD256-35JD    SM61CD256-45JD    SM61CD256-55JD    
+    SM61CD64-25JD     SM61CD64-35JD     SM61CD64-45JD     SM64C16-25FG      
+    SM64C16-25JD      SM64C16-35FG      SM64C16-35JD      SM64C16-45FG      
+    SM64C16-45JD      SM64C64-25JD      SM64C64-35JD      SM64C64-45JD      
+    SM68CE16-25FG     SM68CE16-25JD     SM68CE16-35FG     SM68CE16-35JD     
+    SM68CE16-45FG     SM68CE16-45JD     SM68CE256-35FG    SM68CE256-35JD    
+    SM68CE256-45FG    SM68CE256-45JD    SM68CE256-55FG    SM68CE256-55JD    
+    SM68CE64-25FG     SM68CE64-25JD     SM68CE64-35FG     SM68CE64-35JD     
+    SM68CE64-45FG     SM68CE64-45JD     SM69CE288-35FG    SM69CE288-45FG    
+    SM69CE288-55FG    SM69CE72-25FG     SM69CE72-25JD     SM69CE72-35FG     
+    SM69CE72-35JD     SM69CE72-45FG     SM69CE72-45JD     SMJ27C010-25JA    
+    SMJ27C010-30JA    SMJ27C128-20JA    SMJ27C128-25JA    SMJ27C128-30JA    
+    SMJ27C210-25JA    SMJ27C210-30JA    SMJ27C256-20JA    SMJ27C256-25JA    
+    SMJ27C256-30JA    SMJ27C512-20JA    SMJ27C512-25JA    SMJ27C512-30JA    
+    SMJ4161-15JD      SMJ4161-20JD      SMJ4164-12FG      SMJ4164-12JD      
+    SMJ4164-15FG      SMJ4164-15JD      SMJ4164-20FG      SMJ4164-20JD      
+    SMJ4256-12FV      SMJ4256-12JD      SMJ4256-15FV      SMJ4256-15JD      
+    SMJ4256-20FV      SMJ4256-20JD      SMJ4416-12JD      SMJ4416-15JD      
+    SMJ4416-20JD      SMJ4461-15JD      SMJ4464-12FV      SMJ4464-12JD      
+    SMJ4464-15FV      SMJ4464-15JD      SMJ4464-20FV      SMJ4464-20JD      
+    SMJ44C256-12HJ    SMJ44C256-12JD    SMJ44C256-15HJ    SMJ44C256-15JD    
+    SMJ4C1024-12HJ    SMJ4C1024-12JD    SMJ4C1024-15HJ    SMJ4C1024-15JD    
+    SMJ61CD16-25FG    SMJ61CD16-25JD    SMJ61CD16-35FG    SMJ61CD16-35JD    
+    SMJ61CD16-45FG    SMJ61CD16-45JD    SMJ61CD256-35JD   SMJ61CD256-45JD   
+    SMJ61CD256-55JD   SMJ61CD64-25JD    SMJ61CD64-35JD    SMJ61CD64-45JD    
+    SMJ64C16-25FG     SMJ64C16-25JD     SMJ64C16-35FG     SMJ64C16-35JD     
+    SMJ64C16-45FG     SMJ64C16-45JD     SMJ64C64-25JD     SMJ64C64-35JD     
+    SMJ64C64-45JD     SMJ68CE16-25FG    SMJ68CE16-25JD    SMJ68CE16-35FG    
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 20
+
+    Library Contents                                              TI_MEM.LIB
+
+                                        
+
+    ========================================================================
+
+    SMJ68CE16-35JD    SMJ68CE16-45FG    SMJ68CE16-45JD    SMJ68CE256-35FG   
+    SMJ68CE256-35JD   SMJ68CE256-45FG   SMJ68CE256-45JD   SMJ68CE256-55FG   
+    SMJ68CE256-55JD   SMJ68CE64-25FG    SMJ68CE64-25JD    SMJ68CE64-35FG    
+    SMJ68CE64-35JD    SMJ68CE64-45FG    SMJ68CE64-45JD    SMJ69CE288-35FG   
+    SMJ69CE288-45FG   SMJ69CE288-55FG   SMJ69CE72-25FG    SMJ69CE72-25JD    
+    SMJ69CE72-35FG    SMJ69CE72-35JD    SMJ69CE72-45FG    SMJ69CE72-45JD    
+    SMJ9914AFD        SMJ9914AJD        SN54ALS229AFK     SN54ALS229AJ      
+    SN54ALS232AFK     SN54ALS232AJ      SN54ALS233AFK     SN54ALS233AJ      
+    SN54ALS234FK      SN54ALS234J       SN54ALS235FK      SN54ALS235J       
+    SN54ALS236FK      SN54ALS236J       SN54ALS632BFN     SN54ALS632BJD     
+    SN54ALS633FN      SN54ALS633JD      SN54ALS634BFN     SN54ALS634BJD     
+    SN54ALS635FN      SN54ALS635JD      SN54AS632FN       SN54AS632JD       
+    SN54AS634FN       SN54AS634JD       SN74ACT2151FN     SN74ACT2151JD     
+    SN74ACT2151N      SN74ACT2152-25FN  SN74ACT2152-25JD  SN74ACT2152-25N   
+    SN74ACT2152-35FN  SN74ACT2152-35JD  SN74ACT2152-35N   SN74ACT2153FN     
+    SN74ACT2153JD     SN74ACT2153N      SN74ACT2154-25FN  SN74ACT2154-25JD  
+    SN74ACT2154-25N   SN74ACT2154-35FN  SN74ACT2154-35JD  SN74ACT2154-35N   
+    SN74ACT7201A-25N  SN74ACT7201A-35N  SN74ACT7201A-50N  SN74ACT7202-35N   
+    SN74ACT7202-50N   SN74ALS2232DW     SN74ALS2232FN     SN74ALS2232NT     
+    SN74ALS2233FN     SN74ALS2233N      SN74ALS229ADW     SN74ALS229AFN     
+    SN74ALS229AN      SN74ALS232AD      SN74ALS232AFN     SN74ALS232AN      
+    SN74ALS233ADW     SN74ALS233AFN     SN74ALS233AN      SN74ALS234D       
+    SN74ALS234FN      SN74ALS234N       SN74ALS235DW      SN74ALS235FN      
+    SN74ALS235N       SN74ALS236D       SN74ALS236FN      SN74ALS236N       
+    SN74ALS2967FN     SN74ALS2967JD     SN74ALS2967N      SN74ALS2968FN     
+    SN74ALS2968JD     SN74ALS2968N      SN74ALS6301FN     SN74ALS6301JD     
+    SN74ALS6301N      SN74ALS6302FN     SN74ALS6302JD     SN74ALS6302N      
+    SN74ALS6310DW     SN74ALS6310FN     SN74ALS6310N      SN74ALS6311DW     
+    SN74ALS6311FN     SN74ALS6311N      SN74ALS632BFN     SN74ALS632BJD     
+    SN74ALS633FN      SN74ALS633JD      SN74ALS634BFN     SN74ALS634BJD     
+    SN74ALS635FN      SN74ALS635JD      SN74AS632FN       SN74AS632JD       
+    SN74AS634FN       SN74AS634JD       SN74BCT2827ADW    SN74BCT2827AFN    
+    SN74BCT2827ANT    SN74BCT2828ADW    SN74BCT2828AFN    SN74BCT2828ANT    
+    SN74BCT29827ADW   SN74BCT29827AFN   SN74BCT29827ANT   SN74BCT29828ADW   
+    SN74BCT29828AFN   SN74BCT29828ANT   TACT2150-20DW     TACT2150-20JD     
+    TACT2150-20NT     TACT2150-30DW     TACT2150-30JD     TACT2150-30NT     
+    THCT4502BFK       THCT4502BFN       THCT4502BJD       THCT4502BN        
+    TM024EAD9-10AD    TM024EAD9-12AD    TM024EAD9-15AD    TM024GAD8-10AD    
+    TM024GAD8-12AD    TM024GAD8-15AD    TM024HAC4-10AC    TM024HAC4-12AC    
+    TM024HAC4-15AC    TM4256EC4-10C     TM4256EC4-12C     TM4256EC4-15C     
+    TM4256EL9-10L     TM4256EL9-12L     TM4256EL9-15L     TM4256FC1-10C     
+    TM4256FC1-12C     TM4256FC1-15C     TM4256FL8-10L     TM4256FL8-12L     
+    TM4256FL8-15L     TM4256GU8-10U     TM4256GU8-12U     TM4256GU8-15U     
+    TM4256GU9-10U     TM4256GU9-12U     TM4256GU9-15U     TMS2732A-17JA     
+    TMS2732A-20JA     TMS2732A-25JA     TMS2732A-45JA     TMS2764-17JA      
+    TMS2764-20JA      TMS2764-25JA      TMS2764-45JA      TMS27C010-170JA   
+    TMS27C010-200JA   TMS27C010-20JA    TMS27C010-250JA   TMS27C010-25JA    
+    TMS27C010-300JA   TMS27C010-30JA    TMS27C128-100JA   TMS27C128-120JA   
+    TMS27C128-12JA    TMS27C128-15JA    TMS27C128-1JA     TMS27C128-20JA    
+    TMS27C128-25JA    TMS27C128-2JA     TMS27C128JA       TMS27C210-170JA   
+    TMS27C210-200JA   TMS27C210-20JA    TMS27C210-250JA   TMS27C210-25JA    
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 21
+
+    Library Contents                                              TI_MEM.LIB
+
+                                        
+
+    ========================================================================
+
+    TMS27C210-300JA   TMS27C210-30JA    TMS27C256-120JA   TMS27C256-12JA    
+    TMS27C256-150JA   TMS27C256-15JA    TMS27C256-17JA    TMS27C256-1JA     
+    TMS27C256-20JA    TMS27C256-25JA    TMS27C256-2JA     TMS27C256JA       
+    TMS27C291-35JA    TMS27C291-3JA     TMS27C291-45JA    TMS27C291-50JA    
+    TMS27C291-5JA     TMS27C291JA       TMS27C292-35JA    TMS27C292-3JA     
+    TMS27C292-45JA    TMS27C292-50JA    TMS27C292-5JA     TMS27C292JA       
+    TMS27C32-100JA    TMS27C32-10JA     TMS27C32-120JA    TMS27C32-12JA     
+    TMS27C32-150JA    TMS27C32-15JA     TMS27C32-20JA     TMS27C32-25JA     
+    TMS27C32-2JA      TMS27C32JA        TMS27C49-45JA     TMS27C49-45JTA    
+    TMS27C49-4JA      TMS27C49-4JTA     TMS27C49-55JA     TMS27C49-55JTA    
+    TMS27C49-5JA      TMS27C49-5JTA     TMS27C512-17JA    TMS27C512-1JA     
+    TMS27C512-20JA    TMS27C512-25JA    TMS27C512-2JA     TMS27C512-30JA    
+    TMS27C512-3JA     TMS27C512JA       TMS27C64-100JA    TMS27C64-120JA    
+    TMS27C64-12JA     TMS27C64-15JA     TMS27C64-1JA      TMS27C64-20JA     
+    TMS27C64-25JA     TMS27C64-2JA      TMS27C64JA        TMS27PC128-15FM   
+    TMS27PC128-15N    TMS27PC128-1FM    TMS27PC128-1N     TMS27PC128-20FM   
+    TMS27PC128-20N    TMS27PC128-25FM   TMS27PC128-25N    TMS27PC128-2FM    
+    TMS27PC128-2N     TMS27PC128FM      TMS27PC128N       TMS27PC256-150FM  
+    TMS27PC256-150N   TMS27PC256-15FM   TMS27PC256-15N    TMS27PC256-17FM   
+    TMS27PC256-17N    TMS27PC256-1FM    TMS27PC256-1N     TMS27PC256-20FM   
+    TMS27PC256-20N    TMS27PC256-25FM   TMS27PC256-25N    TMS27PC256-2FM    
+    TMS27PC256-2N     TMS27PC256FM      TMS27PC256N       TMS27PC291-35FN   
+    TMS27PC291-35N    TMS27PC291-3FN    TMS27PC291-3N     TMS27PC291-45FN   
+    TMS27PC291-45N    TMS27PC291-50FN   TMS27PC291-50N    TMS27PC291-5FN    
+    TMS27PC291-5N     TMS27PC291FN      TMS27PC291N       TMS27PC32-120N    
+    TMS27PC32-12N     TMS27PC32-150N    TMS27PC32-15N     TMS27PC32-20N     
+    TMS27PC32-25N     TMS27PC32-2N      TMS27PC32N        TMS27PC49-45FN    
+    TMS27PC49-45N     TMS27PC49-45NT    TMS27PC49-4FN     TMS27PC49-4N      
+    TMS27PC49-4NT     TMS27PC49-55FN    TMS27PC49-55N     TMS27PC49-55NT    
+    TMS27PC49-5FN     TMS27PC49-5N      TMS27PC49-5NT     TMS27PC512-20FM   
+    TMS27PC512-20N    TMS27PC512-25FM   TMS27PC512-25N    TMS27PC512-2FM    
+    TMS27PC512-2N     TMS27PC512-30FM   TMS27PC512-30N    TMS27PC512-3FM    
+    TMS27PC512-3N     TMS27PC512FM      TMS27PC512N       TMS27PC64-120N    
+    TMS27PC64-12N     TMS27PC64-15N     TMS27PC64-1N      TMS27PC64-20N     
+    TMS27PC64-25N     TMS27PC64-2N      TMS27PC64N        TMS28C64-25J      
+    TMS28C64-25N      TMS28C64-35J      TMS28C64-35N      TMS4256-10FM      
+    TMS4256-10N       TMS4256-10SD      TMS4256-12FM      TMS4256-12N       
+    TMS4256-12SD      TMS4256-15FM      TMS4256-15N       TMS4256-15SD      
+    TMS4256-8FM       TMS4256-8N        TMS4256-8SD       TMS4257-10FM      
+    TMS4257-10N       TMS4257-10SD      TMS4257-12FM      TMS4257-12N       
+    TMS4257-12SD      TMS4257-15FM      TMS4257-15N       TMS4257-15SD      
+    TMS4461-12N       TMS4461-12SD      TMS4461-15N       TMS4461-15SD      
+    TMS4464-10FM      TMS4464-10N       TMS4464-12FM      TMS4464-12N       
+    TMS4464-15FM      TMS4464-15N       TMS44C251-10DJ    TMS44C251-10SD    
+    TMS44C251-12DJ    TMS44C251-12SD    TMS44C251-15DJ    TMS44C251-15SD    
+    TMS44C256-10DJ    TMS44C256-10N     TMS44C256-12DJ    TMS44C256-12N     
+    TMS44C256-15DJ    TMS44C256-15N     TMS44C257-10DJ    TMS44C257-10N     
+    TMS44C257-12DJ    TMS44C257-12N     TMS44C257-15DJ    TMS44C257-15N     
+    TMS4500A-15FN     TMS4500A-15N      TMS4500A-20FN     TMS4500A-20N      
+    TMS4500A-25FN     TMS4500A-25N      TMS4C1024-10DJ    TMS4C1024-10N     
+    TMS4C1024-12DJ    TMS4C1024-12N     TMS4C1024-15DJ    TMS4C1024-15N     
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 22
+
+    Library Contents                                              TI_MEM.LIB
+
+                                        
+
+    ========================================================================
+
+    TMS4C1025-10DJ    TMS4C1025-10N     TMS4C1025-12DJ    TMS4C1025-12N     
+    TMS4C1025-15DJ    TMS4C1025-15N     TMS4C1027-10DJ    TMS4C1027-10N     
+    TMS4C1027-12DJ    TMS4C1027-12N     TMS4C1027-15DJ    TMS4C1027-15N     
+    TMS4C1050-3DJ     TMS4C1050-3N      TMS4C1050-3SD     TMS4C1050-4DJ     
+    TMS4C1050-4N      TMS4C1050-4SD     TMS4C1050-6DJ     TMS4C1050-6N      
+    TMS4C1050-6SD     TMX27PC010-200N   TMX27PC010-20N    TMX27PC010-250N   
+    TMX27PC010-25N    TMX27PC010-300N   TMX27PC010-30N    TMX27PC210-200N   
+    TMX27PC210-20N    TMX27PC210-250N   TMX27PC210-25N    TMX27PC210-300N   
+    TMX27PC210-30N    
+    
+    Total Parts: 645
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
+
+    23-Oct-94  13:49                                                 Page 23

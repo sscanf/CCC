@@ -1,0 +1,102 @@
+     TANGO-ROUTE PLUS STATISTICS LOG
+        LOG FILENAME:  G:\RACC\RTC.LOG
+        DATE/TIME:  Thu Oct 13 11:49:46 1994
+
+     Filename Specifications:
+        Input  .PCB file:  G:\RACC\TC.PCB
+        Output .PCB file:  G:\RACC\RTC.PCB
+        Output .LOG file:  G:\RACC\RTC.LOG
+        Setup  .SET file:  G:\RACC\TC.SET
+
+     PCB Layer Assignments:
+        Top:      Horizontal routes
+        Bottom:   Vertical routes
+        Mid 1:    (disabled)
+        Mid 2:    (disabled)
+        Mid 3:    (disabled)
+        Mid 4:    (disabled)
+        Mid 5:    (disabled)
+        Mid 6:    (disabled)
+        Mid 7:    (disabled)
+        Mid 8:    (disabled)
+
+     Routing Parameters:
+        Routing Grid:       25 mils
+        Routing Line Width: 12 mils
+        Routing Clearance:  13 mils
+        Via Diameter:       40 mils
+        Via Hole Diameter:  20 mils
+
+        Pad-to-Pad DRC:     13 mils
+        Pad-to-Line DRC:    13 mils
+        Line-to-Line DRC:   13 mils
+
+     Reading PCB file
+
+     Processing pads
+
+        Error #151 (warning)
+        Clearance violation detected between two primitives:
+        Node Q4-B:  Pad @ (18397,25314)
+        Node R24-A:  Pad @ (18400,25242)
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node Q6-B:  Pad @ (18958,25314)
+        Node R26-A:  Pad @ (18957,25255)
+
+     Processing lines
+
+     Processing polygons
+
+     Processing text
+
+     Processing keepouts
+
+     Processing polygons
+
+     Optimizing pre-routed lines
+
+     Optimizing nets
+
+     Routing Performance:
+                               Routes   Percentage       Time in    Total
+        Pass Title          Completed    Completed          Pass     Time
+
+        Pre-routed signals:         1           0%          0:25     0:25
+        Wide line routing:          1           0%      disabled
+        Horizontal routes:         37          19%          0:01     0:27
+        Vertical routes:           92          49%          0:03     0:30
+        L routes (1 via):         160          86%          0:08     0:38
+        Z routes (2 vias):        165          88%          0:03     0:41
+        C routes (2 vias):        171          91%          0:05     0:46
+        Any node (2 vias):        175          94%          0:08     0:54
+        Maze routes:              185          99%          1:03     1:57
+        Any node (maze routes):   185          99%          0:01     1:58
+        Route clean-up:            43 segs removed          0:20     2:18
+        Via minimization:          54 vias removed          0:04     2:22
+
+     Net list analysis:
+
+        Net not entirely routed:  NET_086
+
+            0   R12-B
+
+            1   U6-3
+
+
+     Final Board Statistics:
+
+        Total pins (in input PCB file):     292
+        Equivalent 16 pin IC's (EIC's):    18.2
+        Area on PCB (square inches):       18.8
+        Density (sq inches per EIC):       1.03
+        Vias added:                          91
+        Completed routes:                   185  ( 99%)
+        Non-completed routes:                 1  (  1%)
+
+        Total execution time:              2:25
+
+     Tango-Route PLUS  V2.02 
+     Copyright (C) 1988-91  ACCEL Technologies, Inc.  All rights reserved.

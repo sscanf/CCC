@@ -1,0 +1,28 @@
+ECHO OFF
+******************************************************************************
+*                              ATENCION                                      *
+*                              --------                                      *
+*                                                                            *
+* LA FILA A ESNAMBLAR HA DE IR SIN LA EXTENSION, EN CASO CONTRARIO, SE       *
+* PIERDE EL PROGRAMA.                                                        *
+*                                                                            * 
+******************************************************************************
+
+
+Paragon ASM05 Assembler - Version 3.0a      
+Copyright (c) 1983 - 1985 Microtec Research Inc.
+ALL RIGHTS RESERVED.     Serial Number 3-001752
+
+
+
+  ASSEMBLER ERRORS       0
+  ASSEMBLER WARNINGS     0
+
+Paragon LOD05 Loader - Version 3.0a         
+Copyright (c) 1983 - 1985 Microtec Research Inc.
+ALL RIGHTS RESERVED.     Serial Number 3-001752
+
+Output Object File        [F:ST.ABS]: Map Filename             [F:NUL.MAP]:
+
+  **Load Completed
+

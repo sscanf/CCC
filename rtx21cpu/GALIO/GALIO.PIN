@@ -1,0 +1,20 @@
+TITLE:     DECODIFICADOR I/O RTX21-CPU
+PATTERN:   
+REVISION:  1
+AUTHOR:    OSCAR CASAMITJANA
+COMPANY:   ELECTRONICA BARCELONA S.L.
+DATE:      01/04/93
+MACRO:     U2
+                                 PAL16V8
+                                ษออออษปออออป
+                      NC      ษอน 1  ศผ 20 ฬอป  VCC                            
+                  COM IOSTB   ษอน 2     19 ฬอป  CSIO0   COM                    
+                  COM A[15]   ษอน 3     18 ฬอป  CSIO1   COM                    
+                  COM A[14]   ษอน 4     17 ฬอป  CSIO2   COM                    
+                  COM A[13]   ษอน 5     16 ฬอป  CSIO3   COM                    
+                  COM A[12]   ษอน 6     15 ฬอป  CSIO4   COM                    
+                  COM RW      ษอน 7     14 ฬอป  CSIO5   COM                    
+                      NC      ษอน 8     13 ฬอป  IOWR    COM                    
+                      NC      ษอน 9     12 ฬอป  IORD    COM                    
+                      GND     ษอน 10    11 ฬอป  NC                             
+                                ศออออออออออผ

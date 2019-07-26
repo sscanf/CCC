@@ -1,0 +1,500 @@
+
+
+/******************************************************************************
+*
+*  PROJECT:		R40 DISPATCHER / NOKIA TELECOMMUNICATIONS
+*
+*  FILE:		MAP_RS.C
+*
+*  PURPOSE:		MAP27 RS Link Driver
+*
+*  REMARKS:		COM IRQ
+*
+*  AUTHOR:		P. Kettunen
+*
+*  LAST UPDATE:		8.5.1993
+*
+*
+*		KUUMIC OY (C) 1993
+*
+******************************************************************************/
+
+
+#include <dos.h>
+#include <bios.h>
+
+#include "map27.h"
+#include "map_rs.h"
+
+
+/*---------------------------------------------------------------------------*/
+
+
+union	REGS ent,sal;
+
+		/*** 8250 COM1 I/O Decodes ***/
+
+#define	COMDATA		0x00		/* Tx/Rx Data Buffer (DLAB=0) */
+#define	COMIER		0x01		/* Interrupt Enable */
+#define	COMLCR		0x03		/* Line Control */
+#define	COMMCR		0x04		/* Modem Control */
+#define COMLSR 		0x05		/* Line Status */
+#define	COMTHRE		0x20
+
+
+
+#define SCCR		0xE0 | 0x03 | 0x00 | 0x00	/* 9600,8,1,N */
+
+#define IER		0x21
+#define EOI		0x20
+
+/*---------------------------------------------------------------------------*/
+
+#define SYN	0x16
+#define DLE	0x10
+#define STX	0x02
+#define ETX	0x03
+
+/*---------------------------------------------------------------------------*/
+
+#define RB_SIZE		10		
+
+/*---------------------------------------------------------------------------*/
+
+
+typedef enum { STATE_SYN, STATE_DLE, STATE_STX, 	/* PROCESS */
+		STATE_data, STATE_DLE2, 
+		STATE_CRC1, STATE_CRC2, 
+		STATE_ready };
+
+/*---------------------------------------------------------------------------*/
+
+
+typedef struct {
+	BYTE len;
+	BYTE data[ LINK_HEADER_LEN + MAX_DATA_LEN ];
+} 
+RS_BUFF;
+
+typedef struct {
+	BYTE len;
+	BYTE header[ LINK_HEADER_LEN ];
+	BYTE data[ MAX_DATA_LEN ];
+} 
+RS_PACKET_TYPE;
+
+/*****************************************************************************/
+
+
+void interrupt (* orig_com_isr ) ();
+
+WORD mtab[256];				/* CRC16 */
+
+
+
+int comport;
+
+WORD comdata;
+WORD comier;
+WORD comlcr;
+WORD commcr;
+WORD comlsr;
+
+int comvect;
+BYTE commask8259;
+BYTE comnmask8259;
+
+
+/*---------------------------------------------------------------------------*/
+
+
+RS_BUFF RS_recv_buff[ RB_SIZE ];	/* FROM RU */
+volatile int RS_recv_qin, RS_recv_qout;
+
+BYTE *rb;
+int rbi;
+
+/*---------------------------------------------------------------------------*/
+
+
+int RS_state;				/* PROCESS */
+
+BYTE rc, rsts;
+
+BYTE rCRC1, rCRC2;
+WORD rCRC16, tCRC16;
+
+/*****************************************************************************/
+
+
+void RS_recv_buff_dequeue( OCTET *header, OCTET *data, int *data_len );
+BOOLEAN RS_recv_buff_empty( void );
+
+void rCRC( BYTE b );
+void tCRC( BYTE b );
+
+void RS_transmit_ctrl( BYTE c );
+void RS_transmit_data( BYTE c );
+
+
+/******************************************************************************
+*
+*	*** SAP ***
+*
+******************************************************************************/
+
+
+void send_RS_packet( OCTET *header, OCTET *data, int data_len )
+{
+	int i;
+
+
+	tCRC16 = 0xFFFF;
+
+	RS_transmit_ctrl( SYN );		/* frame header */
+	RS_transmit_ctrl( DLE );
+	RS_transmit_ctrl( STX );
+
+	for ( i=0; i<LINK_HEADER_LEN; i++ )
+		RS_transmit_data( header[i] );
+
+	for ( i=0; i<data_len; i++ )
+		RS_transmit_data( data[i] );
+
+	RS_transmit_ctrl( DLE ); tCRC( DLE );	/* frame tailer */
+	RS_transmit_ctrl( ETX ); tCRC( ETX );
+
+	tCRC16 ^= 0xFFFF;
+	RS_transmit_ctrl( HIBYTE( tCRC16 ) );
+	RS_transmit_ctrl( LOBYTE( tCRC16 ) );
+}
+
+
+BOOLEAN receive_RS_packet( OCTET *header, OCTET *data, int *data_len )
+{
+	if ( ! RS_recv_buff_empty() ) {
+		RS_recv_buff_dequeue( header, data, data_len );
+		return TRUE;
+	}
+	else
+		return FALSE;		/* no data */
+}
+
+
+/*---------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+/******************************************************************************
+*
+*	*** SERVICE PROVIDER ***
+*
+******************************************************************************/
+
+
+
+void create_table( WORD *mtab )		/* CRC16 */
+{
+	WORD btab[8];
+	WORD i,j, q, shreg, carry, bit;
+
+	carry = 1;
+	shreg = 0;
+	for ( i=0; i<8; i++ ) {
+		if ( carry ) shreg ^= 0xA001;
+		btab[i] = (shreg<<8) | (shreg>>8);
+		carry = shreg & 1;
+		shreg >>= 1;
+	}
+
+	for ( i=0; i<256; i++ ) {
+		q = 0;
+		bit = 0x80;
+		for ( j=0; j<8; j++ ) {
+			if ( bit & i ) q ^= btab[j];
+			bit >>= 1;
+		}
+		*mtab++ = q;
+	}
+}
+
+
+
+void rCRC( BYTE b )
+{
+	WORD q;
+
+	q = *(mtab+(b ^ (rCRC16>>8)));
+	rCRC16 = ((q&0xFF00) ^ (rCRC16<<8)) | (q&0x00ff);
+}
+
+
+void tCRC( BYTE b )
+{
+	WORD q;
+
+	q = *(mtab+(b ^ (tCRC16>>8)));
+	tCRC16 = ((q&0xFF00) ^ (tCRC16<<8)) | (q&0x00ff);
+}
+
+
+/*---------------------------------------------------------------------------*/
+
+
+/* MESSAGES FROM RU */
+
+
+void RS_recv_buff_enqueue( void )
+{
+	RS_recv_buff[ RS_recv_qin ].len = rbi;		/* len */
+
+	if ( ++RS_recv_qin == RB_SIZE ) RS_recv_qin = 0;
+}
+
+
+void RS_recv_buff_dequeue( OCTET *header, OCTET *data, int *data_len )
+{
+	int i;
+	RS_PACKET_TYPE *p = (RS_PACKET_TYPE *) &(RS_recv_buff[ RS_recv_qout ]);
+
+
+	for ( i=0; i<RB_SIZE; i++ )		/* copy header */
+		header[i] = p->header[i];
+
+	for ( i=0; i<p->len-LINK_HEADER_LEN; i++ )	/* copy data */
+		data[i] = p->data[i];
+	*data_len = p->len - LINK_HEADER_LEN;
+
+
+	if ( ++RS_recv_qout == RB_SIZE ) RS_recv_qout = 0;
+}
+
+
+BOOLEAN RS_recv_buff_empty( void )
+{
+	if ( RS_recv_qin == RS_recv_qout )
+		return TRUE;
+	else
+		return FALSE;		
+}
+
+
+BYTE * RS_recv_buff_alloc( void )
+{
+	return RS_recv_buff[ RS_recv_qin ].data;	//??? OVERFLOW
+}
+
+
+void RS_recv_buff_init( void )
+{
+	disable();
+	RS_state = STATE_SYN;
+	RS_recv_qin = RS_recv_qout = 0;
+	enable();
+}
+
+/*---------------------------------------------------------------------------*/
+
+
+void RS_transmit_ctrl( BYTE c )
+{
+	while ( ( inportb( comlsr ) & COMTHRE ) == 0 );	/* wait empty */
+	outportb( comdata, c );		
+}
+
+
+void RS_transmit_data( BYTE c )
+{
+	RS_transmit_ctrl( c );
+	if ( c == DLE )
+		RS_transmit_ctrl( DLE );	/* DLE ---> DLE DLE */
+
+	tCRC( c );				/* compute FCS */
+}
+
+/*---------------------------------------------------------------------------*/
+
+
+
+
+void interrupt RS_receive_isr( void )		/* RECEIVE ISR */
+{
+
+
+	rsts = inportb( comlsr );
+	rc = inportb( comdata );
+	if ( (rsts & 0x0F) != 0x01 ) {		/* OK ? */
+		RS_state = STATE_SYN;
+		rc = 0;
+	}
+
+
+	switch ( RS_state ) {			/* frame */
+
+	case STATE_SYN:
+		if ( rc == SYN ) {
+			rb = RS_recv_buff_alloc(); rbi = 0;
+			rCRC16 = 0xFFFF;
+			RS_state = STATE_DLE;
+		}
+		break;
+
+	case STATE_DLE:
+		if ( rc == DLE )
+			RS_state = STATE_STX;
+		else
+			RS_state = STATE_SYN;
+		break;
+
+	case STATE_STX:
+		if ( rc == STX )
+			RS_state = STATE_data;
+		else
+			RS_state = STATE_SYN;
+		break;
+
+	case STATE_data:
+		rb[rbi++] = rc;			/* STORE */
+		if ( rbi >= LINK_HEADER_LEN + MAX_DATA_LEN )
+			RS_state = STATE_SYN;	/* overflow ??? */
+
+		rCRC( rc );
+		if ( rc == DLE )
+			RS_state = STATE_DLE2;
+		break;
+
+	case STATE_DLE2:
+		if ( rc == DLE )
+			RS_state = STATE_data;		/* DLE DLE ---> DLE */
+		else {
+			if ( rc == ETX ) {
+				rbi--;
+				RS_state = STATE_CRC1;	/* DLE ETX */
+			}
+			else
+				RS_state = STATE_SYN;
+		}
+		break;
+
+	case STATE_CRC1:
+		rCRC1 = rc;
+		RS_state = STATE_CRC2;
+		break;
+
+	case STATE_CRC2:
+		rCRC2 = rc;
+
+	case STATE_ready:
+		rCRC( ETX );
+		if ( (rCRC16^0xFFFF) == MKWORD( rCRC1, rCRC2 ) )	/* OK ? */
+			RS_recv_buff_enqueue();
+
+		RS_state = STATE_SYN;
+		break;
+
+	default:
+		break;
+
+	}
+
+
+	outportb( EOI, 0x20 );
+}
+
+
+/*---------------------------------------------------------------------------*/
+
+
+
+void RS_reset( void )
+{
+	disable();
+
+	RS_recv_buff_init();
+	RS_state = STATE_SYN;
+
+	enable();
+}
+
+
+void RS_init( WORD port_base )
+{
+	int irq;
+
+
+	create_table( mtab );		/* CRC lookup */
+
+
+	disable();
+
+	comdata = port_base + COMDATA;	/* UART ADDRESS DECODES */
+	comier = port_base + COMIER;
+	comlcr = port_base + COMLCR;
+	commcr = port_base + COMMCR;
+	comlsr = port_base + COMLSR;
+
+	switch ( port_base ) {
+
+	case COM1:
+	case COM3:
+		comport = ( port_base == COM1 ) ? 0 : 2;
+		irq = 4;
+		break;
+
+	case COM2:
+	case COM4:
+		comport = ( port_base == COM2 ) ? 1 : 4;
+		irq = 3;
+		break;
+
+	default:
+		break;
+
+	}
+
+	comvect = irq + 8;
+	comnmask8259 = 0x01 << irq;
+	commask8259 = 0xFF ^ comnmask8259;
+
+	bioscom( 0, SCCR, comport );	/* setup line parameters */
+
+	orig_com_isr = getvect( comvect );
+	setvect( comvect, RS_receive_isr );
+
+	outportb( comlcr, inportb( comlcr ) & 0x7F );	/* DLAB = 0 */
+	outportb( comier, 0x01 );	/* enable data available int. */
+	outportb( IER, inportb( IER ) & commask8259 );
+	outportb( commcr, 0x0B );			/* DTR,RTS ON */
+
+	inportb( comdata );    		/* CLEAR */
+	inportb( comlsr );
+
+
+	RS_recv_buff_init();
+	RS_state = STATE_SYN;
+
+	enable();
+}
+
+
+void RS_restore( void )
+{
+	disable();
+	outportb( commcr, 0x00 );			/* DTR,RTS OFF */
+	outportb( comlcr, inportb( comlcr ) & 0x7F );
+	outportb( comier, 0x00 );
+	outportb( IER, inportb( IER ) | comnmask8259 );
+	setvect( comvect, orig_com_isr );
+	enable();
+}
+
+/*---------------------------------------------------------------------------*/
+
+

@@ -1,0 +1,363 @@
+
+;******************************************************************************
+;*                                                                            *
+;* NOMBRE       :  MASTER                                                     *
+;* DESCRIPCION  :                                                             *
+;* LENGUAJE     :                                                             *
+;* EDITOR       :                                                             *
+;* OBSERVACIONES: Este programa controla el 8982 (matriz) ,para efectuar las  *
+;*                interconexiones entre los canales de ST BUS segun las      *
+;*                ordenes que recive via RS-232 del pc industrial             *
+;******************************************************************************
+;
+; DEFINICION DE LOS PORTS
+PORTA   EQU 00H
+PORTB   EQU 01H
+PORTC   EQU 02H
+PORTD   EQU 03H
+PCA     EQU 04H
+PCB     EQU 05H
+PCC     EQU 06H
+PCD     EQU 07H
+MR      EQU 0AH                 ;MISCELLANEOUS REGISTER
+
+
+
+;============================= SEGMENTO DE RAM ============================
+
+SCDAT   EQU 0011H       ;Serial Comunications Data Register
+SCCR1   EQU 000EH       ;Serial Comunication Register 1
+SCCR2   EQU 000FH       ;Serial Comunication Register 2
+SCSR    EQU 0010H       ;Serial comunication Status Register
+SPCR    EQU 000AH       ;Serial peripheral control register
+SPSR    EQU 000BH       ;Serial peripheral status register
+SPDR    EQU 000CH       ;Serial peripheral data i/o register
+
+BAUD    EQU 000DH       ;Baud Rate Register
+TCR     EQU 0012H       ;Timer Control Register
+TSR     EQU 0013H       ;Timer Status Register
+ENTRY   EQU 0100H       ;DIRECCION COMIENZO ROM
+OPTREG  EQU 0FDFH       ;OPTION REGISTER
+TCRH    EQU 0018H       ;TIMER COUNT REGISTER (HIGH)
+TCRL    EQU 0019H       ;TIMER COUNT REGISTER (LOW)
+
+                        ORG 50H
+
+FLAGS   RES 1
+BITS    RES 1
+BITS1   RES 1
+BITS2   RES 1
+SAVX    RES 1
+SAVX1   RES 1
+SAVA    RES 1
+
+;==============================================================================
+
+
+                           ORG ENTRY    ;COMIENZA EL PROGRAMA
+
+;------------------------- PROGRAMACION DE LOS PORTS --------------------------
+
+        SEI
+
+        LDA #$01B
+        STA PCA         ;CONTROL 6302
+
+        LDA #$F0
+        STA PCB
+
+        LDA #$43        ;bits 0,1 y 6 como salidas y 7 entrada
+        STA PCC         ;bit 0 = ODE, 1= CS, 6= Sal. RS-232 Y 7= Ent.RS-232
+
+        LDA #$40
+        STA PCD
+
+        LDA #$02        ;SC ALTO Y
+        STA PORTC       ;'ODE' BAJO, TODAS LAS SALIDAS SEL ST-BUS EN HIGH Z
+;------------------------------------------------------------------------------
+
+        JSR INISPI      ;INICIALIZA EL MODO SPI
+        JSR SCION       ;Activa modo sci
+
+           ;VA A PONER TODOS LOS CANALES DE SALIDA EN ALTA IMPEDANCIA
+           ;HASTA QUE RECIVA ORDENES DEL PC
+
+
+        LDA #$02        ;connection mode, y cadena 0 
+        STA BITS
+        LDA #$40
+        STA BITS1       ;ODE PUESTO Y CADENA '0'
+        CLR FLAGS
+HIGHZ0:
+        CLRX
+        CLC
+HIGHZ:
+        BCLR 1,PORTC    ;CS PUESTO
+        STX SAVX
+        ROL SAVX
+        ROL SAVX        ;PONE LOS BIT DE DIRECCION EN SU SITIO (DIR C. SALIDA)
+        LDA BITS
+        ORA SAVX        ;LE SUMA LOS DEMAS BITS
+        JSR INVERT      ;INVIERTE LOS BITS
+        JSR SPIOUT      ;LO SACA AL 8982 , SE DIRIJE AL ADDRESS BYTE
+
+                        ;VA A PREPARAR PARA ENVIAR AL MODE DATA BYTE
+        CLRA
+
+        BRSET 0,FLAGS,REG       ;SI HAY FLAG ES QUE PONGO A '0' LOS REG.
+
+        TXA             ;ADDRESS DE CANAL DE ENTRADA
+        ORA BITS1       ;LE SUMA EL RESTO DE BITS
+        JSR INVERT
+REG:
+        JSR SPIOUT
+        BSET 1,PORTC    ;QUITA EL CS
+        INX
+        CPX #$20        ;MIRA SI YA HA HECHO LAS 32 POSICIONES
+        BNE HIGHZ
+        BRSET 0,FLAGS,MAI      ;SI ESTA ESTE YA HA HECHO LOS DOS REG.
+        BSET 0,FLAGS
+        LDA #$83        ;SELECCIONA LA CADENA 1 Y MODO MENSAJE
+        STA BITS        ;VA A PONER LOS REGISTROS 'A' Y 'B' a '0'
+        BRA HIGHZ0
+MAI:
+        LDA #$03
+        STA PORTC       ;ODE Y CS QUITADOS  (BITS 0 Y 1 A 1)
+MAIN:
+        CLR BITS
+        CLR BITS1
+MAIN1:
+
+        JSR CARGPC     ;ESPERA ORDENES DEL PC
+        LDA BITS
+        AND #$3F        ;LOS DOS BITS ALTOS SE DESPRECIAN
+        STA BITS
+        AND #$03
+        BEQ LEE         ;ES LECTURA DEL CANAL DE CONEXION
+        CMP #$01
+        BEQ LEE1        ;ES LECTURA DE LOS BITS DE CONTROL DEL CANAL
+        CMP #$11
+        BEQ MAIN2
+MAIN3:
+        LDA BITS
+        JSR INVERT      ;LOS INVIERTE
+        BCLR 1,PORTC    ;CS DEL 8982 PUESTO
+        JSR SPIOUT      ;SACA EL BYTE DE COMANDO Y ADDRESS
+        LDA BITS1
+        JSR INVERT
+        JSR SPIOUT      ;LO ENVIA AL MT 8982
+        BSET 1,PORTC    ;CS QUITADO
+        JMP MAI
+
+MAIN2:
+        BSET 7,BITS     ;PONE CADENA 1 PARA ESCRIBIR EN LOS REGISTROS A Y B
+        BRA MAIN3
+LEE:
+        LDA BITS
+        JSR INVERT      ;LOS INVIERTE
+        BCLR 1,PORTC    ;CS DEL 8982 PUESTO
+        JSR SPIOUT      ;SACA EL BYTE DE COMANDO Y ADDRESS
+
+        JSR SPIIN       ;LEE DEL 8982 EL CANAL DE CONEXION
+        BSET 1,PORTC    ;CS QUITADO
+        JSR INVERT
+        JSR SCIOUT      ;LO SACA AL PC
+        JMP MAI
+LEE1:
+        BSET 7,BITS     ;PONE CADENA 1
+        LDA BITS
+        JSR INVERT      ;LOS INVIERTE
+        BCLR 1,PORTC    ;CS DEL 8982 PUESTO
+        JSR SPIOUT      ;SACA EL BYTE DE COMANDO Y ADDRESS
+
+        JSR SPIIN       ;LEE DEL 8982 EL CANAL DE CONEXION
+        BSET 1,PORTC    ;CS QUITADO
+        JSR INVERT
+        JSR SCIOUT      ;LO SACA AL PC
+        JMP MAI
+
+        
+;---------------------------- SUBRUTINAS --------------------------------------
+
+;-------------- TRANSMITE AL PC EL CONTENIDO DEL REGISTRO A ------------------
+
+CARGPC:
+        JSR SCIIN       ;ESPERA ORDENES DEL PC
+        CMP #$EC
+        BNE CARGPC     ;ESPERA EL FRAME 'EC-A1'
+        JSR SCIIN
+        CMP #$A1
+        BNE CARGPC
+        JSR SCIIN       ;AHORA ESPERA QUE LE VENGA EL DATO
+        STA BITS
+        BRCLR 1,BITS,CARG       ;SI ESTE BIT VIENE A 0 ES LECTURA Y
+                                ;NO VIENEN MAS BYTES
+        JSR SCIIN       ;ESPERA EL SEGUNDO BYTE DEL PC
+        STA BITS1
+CARG:
+        RTS
+;
+;                       -----------------------------------
+;
+                        ;RUTINA QUE INVIERTE LOS BITS DE 'A'
+INVERT:
+        STX SAVX1
+        LDX #$08
+        CLR BITS2
+        CLC
+INV:
+        RORA
+        ROL BITS2       ;EN BITS2 VAN QUEDANDO LOS BITS AL REVES
+        DEX
+        BNE INV
+        LDX SAVX1
+        LDA BITS2
+        RTS
+
+SCIOUT:
+        BRCLR 7,SCSR,SCIOUT        ;MIRA SI ESTA OCUPADO
+        STA SAVA
+        LDA #$EC
+        STA SCDAT
+ESPERA:
+        BRCLR 6,SCSR,ESPERA     ;ESPERA PARA ACABAR DE TRANSMITIR
+SCI0:
+        BRCLR 7,SCSR,SCI0
+        LDA #$A1
+        STA SCDAT
+ESPER:
+        BRCLR 6,SCSR,ESPER
+SCI1:
+        BRCLR 7,SCSR,SCI1
+        LDA SAVA
+        STA SCDAT
+ESPE:
+        BRCLR 6,SCSR,ESPE
+        RTS
+
+;-----------------------------------------------------------------------------
+
+;---------------------RECIBE DEL PC UN CARACTER-------------------------------
+SCIIN:
+        BRCLR 5,SCSR,SCIIN           ;ESPERA QUE ENTREN UN CARACTER
+        LDA SCDAT                    ;EN A ESTA EL CARACTER ENTRADO
+        RTS
+
+; - - - - - - - TRANSMITE AL SPI EL CONTENIDO DE A - - - - - - - - - - - - - -
+SPIOUT:
+        STA SPDR
+
+EEW4    BRCLR 7,SPSR,EEW4       ;ESPERA QUE TRANSMITA EL BYTE
+        RTS
+;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+;  - - - - - - LEE UN BITE DEL SPI Y LO PONE EN A - - - - - - - - - - - - - -
+spiIN:
+
+        CLRA                    TRANSMITE 00 PARA QUE GENERE EL CLOCK
+        JSR SPIOUT              ;Y ASI PERMITIR AL DEVICE QUE TRANSMITA EL BYTE.
+        LDA SPDR                ;LEE EL BYTE RECIBIDO.
+        RTS
+;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+;----------------- CONFIGURACION INTERFACE DE COMUNICACIONES ------------------
+SCION:
+        LDA #$00
+        STA SCCR1
+
+        LDA #$0C        ;- TDRE interrupt disabled
+                        ;- TC interrupt disabled
+                        ;- SCI interrupt disabled
+                        ;- IDLE interrupt disbaled
+                        ;- After the last byte is transmitted, the TDO line
+                        ;  becomes a hight-impedance line.
+                        ;- Receiver disabled and RDRF, IDLE, OR, NF and FE
+                        ;  status bits are inhibited.
+        STA SCCR2
+
+                        
+        LDA #$30        ;Baud rate a 9600
+                        ;PARA 1200 PONER UN #$33
+        STA BAUD
+        RTS
+;------------------------------------------------------------------------------
+
+;******************* DESACTIVA EL MODO SCI *******************************
+SCIOFF:        
+        LDA #$00
+        STA SCCR1       ;one start bit, eight data bits, one stop bit
+
+        LDA #$00        ;- TDRE interrupt disabled
+                        ;- TC interrupt disabled
+                        ;- SCI interrupt enabled
+                        ;- IDLE interrupt disbaled
+                        ;- Transmiter enabled
+                        ;- Receiver enabled
+                        ;  status bits are inhibited.
+        STA SCCR2
+        RTS                     
+
+;-----------------------------------------------------------------------------
+
+;----------------------------------- INICIALIZACION SPI ----------------------------------------
+
+;***************************** IMPORTANTE *************************************
+;                                                      __
+;PARA QUE EL MICRO ACEPTE SER MASTER SE HA DE PONER EL SS A POSITIVO (PATA 37),
+; SI NO ES ASI EL MICRO RECHAZA EL BIT 4 DEL SPCR (MASTER),
+;
+;******************************************************************************
+
+INISPI:
+        LDA #$53        ;Serial Peripheral Interrupt Disable
+        STA SPCR        ;Serial Peripheral System Enable
+                        ;Master mode
+                        ;SCK line idles in low state
+                        ;     __ 
+                        ;When SS is low, first edge of SCK invokes first data
+                        ;sample.
+                        ;Internal Processor Clock Divided by 32
+
+        RTS
+;-----------------------------------------------------------------------------------------------
+
+
+;============================ INTERRUPCIONES  =============================
+
+IRQ:
+TIMER:
+SPI:
+SCI:
+SWI:
+
+        RTI
+;==============================================================================
+
+
+;------------------- INICIALIZACION DE LOS VECTORES ----------------------
+                               ORG 1FF4H
+
+        FDB SPI
+        FDB SCI
+        FDB TIMER
+        FDB IRQ
+        FDB SWI
+        FDB ENTRY
+
+;------------------------------------------------------------------------------
+
+
+
+
+
+
+
+;-------------------- CONFIGURACION REGISTROS --------------------------------
+
+                                ORG 1FDFH       'OPTION REGISTER
+
+        FCB 0C8H               ;RAM0 = 1
+                               ;RAM1 = 1
+;-----------------------------------------------------------------------------
+
+        END

@@ -1,0 +1,57 @@
+
+
+    Bill of Materials                                                RST.PCB
+
+                               Listado Componentes
+
+    Quantity  Type              Value             Ref Designators
+    ========================================================================
+
+         1                      1K                R4
+         3                      1M                R1,R2,R5
+         1                      1N4148            D1
+         2                      1uF               C3,C34
+         2                      2.2uF             C26,C27
+         1                      4.0 Mhz           XT1
+         1                      4.032             XT2
+         1                      4.7uF             C9
+         6                      10K               P1,P2,P3,R6,R8,R14
+         1                      10uF              C10
+         1                      15K               R7
+         1                      22K               R9
+         2                      27p               C1,C2
+         2                      33p               C13,C14
+         1                      64pin acodado     SL1
+         1                      74HC04            U11
+         1                      74HC74            U6
+         1                      74HC126           U12
+         1                      74HC166           U13
+         4                      100               R10,R11,R12,R13
+        14                      100n              C4,C6,C7,C12,C15,C16,C17,
+                                                  C18,C20,C21,C22,C24,C25,
+                                                  C37
+         1                      100uF             C11
+         1                      470n              C8
+         6                      680p              C28,C29,C30,C31,C32,C33
+         1                      1488              U9
+         1                      1489              U10
+         1                      7805              U15
+         1                      7905              U16
+         1                      AD1403            U3
+         2                      BC548             Q1,Q2
+         1                      FX429             U1
+         1                      MT8962            U5
+         1                      ULN2003           U4
+         2                      dip 8-switch      SW1,SW2
+         1    MC68H705          MC68HC705FN       U17
+         1    MH88422           MH88422           U14
+         1    rele                                RL1
+    
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    16-Nov-94  11:26                                                 Page  1

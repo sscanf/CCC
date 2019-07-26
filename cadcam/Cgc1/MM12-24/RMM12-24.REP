@@ -1,0 +1,507 @@
+
+
+    Aperture Information                                        RMM12-24.PCB
+
+                                        
+
+                         Aperture and Tool Descriptions
+    ========================================================================
+
+    Code   Shape    X    Y     Hole  Type   Comment
+    ------------------------------------------------------------------------
+    D10    Mt Hole  200  200   000   Draw   
+    D11    Ellipse  050  050   000   Draw   
+    D12    Sq Rect  050  050   000   Draw   
+    D13    Ellipse  060  060   000   Draw   
+    D14    Sq Rect  060  060   000   Draw   
+    D15    Sq Rect  070  070   000   Draw   
+    D16    Ellipse  070  070   000   Draw   
+    D17    Mt Hole  188  188   000   Draw   
+    D18    Mt Hole  098  098   000   Draw   
+    D19    Mt Hole  156  156   000   Draw   
+    
+
+
+    Code   Hole Diameter
+    --------------------
+    T01    020
+    T02    034
+    T03    038
+    T04    046
+    T05    040
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  1
+
+    Aperture Information                                        RMM12-24.PCB
+
+                                        
+
+                          Aperture and Tool Assignments
+    ========================================================================
+
+    Item                     Normal  S Mask   Plane   Thermal  Drl Sym  Tool
+    ------------------------------------------------------------------------
+    DRAW APERTURE            D11      -        -       -        -        -
+    LINE_006                  *       -        -       -        -        -
+    LINE_008                  *       -        -       -        -        -
+    LINE_010                  *       -        -       -        -        -
+    LINE_012                  *       -        -       -        -        -
+    LINE_018                  *       -        -       -        -        -
+    LINE_020                  *       -        -       -        -        -
+    LINE_026                  *       -        -       -        -        -
+    LINE_030                  *       -        -       -        -        -
+    LINE_040                  *       -        -       -        -        -
+    P_EL_0060_0060_038_AL     *       *        *       *        -        -
+    P_EL_0070_0070_040_AL     *       *        *       *        -        -
+    P_SQ_0060_0060_038_AL     *       *        *       *        -        -
+    P_SQ_0170_0070_000_BL     *       *        -       -        -        -
+    P_SQ_0170_0070_000_TL     *       *        -       -        -        -
+    V_CR_040_020              *       *        *       *        -        -
+    HOLE_020                  -       -        -       -        *       T01
+    HOLE_038                  -       -        -       -        *       T03
+    HOLE_040                  -       -        -       -        *       T05
+    
+
+    - : Not applicable.                   * : Aperture/tool is not assigned.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  2
+
+    Component Locations                                         RMM12-24.PCB
+
+                                        
+
+    Ref Designator    Pattern           Location
+    ========================================================================
+
+    C1                CAP200            03050 00650
+    C2                CAP200            02850 01400
+    C3                CAP100RP          02966 01798
+    C4                CAP100RP          01300 01200
+    C5                CAP100RP          01700 01200
+    C6                CAP100            03315 01984
+    C7                CAP100            02500 01425
+    C8                CAP100RP          02200 01900
+    C9                CAP100RP          01800 01600
+    C10               CAP100RP          02000 01600
+    C11               CAP100            02900 01900
+    C12               CAP100            02625 00750
+    C13               CAP100RP          01000 00600
+    CN1               DB25M-CABLE       00696 01964
+    CN2               MOLEX30P-HORIZ    04725 02000
+    D1                DO-25             00900 01500
+    D2                DO-25             00900 01600
+    D3                DO-25             00900 00800
+    D4                DO-25             04250 00650
+    JP1               JMP3              01500 00700
+    JP2               JUMPER            03600 01875
+    P1                POTEN             01900 01900
+    P2                POTEN             02600 01900
+    Q1                TRANS             02650 01600
+    Q2                TRANS             01100 01100
+    Q3                TRANS             03250 01925
+    R1                RESV              03100 01125
+    R2                RES300            01850 00900
+    R3                RES300            02700 01300
+    R4                RES300            02350 01750
+    R5                RES300            02250 01450
+    R6                RES300            02150 01750
+    R7                RES300            01300 01700
+    R8                RES300            00900 01900
+    R9                RES300            01300 01600
+    R10               RES300            00900 01800
+    R11               RES300            00900 01400
+    R12               RES300            00900 02000
+    R13               RES300            02850 01575
+    R14               RES300            01500 01700
+    R15               RES300            04425 01775
+    U1                DIP24             03225 01750
+    U2                DIP14             02400 00625
+    XT1               XTAL              02925 01100
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  1
+
+    Component Locations                                         RMM12-24.PCB
+
+                                        
+
+    Ref Designator    Pattern           Location
+    ========================================================================
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  2
+
+    Design Rule Check Report                                    RMM12-24.PCB
+
+                                        
+
+    ========================================================================
+
+    DRC Clearances (in mils)
+    ------------------------
+
+                   Top   Bot  Mid1  Mid2  Mid3  Mid4  Mid5  Mid6  Mid7  Mid8
+
+      Pad-to-Pad    20    20    20    20    20    20    20    20    20    20
+     Pad-to-Line    13    13    13    13    13    13    13    13    13    13
+    Line-to-Line    13    13    13    13    13    13    13    13    13    13
+    
+    Hole-to-Hole    13
+    
+
+    DRC Report Options
+    ------------------
+
+    Clearance Violations:             enabled
+    Text Violations:                  enabled
+    Net List Violations:              enabled
+    Single Node Routes:               enabled
+    Unconnected Pins:                 enabled
+    Unplaced Nodes:                   enabled
+    
+
+    DRC Errors
+    ----------
+
+    OPEN NET:  VDD
+       Subnet #1
+          CN2-25 at (4727,803) [top layer]
+          CN1-7 at (700,1310) [top layer]
+          CN1-8 at (700,1200) [top layer]
+       Subnet #2
+          CN2-26 at (4727,803) [bottom layer]
+    SINGLE NODE ROUTE
+       CN2-26 at (4727,803) [bottom layer]
+    CLEARANCE VIOLATION
+       Pad JP2-C2 at (3700,1875) 
+       Line at (3660,1920) to (4480,1920) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad R6-A at (2150,1750) 
+       Line at (2160,1680) to (2200,1720) [Bottom layer]
+       Calculated clearance:  9
+    CONNECTION TO UNCOMMITTED NODE
+       C6-A at (3315,1984) 
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  1
+
+    Design Rule Check Report                                    RMM12-24.PCB
+
+                                        
+
+    ========================================================================
+
+    CLEARANCE VIOLATION
+       Pad U2-12 at (2100,825) 
+       Line at (1580,780) to (2240,780) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U2-5 at (2400,1025) 
+       Line at (2240,980) to (2520,980) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U1-16 at (3825,950) 
+       Line at (3840,900) to (3900,960) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (2000,1260) to (2100,1160) [Bottom layer]
+       Pad U2-8 at (2100,1225) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Polygon segment from (1450,1275) to (1450,1450) [Bottom layer]
+       Via at (1420,1340) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad C13-PLUS at (1000,600) 
+       Via at (1060,554) 
+       Calculated clearance:  14
+    CLEARANCE VIOLATION
+       Pad R2-B at (1850,600) 
+       Line at (1460,560) to (2300,560) [Top layer]
+       Calculated clearance:  5
+    CLEARANCE VIOLATION
+       Polygon segment from (2775,2050) to (4325,2050) [Top layer]
+       Via at (3540,2020) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (2840,1180) to (2860,1200) [Top layer]
+       Line at (2660,1160) to (3020,1160) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (2340,1180) to (2840,1180) [Top layer]
+       Line at (2660,1160) to (3020,1160) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (2340,1180) to (2840,1180) [Top layer]
+       Line at (2640,1140) to (2660,1160) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  2
+
+    Design Rule Check Report                                    RMM12-24.PCB
+
+                                        
+
+    ========================================================================
+
+       Pad P2-CW at (2500,1688) 
+       Line at (2360,1740) to (2580,1740) [Top layer]
+       Calculated clearance:  12
+    CLEARANCE VIOLATION
+       Pad R13-B at (3150,1575) 
+       Pad U1-3 at (3225,1550) 
+       Calculated clearance:  19
+    CLEARANCE VIOLATION
+       Line at (2975,1700) to (3660,1700) [Top layer]
+       Pad U1-1 at (3225,1750) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U1-10 at (3225,850) 
+       Via at (3160,840) 
+       Calculated clearance:  15
+    CLEARANCE VIOLATION
+       Pad U2-4 at (2400,925) 
+       Line at (2000,880) to (2640,880) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U2-11 at (2100,925) 
+       Line at (2000,880) to (2640,880) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (2775,2050) 
+       Line at (2700,2080) to (2780,2000) [Top layer]
+       Calculated clearance:  6
+    CLEARANCE VIOLATION
+       Line at (2975,1700) to (3660,1700) [Top layer]
+       Pad U1-2 at (3225,1650) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3320,1820) to (4580,1820) [Top layer]
+       Pad R15-A at (4425,1775) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (4380,1820) to (4520,1820) [Bottom layer]
+       Pad R15-A at (4425,1775) 
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U2-9 at (2100,1125) 
+       Line at (1240,1080) to (2260,1080) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U2-7 at (2400,1225) 
+       Line at (2340,1180) to (2840,1180) [Top layer]
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  3
+
+    Design Rule Check Report                                    RMM12-24.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Polygon segment from (1725,1675) to (1475,1675) [Top layer]
+       Line at (1520,1600) to (1580,1660) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Polygon segment from (1725,1925) to (1725,1675) [Top layer]
+       Line at (1580,1660) to (2200,1660) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Polygon segment from (1725,1675) to (1475,1675) [Top layer]
+       Line at (1580,1660) to (2200,1660) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U2-2 at (2400,725) 
+       Line at (2260,680) to (2500,680) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U2-12 at (2100,825) 
+       Line at (2100,760) to (2200,860) [Bottom layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Pad U2-10 at (2100,1025) 
+       Line at (1380,980) to (2160,980) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Via at (1420,1120) 
+       Polygon segment from (1650,1150) to (1350,1150) [Bottom layer]
+       Calculated clearance:  10
+    CONNECTION TO UNCOMMITTED NODE
+       C6-B at (3315,2084) 
+    CLEARANCE VIOLATION
+       Line at (4180,1400) to (4200,1420) [Top layer]
+       Line at (4160,1360) to (4180,1380) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3760,1400) to (4180,1400) [Top layer]
+       Line at (4160,1360) to (4180,1380) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (4180,1400) to (4200,1420) [Top layer]
+       Line at (4180,1380) to (4520,1380) [Top layer]
+       Calculated clearance:  10
+    CLEARANCE VIOLATION
+       Line at (3760,1400) to (4180,1400) [Top layer]
+       Line at (4180,1380) to (4520,1380) [Top layer]
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  4
+
+    Design Rule Check Report                                    RMM12-24.PCB
+
+                                        
+
+    ========================================================================
+
+       Calculated clearance:  10
+    
+
+    Unconnected Pins
+    ----------------
+
+       U2-12 at (2100,825) 
+       U2-11 at (2100,925) 
+       U2-10 at (2100,1025) 
+       U1-24 at (3825,1750) 
+       U1-4 at (3225,1450) 
+       CN2-21 at (4728,1003) [top layer]
+       CN2-22 at (4728,1003) [bottom layer]
+       CN2-27 at (4727,703) [top layer]
+       CN2-23 at (4727,903) [top layer]
+       CN2-24 at (4727,903) [bottom layer]
+       CN2-28 at (4727,703) [bottom layer]
+       CN2-29 at (4725,600) [top layer]
+       CN2-30 at (4725,600) [bottom layer]
+       CN1-1 at (700,1964) [top layer]
+       CN1-2 at (700,1854) [top layer]
+       CN1-3 at (700,1749) [top layer]
+       CN1-4 at (700,1638) [top layer]
+    
+    
+    Unplaced Nodes
+    -------------
+
+       No unplaced nodes detected.
+    
+    DRC Summary
+    -----------
+
+           40 errors detected
+           17 unconnected pins detected
+            0 unplaced nodes detected
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    03-Mar-80  19:43                                                 Page  5

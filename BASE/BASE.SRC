@@ -1,0 +1,684 @@
+;******************************************************************************
+;*                                                                            *
+;* NOMBRE       : BASE.SRC                                                    *
+;* DESCRIPCION  : PLACA PARA LAS BASES                                        *
+;* LENGUAJE     : ENSAMBLADOR PARA M68705R3                                   *
+;* EDITOR       :                                                             *
+;* OBSERVACIONES:                                                             *
+;*                                                                            *
+;*                                                                            *
+;******************************************************************************
+; Definici¢n de los ports
+
+PORTA   equ 00h
+PORTB   equ 01h
+PORTC   equ 02h
+PORTD   equ 03h
+PCA     equ 04h
+PCB     equ 05h
+PCC     equ 06h
+PCD     equ 07h
+MR      equ 0ah         ;miscellaneous register
+ACR     equ 0eH         ;CONTROL ENTRADAS ANALOG.
+ARR     equ 0fH         ;REG. LECTURA ANALOGICA
+
+
+ENTRY   equ 80h         ;inicio del programa.
+TDR     equ 08h
+TCR     equ 09h
+
+
+;=============================== RAM =========================================
+
+			       org 10h
+
+
+FxStat  res 1   ;Fx805 Status Register.
+Nrx     res 1   ;N subtono rx.
+Rrx     res 1   ;R subtono rx.
+PQH     res 1   ;Filtro subtono y 3 bits altos subtono tx.
+QL      res 1   ;7 Bits bajos subtono tx (Ver p gina 2.144 del libro de CML EDICION 2).
+
+n       res 1
+r       res 1
+temp    res 1
+mltndos res 10
+mltdor  res 1
+result  res 10
+sumador res 10
+sumando res 10
+tmral   res 10
+llev    res 1
+savx    res 1
+sava    res 1
+cntbyte res 1
+rl      res 1
+rh      res 1
+dvsor2  res 1
+dvsor1  res 1
+dvsor0  res 1
+dvsor12 res 1
+dvsor13 res 1
+temp2   res 1
+temp1   res 1
+temp0   res 1
+temp12  res 1
+temp13  res 1
+temp4   res 1
+temp3   res 1
+temp5   res 1
+temp14  res 1
+temp15  res 1
+temp6   res 1
+r3      res 1
+r0      res 1
+r1      res 1
+r12     res 1
+r13     res 1
+mom     res 1
+carr    res 1
+mlt     res 1
+mlt1    res 1
+car     res 1
+flag    res 1
+;=============================== ROM =========================================
+
+				 PSCT
+
+			       org ENTRY
+
+;- - - - - - - - - - - - - - PROGRAMACION PORTS - - - - - - - - - - - - - - - -
+
+	clra
+	sta PCA
+	sta PCD
+
+	lda #$6f
+	sta PCB
+	
+	lda #$ff
+	sta pcc
+
+
+
+;- - - - - - - - - - - - - - - - - RESET - - - - - - - - - - - - - - - - - - -
+
+	bset 6,MR                     ;INT2 NO PERMITIDO
+
+	sei
+	bset 3,PORTC    ;/STR
+	bset 6,PORTC    ;chip select fx805
+
+;- - - - - - - - - - - - - - - - RESETEA EL FX805 - - - - - - - - - - - - - -
+
+	bclr 6,portc    ;Chip select 805
+	lda #$01        ;resetea el 805
+	jsr cBusOut
+	bset 6,portc    ;Chip select 805
+
+	bclr 6,portc
+	lda #$70        ;DIRECCION CONTROL REGISTER
+	jsr cBusOut
+	lda #$9e
+	jsr cBusOut     ;PROGRAMA EL CONTROL COMMAND
+	bset 6,portc
+
+
+;=============================== MAIN =======================================
+	cli
+
+rst:
+	lda #$6f
+	sta portb       ;Inicializa el n£mero de subtono a 00
+
+main:
+	brclr 1,portd,subtono  ;Se ha abierto el SQL        
+	bra rst
+
+
+subtono:
+	brclr 0,flag,main  ;Si no hay subtono regresa a main
+
+	bclr 0,flag
+	jsr calculo     ;El la frecuencia del subtono queda en r13 r12 r1 r0 r3
+			;siendo r3 el byte mas bajo
+	clrx
+busca:
+	lda tabla,x
+	cmp r3
+	beq FinBus
+	inca
+	cmp r3
+	beq FinBus
+	sub #$2
+	cmp r3
+	beq FinBus
+
+	incx
+	cpx #15
+	bne busca
+			
+	lda #$6f        ;Error, la frecuencia recibida no existe en la tabla,
+	sta portb       ;por lo tanto se presenta un ff en el port (hay que
+	bra main        ;tener en cuenta que los transistores invierten y 
+			;al final queda como un 00)
+
+FinBus:
+	incx
+	stx savx        ;El n£mero de subtono est  en x
+	txa
+	and #$fc
+	rola
+	rola
+	rola
+	and #$60
+	sta sava
+	lda savx
+	and #$03
+	ora sava
+	coma
+	sta portb       ;Presenta el n£mero al portb
+	bra main
+
+;========================== SUBRUTINAS =======================================
+
+
+FxStatusIn:
+
+	bclr 6,portc    ;Selecciona el FX805
+
+	lda #$71
+	jsr cBusOut     ;Direcciona el Status Register
+	jsr CBusIn      ;En a est  el estado del FX805
+	bset 6,portc
+	rts
+
+;- - - - - - - - - - - TRANSMITE EL ACUMULADOR AL C-BUS - - - - - - - - - - -
+;
+;portb - 3 = Data out
+;portb - 4 = Data in
+;portb - 2 = Clock
+
+cBusOut:
+	bclr 2,portb
+
+	ldx #$8     ;N£mero de bits a transmitir
+
+	clc
+cIni:
+	rola
+	bcs uno
+
+	bclr 3,portb
+cCnt:
+	bset 2,portb
+	bclr 2,portb
+	decx
+	bne cIni
+	rts
+
+uno:
+	bset 3,portb
+	bra cCnt
+
+
+;- - - - - - - - - - -RECIBE EL UN BYTE DEL C-BUS - - - - - - - - - - -
+;
+;portb - 3 = Data out
+;portb - 4 = Data in
+;portb - 2 = Clock
+
+cBusIn:
+	bclr 2,portb
+
+	ldx #$8     ;N£mero de bits a recibir
+	clra
+	clc
+cInin:
+	bset 2,portb
+	brset 4,portb,unon
+	clc
+cCntn:
+	bclr 2,portb
+	rola
+	decx
+	bne cInin
+	rts
+unon:
+	sec
+	bra cCntn
+
+
+;------------------------------------- CALCULA EL SUBTONO --------------------------------------
+; CRISTAL DE 4000000d = 3D0900H
+; CRISTAL DE 4032000d = 3D8600H
+;
+; LA FORMULA ES:
+;                                 N x Fxtal
+;                       FREC = ----------------
+;                               1920 x (511-R)
+;
+;
+; PRIMERO MULTIPLICA N x LA FRECUENCIA DEL CRISTAL 
+
+
+calculo:
+	sei
+	lda #$3d
+	sta mltndos
+	lda #$86
+	sta mltndos+1
+	lda #$00
+	sta mltndos+2
+
+	lda nRx
+	sta mltdor
+
+	lda #$2
+	sta cntbyte     ;numero total bytes a multiplicar contando el 0
+	jsr multi       ;el resultado queda en result (EXPLICADO EN LA RUTINA MULTI.)
+
+	lda result      ;memoriza el resultado en tmral para despues hacer la division
+	sta tmral
+	lda result+1
+	sta tmral+1
+	lda result+2
+	sta tmral+2
+	lda result+3
+	sta tmral+3
+
+	lda #$ff        ;resta (511-r)
+	sub rRx
+	sta rl
+	lda #$1
+	sta rh          ;en rl byte bajo de r en rh byte alto de r
+
+	lda #$07
+	sta mltndos
+	lda #$80
+	sta mltndos+1
+
+	lda rl
+	sta mltdor
+
+	lda #$1
+	sta cntbyte
+	jsr multi
+
+	lda result
+	sta sumador
+	lda result+1
+	sta sumador+1
+	lda result+2
+	sta sumador+2
+	lda result+3
+	sta sumador+3
+
+	lda #$07
+	sta sumando
+	lda #$80
+	sta sumando+1
+	clra
+	sta sumando+2
+	clra
+	sta sumando+3
+ 
+	lda #$3
+	sta cntbyte
+	jsr suma
+
+	clra 
+	sta dvsor13
+	lda result
+	sta dvsor12
+	lda result+1
+	sta dvsor0
+	lda result+2
+	sta dvsor1
+	lda result+3
+	sta dvsor2
+
+	clra
+	sta r13
+	lda tmral
+	sta r12
+	lda tmral+1
+	sta r1
+	lda tmral+2
+	sta r0
+	clra
+	sta r3
+
+	jsr div         ;el resultado queda en r13,r12,r1,r0,r3
+			;r3 es el byte mas bajo.
+	cli
+	rts
+
+;------------------------------------------ multi-----------------------------------------------
+; MULTIPLICA UN NUMERO INDETERMINADO DE BYTES POR 1 BYTE
+; EL NUMERO A MULTIPLICAR HA DE VENIR EN EL BUFFER MLTNDOS
+; EL MULTIPLICADOR HA DE VENIR EN MLTDOR
+; EN CNTBYTE HA DE ESTAR EL NUMERO DE BYTES TOTAL A MULTIPLICAR
+; EL RESULTADO QUEDA EN EL BUFFER RESULT.
+;
+; EJEMPLO:
+;               3D0900h x 22h = 81B3200
+;
+; EN MLTNDOS PONEMOS EL NUMERO A MULTIPLICAR DE LA SIGUIENTE FORMA:
+;
+;  BYTES      0    1    2
+;            3D    09  00
+;
+; EN MLTDOR PONEMOS EL MULTIPLICADOR QUE ES UN 22.
+;
+; EN NUMBYTE PONEMOS UN 2 QUE ES EL NUMERO TOTAL DE BYTES (CONTANDO EL 0)
+
+; EL RESULTADO QUEDA EN RESULT DE LA SIGUIENTE FORMA:
+;
+; BYTES      0     1    2    3 
+;            08   1B   32    00
+;  
+
+multi:
+	clr carr
+	clr llev
+	clrx
+mult:
+	ldx cntbyte
+
+	lda mltndos,x
+	ldx mltdor
+
+	clc
+;        fcb 42h         ;mul
+	jsr multip
+	add carr
+	add llev
+
+	clr carr
+	bcc noc
+	inc carr
+noc:
+	stx llev
+	
+	ldx cntbyte
+	incx
+	sta result,x
+	dec cntbyte
+	lda cntbyte
+	cmp #$ff
+	bne mult
+
+	lda llev
+	add carr
+	sta result
+	rts
+		
+multip:
+	sta sava
+	clr mlt
+	clr mlt1
+mulp:
+	cpx #$00
+	beq FinMulp
+
+	lda sava
+	add mlt
+	sta mlt
+	clra
+	adc mlt1
+	sta mlt1
+	decx
+	bra mulp
+
+FinMulp:
+	lda mlt
+	ldx mlt1
+	rts
+
+;---------------------------------------------------------------------------------------------
+; SUMA UN NUMERO INDETERMINADO DE BYTES.
+; EL NUMERO A SUMAR HA DE VENIR EN EL BUFFER SUMANDO
+; EL SUMADOR HA DE VENIR EN SUMADOR
+; EN CNTBYTE HA DE ESTAR EL NUMERO DE BYTES TOTAL A SUMAR
+; EL RESULTADO QUEDA EN EL BUFFER RESULT.
+;
+; EJEMPLO:
+;               3D0900h x 22h = 81B3200
+;
+; EN MLTNDOS PONEMOS EL NUMERO A MULTIPLICAR DE LA SIGUIENTE FORMA:
+;
+;  BYTES      0    1    2
+;            3D    09  00
+;
+; EN MLTDOR PONEMOS EL MULTIPLICADOR QUE ES UN 22.
+;
+; EN NUMBYTE PONEMOS UN 2 QUE ES EL NUMERO TOTAL DE BYTES (CONTANDO EL 0)
+
+; EL RESULTADO QUEDA EN RESULT DE LA SIGUIENTE FORMA:
+;
+; BYTES    ...  0     1    2    3 
+;          ...  08   1B   32    00   ->  BIT MENOS SIGNIFICATIVO.
+;  
+suma:
+	ldx cntbyte
+	clc
+sum:
+	lda sumando,x
+	adc sumador,x
+	incx
+	sta result,x
+	decx
+	decx
+	bne sum
+
+	lda sumando,x
+	adc sumador,x
+	incx
+	sta result,x
+	decx
+	bcs pone1
+	clra
+	sta result,x
+	bra fin
+pone1:
+	lda #$1
+	sta result,x
+fin:
+	rts
+; ---------------------------------------- DIV ------------------------------------------------
+;SUBRUTINA PARA DIVIDIR.
+;EN DVSOR1 (BYTE ALTO) Y DIVSOR2 (BAJO) VA EL DIVISOR
+;EN R1 (BYTE ALTO) Y R0 (BAJO) EL DIVIDENDO
+;EL RESULTADO QUEDA EN R1 Y R0
+	
+
+div:
+	com dvsor0
+	com dvsor1
+	com dvsor2      ;complementa divisor
+	com dvsor12
+	com dvsor13
+
+	clc
+	lda #$1         ;increm.divisor para dos complem.
+	adc dvsor2
+	sta dvsor2
+	clra
+	adc dvsor1
+	sta dvsor1
+	clra
+	adc dvsor0
+	sta dvsor0
+	clra
+	adc dvsor12
+	sta dvsor12
+	clra
+	adc dvsor13
+	sta dvsor13
+
+	clr temp0
+	clr temp1       ;valor inicial para resto
+	clr temp2
+	clr temp12
+	clr temp13
+	ldx #41         ;contador
+dv0:
+	clc             ;suma dvsor1-2 a temp1-2
+	lda temp2
+	adc dvsor2
+	sta temp4
+;
+	lda temp1
+	adc dvsor1
+	sta temp3
+
+	lda temp0
+	adc dvsor0
+	sta temp5
+
+	lda temp12
+	adc dvsor12
+	sta temp14
+	
+	lda temp13
+	adc dvsor13
+	sta temp15
+     
+	bcc dv1
+
+	lda temp4
+	sta temp6
+	lda temp2
+	sta temp4
+	lda temp6
+	sta temp2
+
+	lda temp3
+	sta temp6
+	lda temp1
+	sta temp3
+	lda temp6
+	sta temp1
+
+	lda temp5
+	sta temp6
+	lda temp0
+	sta temp5
+	lda temp6
+	sta temp0
+
+	lda temp14
+	sta temp6
+	lda temp12
+	sta temp14
+	lda temp6
+	sta temp12
+
+	lda temp15
+	sta temp6
+	lda temp13
+	sta temp15
+	lda temp6
+	sta temp13
+
+dv1:
+	rol r3
+	rol r0
+	rol r1
+	rol r12
+	rol r13
+	rol temp2
+	rol temp1
+	rol temp0
+	rol temp12
+	rol temp13
+	rol temp14
+	rol temp15
+	decx
+	bne dv0
+
+	ror temp0
+	ror temp1
+	ror temp2
+	ror temp12
+	ror temp13
+	ror temp14
+	ror temp15
+	rts
+
+
+;======================== RUTINAS INTERRUPT =================================
+
+
+
+;----------------------------- IRQ ------------------------------------------
+irq:
+
+	jsr FxStatusIn              ;Lee el Status Register del FX805
+	sta FxStat
+	brset 0,FxStat,CTSS      ;Ha decodificado un subtono.
+
+FinIrq:
+	rti
+
+
+; - - - - - - - - - EL FX805 HA DECODIFICADO UN SUBTONO - - - - - - - - - - -
+
+CTSS:
+
+	bclr 6,portc    ;Selecciona el FX805
+	lda #$72
+	jsr cBusOut     ;Direcciona al CTCSS rx Freq. Register.
+	jsr cBusIn
+	sta Nrx         ;guarda el valor de N
+	jsr cBusIn
+	sta Rrx         ;gurada el valor de R
+	bset 6,portc
+	bset 0,flag     ;Indica que ha recibido un subtono
+	jmp FinIrq
+
+TIMER:
+inte:
+	rti
+
+
+;============================ ROM DATA ======================================
+
+tabla:
+
+;     Frecuencia       N£mero
+;     ----------       ------
+
+	fcb 77          ;1
+	fcb 79          ;2
+	fcb 82          ;3
+	fcb 85          ;4
+	fcb 88          ;5
+	fcb 91          ;6
+	fcb 94          ;7
+	fcb 100         ;8
+	fcb 107         ;9
+	fcb 114         ;10
+	fcb 123         ;11
+	fcb 131         ;12
+	fcb 136         ;13
+	fcb 151         ;14
+	fcb 179         ;15
+
+
+;======================== VECTORES INTERRUPT =================================
+
+	org 0f38h
+
+	fcb 0fh       ;mask option register
+
+	org 0ff8h
+
+	fdb TIMER
+	fdb irq
+	fdb inte
+	fdb ENTRY
+
+	END
+

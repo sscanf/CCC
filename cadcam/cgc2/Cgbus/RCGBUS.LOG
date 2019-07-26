@@ -1,0 +1,85 @@
+     TANGO-ROUTE PLUS STATISTICS LOG
+        LOG FILENAME:  F:\PROJECTS\RACC\CGC2\RCGBUS.LOG
+        DATE/TIME:  Fri Mar 15 11:09:36 1996
+
+     Filename Specifications:
+        Input  .PCB file:  F:\PROJECTS\RACC\CGC2\CGBUS.PCB
+        Output .PCB file:  F:\PROJECTS\RACC\CGC2\RCGBUS.PCB
+        Output .LOG file:  F:\PROJECTS\RACC\CGC2\RCGBUS.LOG
+        Setup  .SET file:  F:\PROJECTS\RACC\CGC2\CGBUS.SET
+
+     PCB Layer Assignments:
+        Top:      Horizontal routes
+        Bottom:   Vertical routes
+        Mid 1:    (disabled)
+        Mid 2:    (disabled)
+        Mid 3:    (disabled)
+        Mid 4:    (disabled)
+        Mid 5:    (disabled)
+        Mid 6:    (disabled)
+        Mid 7:    (disabled)
+        Mid 8:    (disabled)
+
+     Routing Parameters:
+        Routing Grid:       25 mils
+        Routing Line Width: 12 mils
+        Routing Clearance:  13 mils
+        Via Diameter:       40 mils
+        Via Hole Diameter:  20 mils
+
+        Pad-to-Pad DRC:     13 mils
+        Pad-to-Line DRC:    13 mils
+        Line-to-Line DRC:   13 mils
+
+     Reading PCB file
+
+     Processing pads
+
+     Processing lines
+
+     Processing polygons
+
+     Processing text
+
+     Processing keepouts
+
+     Processing polygons
+
+     Optimizing pre-routed lines
+
+     Optimizing nets
+
+     Routing Performance:
+                               Routes   Percentage       Time in    Total
+        Pass Title          Completed    Completed          Pass     Time
+
+        Pre-routed signals:         0           0%          0:02     0:02
+        Wide line routing:          0           0%      disabled
+        Horizontal routes:         46          33%          0:01     0:04
+        Vertical routes:           76          55%          0:01     0:05
+        L routes (1 via):         118          85%          0:04     0:09
+        Z routes (2 vias):        124          89%          0:02     0:11
+        C routes (2 vias):        126          91%          0:01     0:12
+        Any node (2 vias):        127          92%          0:02     0:14
+        Maze routes:              138         100%          0:22     0:36
+        Route clean-up:           113 segs removed          0:05     0:41
+        Via minimization:          16 vias removed          0:00     0:41
+
+     Net list analysis:
+
+        Board completely routed.
+
+     Final Board Statistics:
+
+        Total pins (in input PCB file):     284
+        Equivalent 16 pin IC's (EIC's):    17.7
+        Area on PCB (square inches):       19.3
+        Density (sq inches per EIC):       1.09
+        Vias added:                         212
+        Completed routes:                   138  (100%)
+        Non-completed routes:                 0  (  0%)
+
+        Total execution time:              0:42
+
+     Tango-Route PLUS  V2.02 
+     Copyright (C) 1988-91  ACCEL Technologies, Inc.  All rights reserved.

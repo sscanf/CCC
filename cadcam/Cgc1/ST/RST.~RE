@@ -1,0 +1,113 @@
+
+
+    Bill of Materials                                                RST.PCB
+
+                               Listado Componentes
+
+    Quantity  Type              Value             Ref Designators
+    ========================================================================
+
+        12                      0.1               C4,C6,C7,C15,C16,C17,C18,
+                                                  C20,C22,C24,C25,C37
+         2                      1                 C3,C34
+         1                      1K                R4
+         2                      1M                R1,R5
+         1                      1N4148            D1
+         1                      1m                R2
+         2                      2.2               C26,C27
+         1                      4.0 Mhz           XT1
+         1                      4.032             XT2
+         2                      4.7               C9,Q1
+         1                      10                C10
+         6                      10K               P1,P2,P3,R6,R8,R14
+         1                      15K               R7
+         1                      22K               R9
+         2                      27p               C1,C2
+         2                      33p               C13,C14
+         1                      64pin acodado     SL1
+         1                      74HC04            U11
+         1                      74HC74            U6
+         1                      74HC126           U12
+         1                      74HC166           U13
+         5                      100               C11,R10,R11,R12,R13
+         1                      100n              C12
+         1                      350               C29
+         1                      470n              C8
+         4                      680               C28,C31,C32,C33
+         1                      1488              U9
+         1                      1489              U10
+         1                      7805              U15
+         1                      7905              U16
+         1                      AD1403            U3
+         1                      BC548             Q2
+         1                      C30               C30
+         1                      FX429             U1
+         1                      MT8962            U5
+         1                      PREGUNTAR *****   C21
+         1                      ULN2003           U4
+         2                      dip 8-switch      SW1,SW2
+         1    4066              4066              U8
+         1    CAP               0.1               C35
+         1    MC68H705          MC68HC705FN       U17
+         1    MH88422           MH88422           U14
+         1    POLCAP            1                 C5
+
+                           Electronica Barcelona S.L.
+
+    13-Nov-94  14:20                                                 Page  1
+
+    Bill of Materials                                                RST.PCB
+
+                               Listado Componentes
+
+    Quantity  Type              Value             Ref Designators
+    ========================================================================
+
+         1    POLCAP            100               C19
+         1    RES               1M                R3
+         1    rele                                RL1
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    13-Nov-94  14:20                                                 Page  2

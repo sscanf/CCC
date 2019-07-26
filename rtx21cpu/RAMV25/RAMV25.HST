@@ -1,0 +1,28 @@
+PALASM4  PLDSIM   - MARKET RELEASE 1.4 (1-15-92)
+ (C) - COPYRIGHT ADVANCED MICRO DEVICES INC., 1992
+
+PALASM SIMULATION HISTORY LISTING
+
+Title     : CONTROLADOR MEMORIA  RTX Author   : OSCAR CASAMITJANA
+Pattern   :                          Company  : ELECTRONICA BARCE
+Revision  : 1                        Date     : 01/04/93         
+
+PAL16V8        
+Page : 1 
+        ggg                                                         
+ MREQ   LLL                                                         
+ A[19]  LHH                                                         
+ A[18]  HHL                                                         
+ A[17]  HHL                                                         
+ A[16]  HHL                                                         
+ A[15]  LLL                                                         
+ A[14]  XXX                                                         
+ RW     XXX                                                         
+ GND    LLL                                                         
+ CS[4]  HLH                                                         
+ CS[3]  LLL                                                         
+ CS[2]  LLH                                                         
+ CS[1]  LHH                                                         
+ CE     HHH                                                         
+ VCC    HHH                                                         
+

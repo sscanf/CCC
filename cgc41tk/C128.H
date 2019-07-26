@@ -1,0 +1,63 @@
+/*      MODEM LINE STATUS       */
+#define S_CTS           0xfe
+#define S_DSR           0x02
+#define S_RI            0x04
+#define S_CD            0x08
+
+/*      MODEM CONTROL setting   */
+#define C_DTR           0x01
+#define C_RTS           0x02
+
+const INT_MST = 0x00;  // Interrupci¢n por modem status
+const INT_TXD = 0x02;  // Interrupci¢n por tx data
+const INT_RXL = 0x06;  // Interrupci¢n por rx line status
+const INT_RXD = 0x04;  // Interrupci¢n por rx data
+const INT_RLS = 0xc0;
+
+const WordLng_5 = 0x0;
+const WordLng_6 = 0x1;
+const WordLng_7 = 0x2;
+const WordLng_8 = 0x3;
+
+const ParityNone=0x0;
+const ParityEven=0x18;
+const ParityOdd =0x8;
+
+const StopBit_1 =0x0;
+const StopBit_2 =0x4;
+
+
+const MAX_LEN = 512;
+const CERRADO = 0;
+const ABIERTO = 1;
+
+void UartRst(int port);
+void far *ServicioInter (int port);
+void PonDLAB (int port ,int modo);
+
+int sio_init(int IrqNumber1, int IrqNumber2, int Mbase, int Mintvctr1, int Mintvctr2, long xtal,int NumPorts);
+void sio_reset(void);
+int sio_getports (void);
+int sio_open (int port);
+int sio_close (int port);
+int sio_getch(int port);
+int sio_linput (int port, char *buff, int len, int term);
+int sio_putch (int port, int code);
+int sio_putb (int port,char *buff, int len);
+int sio_write (int port,char (far)*buff, int len);
+int sio_lstatus (int port);
+int sio_cnt_irq (int port, void (interrupt (*)()),int);
+int  sio_modem_irq (int port, void (interrupt (*func)()));
+int sio_ofree (int port);
+int sio_oqueue (int port);
+char sio_rx(int port);
+int  sio_lctrl (int port, int mode);
+
+void UartRst(int port);
+void sio_end(void);
+int  sio_ioctl (int port,char init);
+void sio_tx(int port,char byte);
+int sio_flush (int,char);
+int sio_overlap (int port, int mode);
+int sio_ifree (int port);
+

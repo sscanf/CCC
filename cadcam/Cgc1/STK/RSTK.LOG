@@ -1,0 +1,194 @@
+     TANGO-ROUTE PLUS STATISTICS LOG
+        LOG FILENAME:  F:\PROJECTS\CGC1\STK\RSTK.LOG
+        DATE/TIME:  Mon Nov 11 12:34:06 1996
+
+     Filename Specifications:
+        Input  .PCB file:  F:\PROJECTS\CGC1\STK\STK.PCB
+        Output .PCB file:  F:\PROJECTS\CGC1\STK\RSTK.PCB
+        Output .LOG file:  F:\PROJECTS\CGC1\STK\RSTK.LOG
+        Setup  .SET file:  F:\PROJECTS\CGC1\STK\STK.SET
+
+     PCB Layer Assignments:
+        Top:      Horizontal routes
+        Bottom:   Vertical routes
+        Mid 1:    (disabled)
+        Mid 2:    (disabled)
+        Mid 3:    (disabled)
+        Mid 4:    (disabled)
+        Mid 5:    (disabled)
+        Mid 6:    (disabled)
+        Mid 7:    (disabled)
+        Mid 8:    (disabled)
+
+     Routing Parameters:
+        Routing Grid:       25 mils
+        Routing Line Width: 12 mils
+        Routing Clearance:  13 mils
+        Via Diameter:       40 mils
+        Via Hole Diameter:  20 mils
+
+        Pad-to-Pad DRC:     13 mils
+        Pad-to-Line DRC:    13 mils
+        Line-to-Line DRC:   13 mils
+
+     Reading PCB file
+
+     Processing pads
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A18:  Pad @ (6800,2400)
+        Node SW1-9:  Pad @ (6860,2400) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A17:  Pad @ (6800,2500)
+        Node SW1-10:  Pad @ (6860,2500) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A16:  Pad @ (6800,2600)
+        Node SW1-11:  Pad @ (6860,2600) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A15:  Pad @ (6800,2700)
+        Node SW1-12:  Pad @ (6860,2700) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A14:  Pad @ (6800,2800)
+        Node SW1-13:  Pad @ (6860,2800) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A13:  Pad @ (6800,2900)
+        Node SW1-14:  Pad @ (6860,2900) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A12:  Pad @ (6800,3000)
+        Node SW1-15:  Pad @ (6860,3000) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-A11:  Pad @ (6800,3100)
+        Node SW1-16:  Pad @ (6860,3100) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C18:  Pad @ (6600,2400)
+        Node SW2-9:  Pad @ (6540,2400) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C17:  Pad @ (6600,2500)
+        Node SW2-10:  Pad @ (6540,2500) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C16:  Pad @ (6600,2600)
+        Node SW2-11:  Pad @ (6540,2600) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C15:  Pad @ (6600,2700)
+        Node SW2-12:  Pad @ (6540,2700) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C14:  Pad @ (6600,2800)
+        Node SW2-13:  Pad @ (6540,2800) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C13:  Pad @ (6600,2900)
+        Node SW2-14:  Pad @ (6540,2900) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C12:  Pad @ (6600,3000)
+        Node SW2-15:  Pad @ (6540,3000) <bottom layer>
+
+        Error #161 (warning)
+        Overlap detected between two primitives.
+        Connection between primitives is assumed.
+        Node CN1-C11:  Pad @ (6600,3100)
+        Node SW2-16:  Pad @ (6540,3100) <bottom layer>
+
+     Processing lines
+
+     Processing polygons
+
+     Processing text
+
+     Processing keepouts
+
+     Processing polygons
+
+     Optimizing pre-routed lines
+
+     Optimizing nets
+
+     Routing Performance:
+                               Routes   Percentage       Time in    Total
+        Pass Title          Completed    Completed          Pass     Time
+
+        Pre-routed signals:        16           4%          0:16     0:16
+        Wide line routing:         16           4%      disabled
+        Horizontal routes:        125          36%          0:02     0:18
+        Vertical routes:          210          61%          0:01     0:19
+        L routes (1 via):         295          86%          0:07     0:26
+        Z routes (2 vias):        305          89%          0:04     0:30
+        C routes (2 vias):        316          92%          0:06     0:36
+        Any node (2 vias):        323          94%          0:05     0:41
+        Maze routes:              340          99%          0:33     1:14
+        Any node (maze routes):   340          99%          0:11     1:25
+        Route clean-up:           376 segs removed          0:25     1:50
+        Via minimization:          52 vias removed          0:02     1:52
+
+     Net list analysis:
+
+        Net not entirely routed:  .PTT
+
+            0   Q3-C
+
+            1   CN1-C26
+
+
+        Net not entirely routed:  D5
+
+            0   U2-17               U3-19               U4-14               
+
+            1   U1-18
+
+
+     Final Board Statistics:
+
+        Total pins (in input PCB file):     617
+        Equivalent 16 pin IC's (EIC's):    38.5
+        Area on PCB (square inches):       25.6
+        Density (sq inches per EIC):       0.66
+        Vias added:                         154
+        Completed routes:                   340  ( 99%)
+        Non-completed routes:                 2  (  1%)
+
+        Total execution time:              1:54
+
+     Tango-Route PLUS  V2.02 
+     Copyright (C) 1988-91  ACCEL Technologies, Inc.  All rights reserved.

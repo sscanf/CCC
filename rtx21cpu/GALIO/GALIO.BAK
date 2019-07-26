@@ -1,0 +1,54 @@
+;PALASM Design Description
+
+;---------------------------------- Declaration Segment ------------
+TITLE    DECODIFICADOR I/O RTX21-CPU
+PATTERN  
+REVISION 1
+AUTHOR   OSCAR CASAMITJANA
+COMPANY  ELECTRONICA BARCELONA S.L.
+DATE     01/04/93
+
+CHIP  U2  PALCE16V8
+
+;---------------------------------- PIN Declarations ---------------
+PIN  12         IORD                                  COMBINATORIAL ;       
+PIN  13         IOWR                                  COMBINATORIAL ;       
+PIN  14         CSIO5                                 COMB
+PIN  15         CSIO4                                 COMB
+PIN  16         CSIO3                                 COMB
+PIN  17         CSIO2                                 COMBINATORIAL ;       
+PIN  18         CSIO1                                 COMBINATORIAL ;       
+PIN  19         CSIO0                                 COMBINATORIAL ;
+PIN  3..6       A[15..12]                             COMBINATORIAL ;       
+PIN  2          IOSTB                                 COMBINATORIAL ;       
+PIN  7          RW                                    COMBINATORIAL ;
+;----------------------------------- Boolean Equation Segment ------
+EQUATIONS
+CSIO0=/(/A[15]*/A[14]*/A[13]*/A[12]*(/IOSTB))
+CSIO1=/(/A[15]*/A[14]*/A[13]*A[12]*(/IOSTB))
+CSIO2=/(/A[15]*/A[14]*A[13]*/A[12]*(/IOSTB))
+CSIO3=/(/A[15]*/A[14]*A[13]*A[12]*(/IOSTB))
+CSIO4=/(/A[15]*A[14]*/A[13]*/A[12]*(/IOSTB))
+CSIO5=/(/A[15]*A[14]*/A[13]*A[12]*(/IOSTB))
+
+/IORD= /((RW)*(//IOSTB))
+/IOWR= /((/RW)*(//IOSTB))
+
+;----------------------------------- Simulation Segment ------------
+SIMULATION
+TRACE_ON        CSIO0 CSIO1 CSIO2 CSIO3 CSIO4 CSIO5 A[15] A[14] A[13] A[12] RW IOSTB IORD IOWR
+
+SETF            A[15] A[14] A[13] A[12] RW IOSTB
+
+;SETF            /A[15] /A[14] /A[13] /A[12] /IOSTB   ;csio0
+;SETF            /A[15] /A[14] /A[13]  A[12] /IOSTB   ;csio1
+;SETF            /A[15] /A[14]  A[13] /A[12] /IOSTB   ;csio2
+;SETF            /A[15] /A[14]  A[13]  A[12] /IOSTB   ;csio3
+;SETF            /A[15]  A[14] /A[13] /A[12] /IOSTB   ;csio4
+;SETF            /A[15]  A[14] /A[13]  A[12] /IOSTB   ;csio4
+
+SETF RW /IOSTB  ;IORD
+SETF /RW /IOSTB ;IORW
+
+;-------------------------------------------------------------------
+

@@ -1,0 +1,57 @@
+
+
+    Bill of Materials                                                RTC.PCB
+
+                               Listado Componentes
+
+    Quantity  Type              Value             Ref Designators
+    ========================================================================
+
+         3                      1K                R14,R18,R19
+         2                      1M                R15,R21
+         6                      1N4148            D3,D4,D5,D6,D9,D12
+         8                      1uF               C1,C2,C5,C6,C7,C18,C19,C23
+        13                      2K2               R1,R2,R3,R4,R5,R6,R22,R23,
+                                                  R24,R25,R26,R27,R28
+         4                      4K7               R12,R13,R17,R29
+         1                      4.032             XT2
+         2                      5V                D1,D2
+         4                      10K               P1,P2,R9,R16
+         1                      10uF              C15
+         1                      15uF              C8
+         2                      33p               C16,C20
+         1                      93C46             U4
+         1                      100K              R8
+        11                      100n              C3,C9,C10,C11,C12,C13,C14,
+                                                  C17,C21,C22,C24
+         2                      150K              R10,R11
+         1                      360K              R20
+         1                      1232              U3
+         1                      2200uF            C25
+         1                      7805              U8
+         7                      BC548             Q1,Q2,Q3,Q4,Q5,Q6,Q7
+         1                      FX489J            U6
+         3                      IN4148            D7,D10,D11
+         1                      MC68705R3P        U1
+         1                      MOLEX 2 PIN       CN4
+         2                      MOLEX 3 PIN       CN2,CN3
+         1                      MOLEX 7 PIN       CN1
+         3                      RELE              RL1,RL2,RL3
+         1    PLCC24            FX805             U2
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+                           Electronica Barcelona S.L.
+
+    16-Nov-94  11:31                                                 Page  1

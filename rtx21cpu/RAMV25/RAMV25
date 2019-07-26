@@ -1,0 +1,92 @@
+Galmem.pds
+
+
+DOS Extender Technology, Copyright ERGO Computing, Inc., 1990
+PALASM4  PARSER   - MARKET RELEASE 1.4 (2-5-92)
+ (C) - COPYRIGHT ADVANCED MICRO DEVICES INC., 1992
+
+
+                    ***********************************
+                    *     PALASM PARSER LISTING       *
+                    ***********************************
+
+LINE #   |----+----1----+----2----+----3----+----4----+----5----+----6----+
+   1     |;PALASM Design Description
+   2     |
+   3     |;---------------------------------- Declaration Segment ------------
+   4     |TITLE    CONTROLADOR MEMORIA  RTX-21/CPU
+   5     |PATTERN  
+   6     |REVISION 1
+   7     |AUTHOR   OSCAR CASAMITJANA
+   8     |COMPANY  ELECTRONICA BARCELONA S.L.
+   9     |DATE     01/04/93
+  10     |
+  11     |CHIP  U3  PALCE16V8
+  12     |
+  13     |;---------------------------------- PIN Declarations ---------------
+  14     |PIN  18..15     CS[4..1]                             COMBINATORIAL ;
+  15     |PIN  19         CE                                   COMBINATORIAL ;
+  16     |PIN  9          RW                                   COMBINATORIAL ;
+  17     |PIN  3..8       A[19..14]                            COMBINATORIAL ;
+  18     |PIN  2          MREQ                                 COMBINATORIAL ;
+  19     |
+  20     |;----------------------------------- Boolean Equation Segment ------
+  21     |EQUATIONS
+  22     |CE = /(/A[19]*/A[18]*/A[17]*/A[16]*/A[15]*/MREQ)
+  23     |CS[1] = ((/A[19]*A[18])+(/A[19]*/A[18]*A[17])+(/A[19]*/A[18]*/A[17]*A[16])
+  24     |+(/A[19]*/A[18]*/A[17]*/A[16]*A[15]))*/MREQ
+  25     |CS[2] =A[19]*/A[18]*/MREQ
+  26     |CS[3] =((A[19]*A[18]*/A[17])+(A[19]*A[18]*A[17]*/A[16]))*/MREQ
+  27     |/CS[4]=A[19]*A[18]*A[17]*A[16]*/MREQ
+  28     |;----------------------------------- Simulation Segment ------------
+  29     |SIMULATION
+  30     |
+  31     |TRACE_ON CE CS[1] CS[2] CS[3] CS[4] A[19] A[18] A[17] A[16] A[15] MREQ
+  32     |SETF A[19] A[18] A[17] A[16] A[15]
+  33     |SETF MREQ
+  34     |
+  35     |SETF /A[19] /A[18] /A[17] /A[16] /A[15]         ;CS0
+  36     |SETF /MREQ
+  37     |SETF /A[19] /A[18] /A[17]  A[16] A[15]          ;CS1
+  38     |SETF A[19] A[18]  /A[17]  A[16] A[15]           ;CS3
+  39     |SETF /A[19] /A[18] /A[17]  A[16] /A[15]         ;CS1
+  40     |SETF A[19] /A[18] A[17]  A[16] /A[15]           ;CS2
+  41     |SETF /A[19] /A[18] A[17]  A[16] /A[15]          ;CS1
+  42     |
+  43     |
+  44     |;-------------------------------------------------------------------
+
+ %% PARSE %%    No errors.  No warnings.
+
+ %% PARSE %%    File processed successfully.    File:  Galmem.pds
+Copyright (c) 1990 Ergo Computing, Inc. 
+
+DOS Extender Technology, Copyright ERGO Computing, Inc., 1990
+PALASM4  BPP   - MARKET RELEASE 1.4 (1-27-92)
+ (C) - COPYRIGHT ADVANCED MICRO DEVICES INC., 1992
+
+EQUATIONS SEGMENT
+Processing equation for ====>CE
+Processing equation for ====>CS[1]
+Processing equation for ====>CS[2]
+Processing equation for ====>CS[3]
+Processing equation for ====>/CS[4]
+SIMULATION SEGMENT
+..........
+ %%  BPP  %% Maximum memory allocated was: 17816 bytes.
+
+ %%  BPP  %% File Processed Successfully.  File: Galmem.pds.
+ %%  BPP  %% ERROR count: 0  WARNING count: 0
+Copyright (c) 1990 Ergo Computing, Inc. 
+
+DOS Extender Technology, Copyright ERGO Computing, Inc., 1990
+PALASM4  MINIMIZE   - MARKET RELEASE 1.4 (1-27-92)
+ (C) - COPYRIGHT ADVANCED MICRO DEVICES INC., 1992
+
+.....
+Copyright (c) 1990 Ergo Computing, Inc. 
+
+Copyright (c) 1990 Ergo Computing, Inc. 
+
+Processing equation ====> /CE                 MINIMIZE_ON  (6 pt ---> 1 pt)
+Pr

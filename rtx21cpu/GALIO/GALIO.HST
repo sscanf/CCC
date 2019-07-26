@@ -1,0 +1,31 @@
+
+DOS Extender Technology, Copyright ERGO Computing, Inc., 1990
+PALASM4  PLDSIM   - MARKET RELEASE 1.4 (1-15-92)
+ (C) - COPYRIGHT ADVANCED MICRO DEVICES INC., 1992
+
+PALASM SIMULATION HISTORY LISTING
+
+Title     : DECODIFICADOR I/O RTX21- Author   : OSCAR CASAMITJANA
+Pattern   :                          Company  : ELECTRONICA BARCE
+Revision  : 1                        Date     : 01/04/93         
+
+PAL16V8        
+Page : 1 
+        ggg                                                         
+ IOSTB  HLL                                                         
+ A[15]  HHH                                                         
+ A[14]  HHH                                                         
+ A[13]  HHH                                                         
+ A[12]  HHH                                                         
+ RW     HHL                                                         
+ GND    LLL                                                         
+ IORD   HLH                                                         
+ IOWR   HHL                                                         
+ CSIO5  HHH                                                         
+ CSIO4  HHH                                                         
+ CSIO3  HHH                                                         
+ CSIO2  HHH                                                         
+ CSIO1  HHH                                                         
+ CSIO0  HHH                                                         
+ VCC    HHH                                                         
+

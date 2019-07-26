@@ -1,0 +1,55 @@
+PARAGON ASM05 V3.0A PRODUCT NOTES
+---------------------------------
+
+SPECIAL NOTES:
+-------------
+
+The number of significant characters in a symbol has been 
+increased to 31 for the PARAGON ASM05 product.
+
+LIMITATIONS AND RESTRICTIONS:
+----------------------------
+
+The LIB05 V4.0A program will not handle object modules containing 
+symbols longer than 27 characters. In addition, the librarian 
+will give the error "ILLEGAL FORMAT IN OBJECT FILE" if symbols 
+with periods (.) or dollar signs ($) are detected in the object 
+module. These problems will be fixed in a future ASM05 release.
+
+PROBLEM REPORTING:
+-----------------
+
+When reporting problems with your PARAGON products, we ask that 
+you please provide the following information to help us in 
+identifying the problem:
+
+- The program name (ASM68K, LOD51 etc.) and the program version 
+number (displayed in the banner when the program is invoked).
+
+- The version of DOS you are running (use the DOS VER command).
+
+- Your system configuration (what machine etc.)
+
+- The exact command line used to invoke the program.
+
+- Source and include files referenced, and an annotated listing 
+that shows the problem.
+
+- All objects, libraries (except the standard ones, but please 
+state which standard objects/libraries you are using) needed to 
+link, if necessary.
+
+Having this information will be of immense help to us in solving 
+your problem quickly.
+
+REMINDER:
+--------
+
+Please fill out your Warranty Registration Form and return it to 
+Microtec Research. Thank You.
+
+
+
+
+
+
